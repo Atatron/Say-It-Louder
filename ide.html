@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You, Yourself Breadboard</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="ide.css?v=2">
+</head>
+<body>
+<div class="app">
+  <!-- title + menu -->
+  <div class="titlebar"><span class="appicon"></span>You, Yourself — Virtual Breadboard <span class="dim">· Breadboard.ini</span>
+    <a class="back" href="index.html">Workboard ↗</a></div>
+  <div class="menubar">
+    <div class="menu"><button>File</button><div class="drop"><button data-cmd="export">Export wiring list</button><a href="index.html">Open workboard</a></div></div>
+    <div class="menu"><button>Edit</button><div class="drop"><button data-cmd="deselect">Deselect all</button></div></div>
+    <div class="menu"><button>Debug</button><div class="drop"><button data-cmd="run">Run</button><button data-cmd="stop">Stop</button><button data-cmd="voice">Trigger “I hear a voice”</button></div></div>
+    <div class="menu"><button>Tools</button><div class="drop"><button data-cmd="scope">Toggle oscilloscope</button><button data-cmd="serial">Serial monitor</button></div></div>
+    <div class="menu"><button>Help</button><div class="drop"><button data-cmd="about">About You, Yourself</button></div></div>
+  </div>
+
+  <!-- toolbar -->
+  <div class="toolbar">
+    <button class="tb" data-cmd="export" title="Save wiring list"><svg viewBox="0 0 32 32"><rect x="5" y="5" width="22" height="22" rx="3" fill="#2f7fd1"/><rect x="10" y="5" width="12" height="8" fill="#e8f1fb"/><rect x="9" y="17" width="14" height="10" fill="#fff"/></svg></button>
+    <span class="sep"></span>
+    <button class="tb" data-cmd="zoomout" title="Zoom out"><svg viewBox="0 0 32 32"><circle cx="14" cy="14" r="9" fill="none" stroke="#555" stroke-width="3"/><path d="M21 21l7 7M10 14h8" stroke="#555" stroke-width="3"/></svg></button>
+    <button class="tb" data-cmd="zoomin" title="Zoom in"><svg viewBox="0 0 32 32"><circle cx="14" cy="14" r="9" fill="none" stroke="#555" stroke-width="3"/><path d="M21 21l7 7M10 14h8M14 10v8" stroke="#555" stroke-width="3"/></svg></button>
+    <span class="sep"></span>
+    <button class="tb big run" data-cmd="run" title="Run (F5)"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#3dae49"/><path d="M15 11l14 9-14 9z" fill="#fff"/></svg></button>
+    <button class="tb big" data-cmd="stop" title="Stop"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#c9c9c9"/><rect x="13" y="13" width="14" height="14" rx="2" fill="#fff"/></svg></button>
+    <button class="tb big" data-cmd="calibrate" title="Recalibrate baseline"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#2f7fd1"/><path d="M12 22c3-8 5-8 8 0s5 8 8 0" stroke="#fff" stroke-width="3" fill="none"/></svg></button>
+    <span class="sep"></span>
+    <button class="tb big" data-cmd="upload" title="Upload firmware (opens code)"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#e9e9e9" stroke="#bbb"/><path d="M11 20h16M21 13l7 7-7 7" stroke="#2f7fd1" stroke-width="3.5" fill="none"/></svg></button>
+    <span class="tbstatus" id="tbStatus">Stopped</span>
+  </div>
+
+  <div class="main">
+    <!-- toolbox -->
+    <aside class="toolbox">
+      <div class="paneltitle">Toolbox</div>
+      <div class="iconsgrid" id="iconsGrid"></div>
+      <div class="cats" id="cats"></div>
+    </aside>
+
+    <!-- center -->
+    <section class="center">
+      <div class="doctabs" id="docTabs">
+        <button data-doc="board" class="on">Breadboard.ini</button>
+        <button data-doc="code">ini_aku_esp32.ino</button>
+        <button data-doc="serial">Serial Monitor</button>
+      </div>
+      <div class="doc on" id="doc-board">
+        <div class="canvaswrap" id="canvasWrap">
+          <svg id="board" viewBox="0 0 1000 640" xmlns="http://www.w3.org/2000/svg"></svg>
+          <div class="float scope" id="scopeWin">
+            <div class="ftitle">Oscilloscope · GPIO34 (ENV)</div>
+            <canvas id="scope" width="240" height="96"></canvas>
+          </div>
+          <div class="float stim">
+            <div class="ftitle">Stimulus</div>
+            <div class="sbtns">
+              <button data-act="murmur">Silent murmur</button>
+              <button data-act="chew">Chew</button>
+              <button data-act="swallow">Swallow</button>
+            </div>
+            <label><input type="checkbox" id="roomTalk"> Someone talks nearby</label>
+            <button class="voice" data-cmd="voice">I hear a voice</button>
+          </div>
+        </div>
+      </div>
+      <div class="doc" id="doc-code"><pre><code id="codeBody"></code></pre></div>
+      <div class="doc" id="doc-serial"><div class="serialbar"><span>COM3 · 115200 baud</span><button data-cmd="clearserial">Clear</button></div><pre id="serial" class="serial"></pre></div>
+    </section>
+
+    <!-- right -->
+    <aside class="right">
+      <div class="paneltitle">Solution Explorer</div>
+      <ul class="tree" id="tree">
+        <li class="open"><span class="tw">▾</span><i class="ic sol"></i>Solution 'You, Yourself'
+          <ul>
+            <li class="open"><span class="tw">▾</span><i class="ic proj"></i>Wearable
+              <ul>
+                <li data-open="board"><i class="ic bb"></i>Breadboard.ini</li>
+                <li class="open"><span class="tw">▾</span><i class="ic folder"></i>firmware
+                  <ul><li data-file="firmware/ini_aku_esp32/ini_aku_esp32.ino"><i class="ic file"></i>ini_aku_esp32.ino</li></ul></li>
+              </ul></li>
+            <li class="open"><span class="tw">▾</span><i class="ic proj"></i>Phone app
+              <ul>
+                <li data-file="detector.js"><i class="ic file"></i>detector.js</li>
+                <li data-file="vad.js"><i class="ic file"></i>vad.js</li>
+                <li data-file="live.js"><i class="ic file"></i>live.js</li>
+              </ul></li>
+          </ul></li>
+      </ul>
+      <div class="paneltitle">Properties</div>
+      <table class="props" id="props"></table>
+      <div class="desc"><b id="descTitle">Description</b><p id="descBody">Click a component on the breadboard.</p></div>
+    </aside>
+  </div>
+
+  <div class="statusbar"><span id="status">Ready</span><span id="simTime"></span><span id="pins"></span></div>
+</div>
+
+<div class="modal hidden" id="modal"><div class="mbox"><div class="ftitle" id="mTitle"></div><div id="mBody"></div><button data-cmd="closemodal">OK</button></div></div>
+
+<script src="detector.js?v=2"></script>
+<script src="data.js?v=2"></script>
+<script src="ide.js?v=2"></script>
+</body>
+</html>

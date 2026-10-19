@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You, Yourself Workboard</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="logo" aria-hidden="true"><span></span></div>
+    <div>
+      <div class="name">You, Yourself <small>INI AKU · “it’s me”</small></div>
+      <div class="tag">A prosthetic “this is me” signal for people who hear voices · hackathon workboard</div>
+    </div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="overview" aria-selected="true">Overview</button>
+    <button role="tab" data-tab="products">Products</button>
+    <button role="tab" data-tab="sim">Simulator</button>
+    <button role="tab" data-tab="method">Method</button>
+    <button role="tab" data-tab="code">Code</button>
+    <button role="tab" data-tab="board">Board</button>
+    <a class="idelink" href="ide.html">Breadboard IDE ↗</a>
+    <a class="idelink" href="deck/">Pitch deck ↗</a>
+  </nav>
+</header>
+
+<main>
+<!-- ============ OVERVIEW ============ -->
+<section id="overview" class="panel active">
+  <div class="hero">
+    <div>
+      <h1>When a voice shows up, check two channels.</h1>
+      <p class="lead">The brain normally tags inner speech with a copy signal that says “this is me.” In many people who hear voices,
+      that tag is weak, so their own inner speech can sound like someone else. You, Yourself doesn't try to repair the brain's signal.
+      It adds an outside one: a lip-muscle sensor (<b>inside channel</b>) and the phone microphone (<b>outside channel</b>).</p>
+      <div class="stats">
+        <div><b>~70%</b><span>of people with schizophrenia hear voices</span></div>
+        <div><b>up to 30%</b><span>don't respond to current treatments</span></div>
+        <div><b>59%</b><span>fewer reported voices while humming (small 1990 study)</span></div>
+      </div>
+    </div>
+  </div>
+  <h2>System map <small>click any block</small></h2>
+  <div class="map-wrap">
+    <svg id="map" viewBox="0 0 900 360" role="img" aria-label="System diagram">
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker></defs>
+      <path class="flow" d="M150,110 L250,110"/><path class="flow" d="M380,110 L470,110"/>
+      <path class="flow" d="M600,110 L690,170"/><path class="flow" d="M600,270 L690,210"/>
+      <path class="flow back" d="M690,150 C640,40 360,30 320,80"/>
+      <path class="flow" d="M150,270 L470,270"/>
+      <g class="node" data-node="electrodes"><rect x="20" y="70" width="130" height="80" rx="12"/><text x="85" y="105">Electrodes</text><text x="85" y="125" class="sub">lower lip / chin</text></g>
+      <g class="node" data-node="myoware"><rect x="250" y="70" width="130" height="80" rx="12"/><text x="315" y="105">MyoWare 2.0</text><text x="315" y="125" class="sub">muscle envelope</text></g>
+      <g class="node" data-node="esp32"><rect x="470" y="70" width="130" height="80" rx="12"/><text x="535" y="105">ESP32</text><text x="535" y="125" class="sub">1 kHz → 100 Hz · BLE</text></g>
+      <g class="node" data-node="motor"><rect x="250" y="5" width="130" height="50" rx="12" class="small"/><text x="315" y="35">Vibration motor</text></g>
+      <g class="node" data-node="room"><rect x="20" y="230" width="130" height="80" rx="12"/><text x="85" y="265">The room</text><text x="85" y="285" class="sub">people, TV, street</text></g>
+      <g class="node" data-node="vad"><rect x="470" y="230" width="130" height="80" rx="12"/><text x="535" y="265">Phone mic VAD</text><text x="535" y="285" class="sub">on-device only</text></g>
+      <g class="node key" data-node="app"><rect x="690" y="130" width="190" height="100" rx="14"/><text x="785" y="170">You, Yourself web app</text><text x="785" y="192" class="sub">detector · verdict · coach</text><text x="785" y="210" class="sub">diary · clinician summary</text></g>
+      <circle r="5" class="dot"><animateMotion dur="2.4s" repeatCount="indefinite" path="M85,110 L535,110 L785,180"/></circle>
+      <circle r="5" class="dot b"><animateMotion dur="2.8s" repeatCount="indefinite" path="M85,270 L535,270 L785,190"/></circle>
+    </svg>
+    <aside id="mapInfo" class="info"><h3>Click a block</h3><p>Each block opens what it does, the real part, and where its code lives.</p></aside>
+  </div>
+</section>
+
+<!-- ============ PRODUCTS ============ -->
+<section id="products" class="panel">
+  <h1>Products</h1>
+  <p class="lead">Everything the team builds or buys. Prices are rough Indonesian marketplace estimates, so check before ordering.</p>
+  <div class="filter" id="prodFilter">
+    <button data-f="all" class="on">All</button><button data-f="hardware">Hardware</button><button data-f="software">Software</button>
+  </div>
+  <div id="prodGrid" class="grid"></div>
+  <div class="total" id="bomTotal"></div>
+  <h2>Wiring</h2>
+  <div class="card wiring">
+    <svg viewBox="0 0 860 300" role="img" aria-label="Wiring diagram">
+      <rect x="20" y="40" width="200" height="200" rx="10" class="pcb"/><text x="120" y="70" class="lbl">MyoWare 2.0</text>
+      <text x="40" y="120" class="pin">+  (3.3 V)</text><text x="40" y="160" class="pin">−  (GND)</text><text x="40" y="200" class="pin">ENV</text>
+      <rect x="330" y="20" width="220" height="260" rx="10" class="pcb"/><text x="440" y="50" class="lbl">ESP32 DevKit</text>
+      <text x="345" y="120" class="pin">3V3</text><text x="345" y="160" class="pin">GND</text><text x="345" y="200" class="pin">GPIO34 (ADC1)</text>
+      <text x="460" y="240" class="pin">GPIO25</text><text x="490" y="120" class="pin">GPIO2 LED</text>
+      <path d="M150,116 L345,116" class="w red"/><path d="M150,156 L345,156" class="w blk"/><path d="M110,196 L345,196" class="w yel"/>
+      <path d="M520,236 L640,236" class="w grn"/>
+      <rect x="640" y="200" width="70" height="70" rx="8" class="part"/><text x="675" y="230" class="pin c">NPN</text><text x="675" y="250" class="pin c">+1 kΩ</text>
+      <circle cx="790" cy="140" r="38" class="part"/><text x="790" y="137" class="pin c">coin</text><text x="790" y="155" class="pin c">motor</text>
+      <path d="M710,220 L790,178" class="w grn"/>
+      <text x="740" y="280" class="pin">1N4148 diode across motor</text>
+    </svg>
+    <p class="note">Power the MyoWare from 3.3 V so its ENV output never exceeds what the ESP32 ADC can take. Use ADC1 pins (32–39), because ADC2 stops working while the radio is on. The motor draws more current than a GPIO can supply, so drive it through an NPN transistor with a flyback diode.</p>
+  </div>
+</section>
+
+<!-- ============ SIMULATOR ============ -->
+<section id="sim" class="panel">
+  <h1>Simulator <small>runs the real detector.js</small></h1>
+  <p class="lead">Synthetic muscle signal, real detection code. Calibrate first, then try each action and press <b>“I hear a voice”</b>.</p>
+  <div class="sim">
+    <div class="card scope">
+      <div class="scope-head"><span id="simState" class="pill">Not calibrated</span><span id="thrText"></span></div>
+      <canvas id="scope" width="900" height="260"></canvas>
+      <div class="legend"><span class="l sig">ENV signal</span><span class="l thr">threshold</span><span class="l lsp">speech-motor</span><span class="l lch">chewing</span><span class="l lsw">swallow</span></div>
+    </div>
+    <div class="card controls">
+      <h3>1 · Calibrate</h3>
+      <button id="btnCal" class="primary">Calibrate (3 s rest)</button>
+      <h3>2 · Act</h3>
+      <div class="btnrow">
+        <button data-act="murmur">Silent murmur</button>
+        <button data-act="chew">Chew</button>
+        <button data-act="swallow">Swallow</button>
+      </div>
+      <label class="toggle"><input type="checkbox" id="roomTalk"> Someone talks nearby</label>
+      <h3>3 · Check</h3>
+      <button id="btnVoice" class="voice">I hear a voice</button>
+      <div class="channels">
+        <div id="chIn" class="ch"><span>Inside</span><b>–</b></div>
+        <div id="chOut" class="ch"><span>Outside</span><b>–</b></div>
+        <div id="haptic" class="haptic" title="Vibration motor">◉</div>
+      </div>
+    </div>
+  </div>
+  <div id="verdictCard" class="card verdict hidden"></div>
+  <div class="card">
+    <h3>Event log</h3>
+    <ol id="evLog" class="log"></ol>
+  </div>
+  <div class="card live">
+    <h3>Live hardware mode</h3>
+    <p>With the real wearable: connect over Bluetooth (Chrome on Android or desktop) and use the real microphone. The same detector runs on real data.</p>
+    <div class="btnrow"><button id="btnBle">Connect wearable</button><button id="btnMic">Use real microphone</button></div>
+    <p id="liveMsg" class="note"></p>
+  </div>
+</section>
+
+<!-- ============ METHOD ============ -->
+<section id="method" class="panel">
+  <h1>Method</h1>
+  <p class="lead">From the science to the screen, step by step. Click a step to expand it.</p>
+  <div id="steps" class="steps"></div>
+  <h2>Decision table</h2>
+  <div class="card"><table class="dt">
+    <thead><tr><th></th><th>Outside: no speech</th><th>Outside: speech</th></tr></thead>
+    <tbody>
+      <tr><th>Inside: active</th><td class="g">Probably your own inner speech → hum coach</td><td class="a">Real speech + muscle activity → can't separate, log it</td></tr>
+      <tr><th>Inside: quiet</th><td class="a">Can't explain this voice → diary for the clinician</td><td class="g">Someone nearby is really speaking</td></tr>
+    </tbody>
+  </table></div>
+  <h2>Safety rules</h2>
+  <div class="grid three" id="safety"></div>
+  <h2>Evidence</h2>
+  <div class="card"><ul id="refs" class="refs"></ul></div>
+</section>
+
+<!-- ============ CODE ============ -->
+<section id="code" class="panel">
+  <h1>Code</h1>
+  <p class="lead">These are the real files this page runs, loaded live from disk. The ESP32 firmware is written for Arduino-ESP32 but hasn't been compiled on a board yet.</p>
+  <div class="codewrap">
+    <div class="files" id="fileList"></div>
+    <div class="card codeview">
+      <div class="codehead"><span id="codeName"></span><span id="codeDesc" class="muted"></span><span class="spacer"></span><button id="btnCopy">Copy</button><a id="btnDl" class="btn" download>Download</a></div>
+      <pre><code id="codeBody"></code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOARD ============ -->
+<section id="board" class="panel">
+  <h1>Board <small>4-day build · drag cards · saved in this browser</small></h1>
+  <div class="boardbar"><span id="progress"></span><button id="btnReset">Reset board</button></div>
+  <div class="kanban" id="kanban"></div>
+</section>
+</main>
+
+<script src="detector.js"></script>
+<script src="vad.js"></script>
+<script src="live.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

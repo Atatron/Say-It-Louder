@@ -1,0 +1,91 @@
+[
+  {"id":"title","layout":"title","kicker":"Hackathon pitch · mental health × hardware",
+   "title":"You, Yourself",
+   "sub":"INI AKU — “it’s me”",
+   "lines":["Schizophrenia can break the brain’s “this is me” signal.","We built an outside one."],
+   "notes":"Open quiet. Pause after the first line. Do not say ‘cure’. We are an aid that helps a person decide where a voice might come from."},
+
+  {"id":"story1","layout":"story","kicker":"A real story · West Java, June 2024",
+   "title":"She had no one to tell.",
+   "lines":["Ny. G is 24. She is a low-paid honorary teacher at a junior-high school, and the eldest child of a family that no longer holds together.","Her parents divorced three years ago. Six months before she was admitted, her father died. Now she supports her mother and two younger siblings, and runs a school event on top of her classes.","The report notes she had nobody to share stories with or pour out her feelings to. She kept all of it inside."],
+   "source":"Amelia, Rafiyah & Widianti, “Penerapan intervensi menggambar pada pasien skizofrenia…”, SINERGI 2(2), 2025. Name anonymised in the report.",
+   "notes":"This is a published, anonymised nursing case report (Universitas Padjadjaran). Tell it as a story, but do not add details that are not in the paper."},
+
+  {"id":"story2","layout":"story","kicker":"What she heard",
+   "title":"“Ayo pulang.” Come home.",
+   "quote":"Ayo pulang.",
+   "lines":["On 28 May 2024 her family brought her to a psychiatric hospital, in distress. She said she wanted to die.","Days later, calmer, she described a black shadow that walked toward her, 5–7 times a day for 1–2 minutes. And whispers saying “ayo pulang”, 4–5 times a day, up to 5 minutes, usually too faint to make out.","She pressed her hands over her ears. She talked to herself. She could not concentrate."],
+   "notes":"Diagnosis: schizophrenia unspecified. Medication and standard coping (rebuking the voice, chatting, taking pills) were already in place; she said she still struggled to control the voices."},
+
+  {"id":"story3","layout":"drawing","kicker":"Three days, one box of crayons",
+   "title":"On day three she drew home.",
+   "images":["img/draw1.png","img/draw2.png","img/draw3.png"],
+   "captions":["Day 1 · a thick black whirlpool. She said it meant everything was piled up and tangled, and she didn’t know how to cope.","Day 2 · the room she sat in, in careful detail. Her focus was coming back.","Day 3 · a mountain from her childhood, with both parents. She said she missed her family’s harmony."],
+   "chart":{"title":"Hallucination signs present (of 21 checked)","labels":["Before","Day 1","Day 2","Day 3"],"values":[9,5,3,1]},
+   "source":"Illustrations inspired by the report, not the patient’s own drawings. Counts from Table 1 of the report. One patient, no control group: encouraging, not proof.",
+   "notes":"Crayons were chosen on purpose because of her suicide history. Whispers fell from 4–5 to 2–3 a day by day 2. By day 3 only the shadow, occasionally, remained."},
+
+  {"id":"turn","layout":"statement","kicker":"What drawing gave her",
+   "title":"It put the inside, outside.",
+   "lines":["Her feelings had no outlet, so they stayed inside, where they were loud. The page made them visible, and that gave her a sense of control.","So we asked: what if the voice itself had something you could see? An outside signal that says whether a voice comes from you."],
+   "notes":"This is the bridge. Drawing externalises emotion. You, Yourself externalises one specific signal: the speech muscles."},
+
+  {"id":"science","layout":"stats","kicker":"The science, and the honest limits",
+   "title":"Some voices may be your own inner speech.",
+   "stats":[["142","people in the 2025 EEG study. Those hearing voices showed an enhanced, not reduced, auditory response to sounds matching their inner speech. (Whitford et al.)"],["11","patients with more lip-muscle activity during silent voices. (Rapin et al. 2013)"],["59%","fewer reported voices while humming, in a small 1990 study of 20 patients. (Green & Kinsbourne)"]],
+   "lines":["The brain normally sends a copy signal when you speak, even silently, that tags the sound as yours. If it is weak, your own inner speech can sound like someone else.","But 39% of voice-hearers describe voices as replayed memories, and the muscle evidence is small and mixed. So the device tests this for each person. It never assumes it."],
+   "notes":"Say the caveat out loud: not every voice is inner speech. That is why this is a per-person test with a clinician."},
+
+  {"id":"need","layout":"stats","kicker":"Why it matters here",
+   "title":"Millions hear voices. Few get a tool that is theirs.",
+   "stats":[["24 M","people live with schizophrenia worldwide, about 1 in 300 (WHO 2022)"],["7 / 1000","schizophrenia prevalence in Indonesia (Riskesdas 2018)"],["~70%","of people with schizophrenia hear voices; up to 30% do not respond to current treatment"]],
+   "lines":["Medication helps many, but not all. Therapy needs scarce specialists. Nobody hands a voice-hearer personal, objective evidence about where a voice might come from.","Our target is low-resource settings: a phone, a few parts, no scanner."],
+   "notes":"Indonesia context from the manuscript: limited community services, pasung still used, pluralistic help-seeking."},
+
+  {"id":"solution","layout":"image","kicker":"The idea",
+   "title":"When a voice shows up, check two channels.",
+   "image":"img/overview.png",
+   "lines":["Inside: a lip-muscle sensor (MyoWare 2.0 + ESP32) sees silent speech-muscle activity.","Outside: the phone microphone checks whether anyone nearby is actually speaking, on-device, nothing recorded.","Then one gentle verdict, never “definitely”, a two-tap vibration and a 30-second humming coach."],
+   "notes":"We do not repair the brain’s signal; that would need stimulation we cannot do. We add an outside one."},
+
+  {"id":"demo","layout":"image","kicker":"Live demo",
+   "title":"Calibrate. Murmur. Press “I hear a voice.”",
+   "image":"img/demo-verdict.png",
+   "lines":["Runs the real detector.js: personal baseline, then speech-motor activity vs chewing vs swallowing.","Verdict: “Probably your own inner speech.” → hum coach.","Try it: open the workboard → Simulator, or plug in the wearable over Bluetooth."],
+   "cta":"Open the live demo",
+   "notes":"Do this live. Order: Calibrate (3 s) → Silent murmur → I hear a voice. Then tick ‘Someone talks nearby’ and repeat to show the other verdict. Backup: the recorded video."},
+
+  {"id":"hardware","layout":"image","kicker":"It is buildable",
+   "title":"A wearable for about Rp 0.6–1 million.",
+   "image":"img/ide.png",
+   "lines":["MyoWare 2.0, ESP32, a coin motor, electrodes and a LiPo: Rp 610,000–1,050,000 (marketplace estimates).","Our Virtual Breadboard simulates the exact circuit and runs the real detector, so judges can inspect every wire.","Firmware is written (1 kHz → 100 Hz, BLE, haptics) but not yet flashed on a board. We say so."],
+   "cta":"Open the Breadboard IDE",
+   "notes":"Wiring rules: MyoWare at 3.3 V, ADC1 pin, NPN + flyback diode for the motor."},
+
+  {"id":"rigor","layout":"stats","kicker":"We tested our own maths first",
+   "title":"The obvious test lies. We caught it before any patient.",
+   "stats":[["85–100%","false positives from the naive “any muscle burst near the report” test when a button-press artefact exists, with no real coupling"],["4.8–6.3%","false positives with our within-episode permutation test, across 16 null scenarios"],["≥ 80%","power with 20 episodes when half the voices are coupled"]],
+   "lines":["A button press moves muscles too. Naively, “7 of 10 voices matched your muscles” appears with no coupling at all.","So our analysis plan compares each voice with the same person’s other moments and excludes the press. All numbers are from simulation; no human data yet."],
+   "source":"EchoSelf manuscript v2, in-silico validation (16 null and 24 alternative scenarios).",
+   "notes":"This is the credibility slide. Judges rarely see a team falsify its own first idea."},
+
+  {"id":"honest","layout":"list","kicker":"Said upfront",
+   "title":"What this is not.",
+   "items":[["Not a cure","An aid that supports medication and clinicians. It never replaces them."],["Not every voice","Many voices are not inner speech. We screen, and the app says “probably”, never “definitely”."],["Small, old evidence","Humming and lip-EMG findings come from small studies. This is a tool to test properly, not a proven therapy."],["Private by design","On-device only. No cloud. No audio recorded."],["Built with voice-hearers","Some find their voices meaningful. The wording is co-designed and never dismissive."]],
+   "notes":"Pause here. Judges respect it."},
+
+  {"id":"roadmap","layout":"list","kicker":"Roadmap",
+   "title":"Ethics first, then people.",
+   "items":[["Now · 4-day build","Flash firmware → live graph → calibrate on 3 people → verdict, hum coach, diary → rehearse."],["Stage 1","Bench and healthy-volunteer validation of detection accuracy and latency."],["Stage 2","Usability testing and co-design with a lived-experience panel."],["Stage 3","With ethics approval: single-case A–B–A–B study in voice-hearers."],["Stage 4","Sham-feedback controlled pilot, with a partner lab for inner-speech EEG."]],
+   "notes":"No clinical claims until Stage 3 and 4."},
+
+  {"id":"close","layout":"title","kicker":"Say it louder",
+   "title":"Ny. G drew her way home.",
+   "sub":"You, Yourself",
+   "lines":["We want every voice-hearer to have a way to see where the voice comes from, and someone to tell.","Try it now → the live demo."],
+   "cta":"Open the live demo",
+   "notes":"End on the story, not the tech."},
+
+  {"id":"sources","layout":"sources","kicker":"Sources","title":"Evidence and data",
+   "items":["Amelia GS, Rafiyah I, Widianti E. Penerapan intervensi menggambar pada pasien skizofrenia dengan halusinasi penglihatan dan pendengaran: case report. SINERGI Jurnal Riset Ilmiah 2(2):730–742, 2025. doi:10.62335","Whitford TJ et al. Corollary discharge dysfunction to inner speech and auditory verbal hallucinations. Schizophr Bull 2025. doi:10.1093/schbul/sbaf167","Whitford TJ et al. Mechanisms of inner speaking-induced suppression. eNeuro 2026. doi:10.1523/ENEURO.0047-26.2026","Rapin L et al. EMG of the lip muscles during covert auditory verbal hallucinations. J Speech Lang Hear Res 2013. doi:10.1044/1092-4388(2013/12-0210)","Green MF, Kinsbourne M. Subvocal activity and auditory hallucinations. Schizophr Bull 1990. doi:10.1093/schbul/16.4.617","McCarthy-Jones S et al. Phenomenological survey of auditory hallucinations. Schizophr Bull 2014. doi:10.1093/schbul/sbs156","Jack BN et al. Inner speech corollary discharge is temporally precise and content-specific. NeuroImage 2019. doi:10.1016/j.neuroimage.2019.04.038","World Health Organization (2022) schizophrenia fact sheet; Kemenkes Riskesdas 2018 (as cited in the case report).","EchoSelf design & protocol manuscript v2 and hackathon concept notes (team documents). Hardware prices: Indonesian marketplace estimates in the workboard."]}
+]

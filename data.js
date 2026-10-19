@@ -1,0 +1,112 @@
+// Content for the workboard. Prices are rough Indonesian marketplace estimates (Rp), not quotes.
+const PRODUCTS = [
+  { id: "myoware", kind: "hardware", name: "MyoWare 2.0 Muscle Sensor", role: "Inside channel sensor",
+    price: [450000, 750000], qty: 1,
+    specs: ["Outputs ENV (smoothed envelope), RECT and RAW", "Snap-on gel electrodes, no soldering to the skin side", "Run it at 3.3 V so ENV stays in the ESP32 ADC range"],
+    why: "Lip-muscle activity rises during silent voices (Rapin et al. 2013, n = 11). The envelope output is already smoothed, so the ESP32 only has to sample it." },
+  { id: "electrodes", kind: "hardware", name: "Ag/AgCl gel electrodes", role: "Skin contact",
+    price: [40000, 80000], qty: 1, unit: "pack of 50",
+    specs: ["Two on the muscle below the lower lip (orbicularis oris), reference on the jaw bone", "Single use: change daily", "Clean the skin with alcohol first for a stable baseline"],
+    why: "Placement decides the signal quality. Bad contact looks like noise, and the detector's calibration step catches it." },
+  { id: "esp32", kind: "hardware", name: "ESP32 DevKit (WROOM-32)", role: "Sampling + Bluetooth LE",
+    price: [60000, 110000], qty: 1,
+    specs: ["Dual-core 240 MHz, 12-bit ADC", "Bluetooth LE: streams 100 Hz envelope to the phone", "Use ADC1 (GPIO 32–39): ADC2 is blocked while the radio is on"],
+    why: "Cheap, well documented, and Bluetooth LE works straight from Chrome through Web Bluetooth, so no native app is needed." },
+  { id: "motor", kind: "hardware", name: "Coin vibration motor + driver", role: "The “this is me” tap",
+    price: [15000, 30000], qty: 1, unit: "motor, NPN, 1 kΩ, 1N4148",
+    specs: ["10 mm 3 V coin motor", "Driven through an NPN transistor, never straight from a GPIO", "Flyback diode across the motor"],
+    why: "A gentle two-tap pattern gives a body-level cue without the person having to look at the screen." },
+  { id: "power", kind: "hardware", name: "LiPo 3.7 V 500 mAh + TP4056 charger", role: "Wearable power",
+    price: [45000, 80000], qty: 1,
+    specs: ["Feeds the ESP32 board's 5V/VIN pin through the charger output", "Several hours of streaming", "For the hackathon demo, a USB power bank also works"],
+    why: "Makes it wearable. Optional for day 1, where USB power is fine." },
+  { id: "piezo", kind: "hardware", name: "Throat contact (piezo) microphone", role: "No-electrode option",
+    price: [35000, 90000], qty: 1,
+    specs: ["Picks up laryngeal vibration, not room sound", "No gel electrodes needed", "Weaker for fully silent inner speech"],
+    why: "A backup sensor if electrodes are uncomfortable or unavailable." },
+  { id: "firmware", kind: "software", name: "You, Yourself firmware", role: "ESP32 · Arduino",
+    file: "firmware/ini_aku_esp32/ini_aku_esp32.ino",
+    specs: ["1 kHz sampling, averaged to 100 Hz", "BLE notify: 10 samples per 100 ms", "Haptic patterns on command from the phone"],
+    why: "Keeps the device simple: it only measures and buzzes, and all decisions happen on the phone where they can be shown and explained." },
+  { id: "detector", kind: "software", name: "Inside-channel detector", role: "detector.js",
+    file: "detector.js",
+    specs: ["Personal rest calibration (mean + 3 SD)", "Speech-motor = above threshold ≥ 300 ms", "Rejects swallowing (short, big) and chewing (rhythmic)"],
+    why: "One file, used by both the simulator and live mode, so the demo shows the real logic." },
+  { id: "vad", kind: "software", name: "Outside-channel VAD", role: "vad.js",
+    file: "vad.js",
+    specs: ["Web Audio spectrum, 300–3400 Hz speech band", "Adaptive noise floor", "No recording: two numbers per frame, nothing stored"],
+    why: "Answers “was anyone actually speaking?” on the phone itself." },
+  { id: "app", kind: "software", name: "You, Yourself web app", role: "Verdict · coach · diary",
+    file: "app.js",
+    specs: ["Two-channel verdict, always worded as “probably”", "Hum coach (30 s)", "Diary and a one-page clinician summary"],
+    why: "Runs in Chrome with no install. Works on Android, where Web Bluetooth is available." },
+];
+
+const MAP_INFO = {
+  electrodes: ["Electrodes", "Pick up the electrical activity of the lower-lip muscle. During silent voices this muscle can fire even with no sound (Rapin 2013).", "electrodes"],
+  myoware: ["MyoWare 2.0", "Amplifies and smooths the muscle signal into an envelope: a slow line that rises when the muscle works.", "myoware"],
+  esp32: ["ESP32", "Samples the envelope 1000×/s, averages to 100×/s, and streams it to the phone over Bluetooth LE. Also drives the motor.", "esp32"],
+  motor: ["Vibration motor", "The phone sends a command back and the motor taps twice: the outside “this is me” tag.", "motor"],
+  room: ["The room", "Real voices: family, neighbours, TV. The outside channel checks for them.", null],
+  vad: ["Phone mic VAD", "Listens for speech-band energy above the room's noise floor. Processes the spectrum live and stores nothing.", "vad"],
+  app: ["You, Yourself web app", "Combines both channels into a gentle verdict, suggests humming, logs a diary, and makes a summary for the clinician.", "app"],
+};
+
+const STEPS = [
+  ["The science", "Inner speech normally comes with a copy signal that dampens the brain's response to it. In people currently hearing voices, inner speech made matching sounds louder instead (Whitford et al. 2025, n = 142). Voice-hearers can also tickle themselves, which tracks symptoms rather than the diagnosis (Blakemore et al. 2000)."],
+  ["Why not boost the brain's signal?", "The copy signal is generated by the brain's own speech plan, precise to timing and content (Jack et al. 2019). Expectation alone didn't recreate it (Whitford et al. 2026, n = 70). So You, Yourself works on awareness: it gives an outside tag the person can use. People with schizophrenia lean more on after-the-fact cues to judge what they caused (Voss et al. 2010)."],
+  ["Screen", "Not every voice is inner speech: 39% of voice-hearers describe voices as replayed memories (McCarthy-Jones et al. 2014). Use You, Yourself with a clinician, for people whose voices feel like inner speech, not during acute psychosis or fear about devices."],
+  ["Fit and calibrate", "Electrodes under the lower lip, reference on the jaw. 3 seconds of rest sets the personal baseline: threshold = mean + 3 SD (at least 25 ADC units). Recalibrate each time the electrodes are put on."],
+  ["Detect (inside channel)", "Above threshold for ≥ 300 ms = speech-motor activity. Short big bursts = swallowing. Three or more short, evenly spaced bursts = chewing. Only speech-motor activity in the last 5 s counts."],
+  ["Listen (outside channel)", "Phone microphone, on the device only: speech-band (300–3400 Hz) energy at least 12 dB above the adaptive noise floor, holding most of the spectrum, for ≥ 250 ms."],
+  ["Verdict and coach", "Both channels → one of four gentle verdicts, never “definitely”. If inner speech is likely: a two-tap vibration and a 30-second humming coach (humming cut reported voices by 59% in Green & Kinsbourne 1990, n = 20)."],
+  ["Learn and fade", "The diary shows when voices cluster (time, sleep). Over weeks, the tag is faded out as the person gets better at recognising inner speech themselves: scaffold, then fade."],
+  ["Validate", "Pilot: 4 weeks, voice frequency and distress (PSYRATS) before vs after. Mechanism: with a partner lab, inner-speech EEG (N1 suppression) and a self-vs-other voice task before and after use. Claim nothing beyond what the pilot shows."],
+];
+
+const SAFETY = [
+  ["Muscles, not thoughts", "It measures muscle activity. The raw signal is always visible, so nothing is hidden."],
+  ["On-device only", "No cloud, no audio recording. Data stays on the phone."],
+  ["User in control", "The person starts and stops it. Physical off switch on the device."],
+  ["With a clinician", "Not for acute psychosis or fear about devices: passivity experiences are common in this group."],
+  ["Co-designed wording", "Test every sentence with people who hear voices (e.g. via KPSI)."],
+  ["Probably, never definitely", "The app can be wrong and says so."],
+];
+
+const REFS = [
+  ["Whitford TJ et al. Corollary discharge dysfunction to inner speech and AVH. Schizophr Bull 2025", "10.1093/schbul/sbaf167"],
+  ["Whitford TJ et al. Mechanisms of inner speaking-induced suppression. eNeuro 2026", "10.1523/ENEURO.0047-26.2026"],
+  ["Jack BN et al. Inner speech corollary discharge is temporally precise and content-specific. NeuroImage 2019", "10.1016/j.neuroimage.2019.04.038"],
+  ["Blakemore SJ et al. Self-produced stimuli in patients with hallucinations and passivity. Psychol Med 2000", "10.1017/s0033291799002676"],
+  ["Rapin L et al. EMG of the lip muscles during covert AVH. J Speech Lang Hear Res 2013", "10.1044/1092-4388(2013/12-0210)"],
+  ["Voss M et al. Altered awareness of action in schizophrenia. Brain 2010", "10.1093/brain/awq152"],
+  ["McCarthy-Jones S et al. Phenomenological survey of auditory hallucinations. Schizophr Bull 2014", "10.1093/schbul/sbs156"],
+  ["Green MF, Kinsbourne M. Subvocal activity and auditory hallucinations. Schizophr Bull 1990", "10.1093/schbul/16.4.617"],
+  ["Bick PA, Kinsbourne M. Auditory hallucinations and subvocal speech. Am J Psychiatry 1987", "10.1176/ajp.144.2.222"],
+  ["Cobandag M, Sigala N. Non-pharmacological treatments for AVH. Eur Psychiatry 2025", "10.1192/j.eurpsy.2025.10115"],
+];
+
+const FILES = [
+  ["firmware/ini_aku_esp32/ini_aku_esp32.ino", "ESP32 firmware (Arduino)"],
+  ["detector.js", "Inside-channel detector + verdict"],
+  ["vad.js", "Outside-channel voice detection"],
+  ["live.js", "Web Bluetooth link to the wearable"],
+  ["app.js", "This workboard: simulator, views, board"],
+  ["data.js", "Products, method, references, tasks"],
+];
+
+const TASKS = [
+  ["D0", "Order MyoWare, ESP32, motor, electrodes (by Oct 9)", "todo"],
+  ["D0", "Confirm the rulebook allows hardware", "todo"],
+  ["D0", "Find a clinician advisor", "todo"],
+  ["D1", "Flash firmware, see BLE notifications in Chrome", "todo"],
+  ["D1", "Live muscle graph on the phone", "todo"],
+  ["D2", "Calibrate on 3 people, tune thresholds", "todo"],
+  ["D2", "8 of 10 silent murmurs flagged; chewing ignored", "todo"],
+  ["D2", "Outside channel works in a noisy room", "todo"],
+  ["D3", "Verdict card, hum coach, diary", "todo"],
+  ["D3", "Clinician one-page summary", "todo"],
+  ["D4", "Rehearse the demo 10 times", "todo"],
+  ["D4", "Record the backup video", "todo"],
+  ["D4", "Safety slide and pitch", "todo"],
+];

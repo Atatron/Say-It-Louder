@@ -165,7 +165,7 @@
     F.text(ctx, String(cur[1]), 0, 60 - (1 - flip) * 18, { family: 'Fraunces', size: 190, weight: 600, align: 'center', color: cur[1] <= 1 ? '#2f7d43' : '#c0392b' });
     ctx.globalAlpha = a;
     F.text(ctx, 'of 21 checked · ' + cur[2], 0, 120, { size: 20, weight: 500, align: 'center', color: '#4a4a5a' });
-    F.text(ctx, 'SDKI checklist', 0, 180, { family: 'JetBrains Mono', size: 15, align: 'center', color: '#8a8a9a' });
+    F.text(ctx, 'real data · case report, 2025', 0, 180, { family: 'JetBrains Mono', size: 15, align: 'center', color: '#8a8a9a' });
     ctx.restore();
   }
 
@@ -181,32 +181,27 @@
   }
   function memory(ctx, t, a) {
     if (a <= 0) return;
-    const M = F._mem || (F._mem = F.canvas(480, 270)), g = M.getContext('2d');
-    g.setTransform(0.25, 0, 0, 0.25, 0, 0);
+    const M = F._mem || (F._mem = F.canvas(960, 540)), g = M.getContext('2d');
+    g.setTransform(0.5, 0, 0, 0.5, 0, 0);
     const bg = g.createLinearGradient(0, 0, W, 0);
     bg.addColorStop(0, '#c98d55'); bg.addColorStop(0.5, '#f7dcaa'); bg.addColorStop(1, '#d99a5c');
     g.fillStyle = bg; g.fillRect(0, 0, W, H);
-    F.glowDot(g, 960, 300, 900, '#fff4d8', 0.9);               // the window behind them
-    g.fillStyle = 'rgba(120,80,45,0.35)'; g.fillRect(560, 80, 800, 520);
-    g.fillStyle = 'rgba(255,246,220,0.9)'; g.fillRect(590, 110, 740, 460);
-    g.fillStyle = 'rgba(150,110,70,0.5)'; g.fillRect(955, 110, 10, 460); g.fillRect(590, 335, 740, 10);
-    g.fillStyle = '#6e4628'; g.fillRect(0, 760, W, 330);       // table
+    F.glowDot(g, 960, 300, 900, '#fff4d8', 0.9);
+    g.fillStyle = 'rgba(120,80,45,0.35)'; g.fillRect(560, 60, 800, 520);
+    g.fillStyle = 'rgba(255,246,220,0.9)'; g.fillRect(590, 90, 740, 460);
+    g.fillStyle = 'rgba(150,110,70,0.5)'; g.fillRect(955, 90, 10, 460); g.fillRect(590, 315, 740, 10);
+    const fam = F.TOON_FAMILY, sep = 'rgba(150,100,50,0.3)', k = F.seg(t, F.C.day3 + 1.3, F.C.day3 + 4.0);
+    F.toon(g, 610, 420, 0.92, { facing: 1, pose: 'rest', t, seed: 11, style: fam.father, tint: sep, expr: { mouth: 'smile', smile: 0.85, lift: 2, look: [0.7, 0.7] } });
+    F.toon(g, 1310, 430, 0.9, { facing: -1, pose: 'rest', t, seed: 12, style: fam.mother, tint: sep, expr: { mouth: 'smile', smile: 0.85, lift: 2, look: [0.7, 0.7] } });
+    g.fillStyle = '#6e4628'; g.fillRect(0, 760, W, 330);
     g.fillStyle = '#fbf3e2'; g.beginPath(); g.moveTo(820, 770); g.lineTo(1110, 770); g.lineTo(1150, 815); g.lineTo(790, 815); g.closePath(); g.fill();
-    const k = F.seg(t, F.C.day3 + 1.3, F.C.day3 + 4.0);
     g.strokeStyle = '#4a7a3a'; g.lineWidth = 5; g.beginPath();
     const m = [[830, 808], [880, 782], [920, 800], [970, 776], [1030, 806]];
     F.partial(m, k).forEach((p, i) => (i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1]))); g.stroke();
-    const col = '#4a2e1c';
-    person(g, 600, 790, 470, 0.16, false, col);                // father
-    person(g, 1330, 790, 430, -0.16, true, col);               // mother
-    person(g, 965, 790, 270, 0.0, true, col);                  // Senja, small
-    g.strokeStyle = col; g.lineCap = 'round';
-    g.lineWidth = 34; g.beginPath(); g.moveTo(690, 520); g.quadraticCurveTo(820, 640, 900, 780); g.stroke();   // father points at the paper
-    g.lineWidth = 32; g.beginPath(); g.moveTo(1260, 540); g.quadraticCurveTo(1120, 560, 1010, 610); g.stroke(); // mother's hand on her shoulder
-    g.lineWidth = 22; g.beginPath(); g.moveTo(985, 640); g.quadraticCurveTo(1000, 720, F.lerp(860, 1020, k), 792); g.stroke(); // the child draws
+    F.toon(g, 935, 560, 0.62, { facing: 1, pose: 'write', t: t * 1.6, seed: 13, style: fam.youngSenja, tint: sep, expr: { mouth: 'bigsmile', lift: 3, look: [0.3, 0.9] } });
     ctx.save(); ctx.globalAlpha = a; ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(M, 0, 0, 480, 270, 0, 0, W, H);
-    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = 'rgba(255,214,160,0.55)'; ctx.fillRect(0, 0, W, H);
+    ctx.drawImage(M, 0, 0, 960, 540, 0, 0, W, H);
+    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = 'rgba(255,214,160,0.5)'; ctx.fillRect(0, 0, W, H);
     ctx.globalCompositeOperation = 'source-over';
     const v = ctx.createRadialGradient(W / 2, H / 2, 300, W / 2, H / 2, 1100);
     v.addColorStop(0, 'rgba(60,30,10,0)'); v.addColorStop(1, 'rgba(60,30,10,0.7)'); ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
@@ -267,8 +262,9 @@
           F.text(ctx, String(v), x + 55, 870 - h, { family: 'Caveat', size: 52, weight: 700, align: 'center', color: '#fff8ec', alpha: g });
           F.text(ctx, labels[i], x + 55, 916, { size: 20, weight: 600, align: 'center', color: 'rgba(255,248,236,0.8)' });
         });
-        F.text(ctx, 'hallucination signs present, of 21 checked', 1440, 760, { size: 22, color: 'rgba(255,248,236,0.85)' });
-        F.text(ctx, 'Amelia, Rafiyah & Widianti, 2025', 1440, 792, { family: 'JetBrains Mono', size: 16, color: 'rgba(255,248,236,0.6)' });
+        F.text(ctx, 'A real case study', 1390, 724, { size: 26, weight: 700, color: 'rgba(255,248,236,0.92)' });
+        F.text(ctx, 'hallucination signs, of 21 checked', 1390, 760, { size: 21, color: 'rgba(255,248,236,0.8)' });
+        F.text(ctx, 'Amelia, Rafiyah & Widianti, 2025', 1390, 792, { family: 'JetBrains Mono', size: 16, color: 'rgba(255,248,236,0.6)' });
         ctx.restore();
       }
       // inside → outside: the tangle glows as we fall into it
@@ -287,7 +283,6 @@
       ctx.save(); F.cam(ctx, 960, F.lerp(470, 490, k), F.lerp(1.3, 1.44, k));
       const done = paper(ctx, 960, 540, 1.6, 1, 0);
       drawDay(ctx, 3, 1, t);
-      // "ayo pulang", reclaimed: warm, written in gold over her sky
       const w5 = F.TL.whispers.find((w) => w.id === 'w5');
       const a = F.seg(t, w5.start - 0.2, w5.end + 0.3);
       if (a > 0) {
@@ -297,10 +292,23 @@
       }
       done();
       ctx.restore();
-      // dusk grade over the page
       const g = ctx.createLinearGradient(0, 0, 0, H);
       g.addColorStop(0, 'rgba(90,40,90,0.35)'); g.addColorStop(0.6, 'rgba(230,120,90,0.12)'); g.addColorStop(1, 'rgba(255,190,120,0.2)');
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      // first: Senja, smiling at her drawing in the dusk light, then a dissolve into the page
+      const her = 1 - F.ease.inOut(F.seg(lt, 1.7, 2.6));
+      if (her > 0 && F.imagineRoom) {
+        const L = F.layer(2), lg = L.getContext('2d');
+        lg.setTransform(1, 0, 0, 1, 0, 0); lg.globalAlpha = 1; lg.globalCompositeOperation = 'source-over'; lg.clearRect(0, 0, W, H);
+        lg.save(); F.cam(lg, F.lerp(860, 900, F.seg(lt, 0, 2.6)), 520, F.lerp(1.1, 1.22, F.seg(lt, 0, 2.6)));
+        F.imagineRoom(lg);
+        F.toon(lg, 760, 470, 1.15, { facing: 1, pose: 'rest', t, seed: 4, tilt: -0.05, rim: '#ffd38a', rimDir: 1, rimW: 3, tint: 'rgba(140,70,60,0.1)',
+          expr: { mouth: 'smile', smile: 0.9, lift: 2, look: [0.85, -0.55] } });
+        F.imagineDesk(lg);
+        lg.save(); lg.globalCompositeOperation = 'lighter'; F.glowDot(lg, 1400, 380, 900, '#ffb070', 0.25); lg.restore();
+        lg.restore();
+        ctx.save(); ctx.globalAlpha = her; ctx.drawImage(L, 0, 0); ctx.restore();
+      }
       const l55 = F.TL.lines.find((l) => l.id === 'L55');
       const q = F.seg(t, l55.start - 0.1, l55.start + 0.9);
       if (q > 0) {

@@ -491,7 +491,7 @@
       const cards = [['p1', 'Not a cure.', 'A support for care, never a replacement. Used with a clinician.'],
         ['p2', 'Muscles, never thoughts.', 'It measures a muscle. The raw signal is always visible.'],
         ['p3', 'Stays on her phone.', 'No cloud. No audio recorded. She can switch it off.'],
-        ['p4', '≈ Rp 1 million.', 'MyoWare 2.0 · ESP32 · coin motor · LiPo (Rp 610k–1.05M).']];
+        ['p4', 'Tested on our own maths.', 'False alarms: 85–100% with a naive test → about 5% with ours.']];
       cards.forEach(([cue, title, sub], i) => {
         const k = F.ease.out(F.seg(t, c[cue] - 0.1, c[cue] + 0.5));
         if (k <= 0) return;
@@ -503,9 +503,8 @@
         F.text(ctx, sub, x + 48, y + 172, { size: 22, color: 'rgba(240,236,228,0.75)' });
         ctx.restore();
       });
-      const r = F.seg(t, c.p4 + 1.0, c.p4 + 1.6);
-      F.text(ctx, 'Before testing on anyone, we stress-tested our own statistics: false alarms 85–100% (naive test) → 4.8–6.3% (ours), across 16 simulated scenarios.',
-        960, 820, { size: 21, align: 'center', color: 'rgba(240,236,228,0.7)', alpha: r });
+      F.text(ctx, '16 simulated scenarios, before testing on anyone · EchoSelf manuscript v2', 960, 820,
+        { family: 'JetBrains Mono', size: 17, align: 'center', color: 'rgba(240,236,228,0.6)', alpha: F.seg(t, c.p4 + 0.3, c.p4 + 0.9) });
     },
   };
 
@@ -520,7 +519,7 @@
       F.text(ctx, 'INI AKU  ·  “IT’S ME”', 960, 585, { size: 26, weight: 600, tracking: 10, align: 'center', color: P.gold, alpha: F.seg(lt, 0.6, 1.2) });
       F.text(ctx, 'Try the live demo  →  you-yourself.vercel.app', 960, 680, { size: 32, weight: 600, align: 'center', color: '#fff', alpha: F.seg(lt, 1.0, 1.6) });
       const a = F.seg(lt, 1.6, 2.4);
-      F.text(ctx, 'Story: Amelia, Rafiyah & Widianti (2025), SINERGI 2(2):730–742 — the woman we call Senja is “Ny. G”. Names changed; dramatised.', 960, 790, { size: 17, align: 'center', color: 'rgba(220,214,232,0.7)', alpha: a });
+      F.text(ctx, 'Senja is a fictional character. Drawing-therapy data: Amelia, Rafiyah & Widianti (2025), SINERGI 2(2):730–742.', 960, 790, { size: 17, align: 'center', color: 'rgba(220,214,232,0.7)', alpha: a });
       F.text(ctx, 'Evidence: Whitford et al. 2025 · Rapin et al. 2013 · Inouye & Shimizu 1970 · Green & Kinsbourne 1990 · WHO 2022', 960, 822, { size: 17, align: 'center', color: 'rgba(220,214,232,0.7)', alpha: a });
       F.text(ctx, 'Research prototype — not a medical device. Built for people who hear voices, with them.', 960, 864, { size: 19, weight: 600, align: 'center', color: 'rgba(245,192,78,0.85)', alpha: a });
     },

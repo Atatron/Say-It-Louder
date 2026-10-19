@@ -12,8 +12,9 @@ Items
   ("whisper", id, opts)           the "ayo pulang" voice
 Phoneme overrides use misaki syntax: [word](/phonemes/).
 
-Facts come from: Amelia, Rafiyah & Widianti (2025) case report (the woman we call
-Senja is "Ny. G" there); WHO 2022; the You, Yourself workboard; EchoSelf manuscript v2.
+Senja is a fictional character. The drawing-therapy numbers come from a real case report
+(Amelia, Rafiyah & Widianti, 2025) and are attributed to it on screen; other facts: WHO 2022,
+the You, Yourself workboard, EchoSelf manuscript v2.
 """
 
 SENJA = "[Senja](/sˈɛnʤɑ/)"
@@ -33,24 +34,21 @@ EDL = [
     ("shot", "class"),
     ("gap", 0.6),
     ("say", "L01", f"This is {SENJA}.", "Ini Senja.", {}),
-    ("gap", 0.25),
-    ("say", "L02", "She's twenty-four.", "Usianya dua puluh empat tahun.", {}),
+    ("gap", 0.3),
+    ("say", "L02", "A young teacher in West Java.", "Guru muda di Jawa Barat.", {}),
     ("gap", 0.35),
-    ("say", "L03", "A junior-high teacher in West Java, on an honorary wage.",
-     "Guru honorer di sebuah SMP di Jawa Barat.", {}),
+    ("cue", "late"),
+    ("say", "L03", "She stays late, every day.", "Setiap hari, ia pulang paling akhir.", {}),
     ("gap", 0.8),
     ("shot", "family"),
-    ("say", "L04", "The eldest child.", "Anak sulung.", {}),
-    ("gap", 0.3),
-    ("cue", "tear"),
-    ("say", "L05", "Her parents divorced.", "Orang tuanya bercerai.", {}),
-    ("gap", 0.35),
-    ("cue", "father"),
-    ("say", "L06", "Six months ago, her father died.", "Enam bulan lalu, ayahnya meninggal.", {"speed": 0.94}),
-    ("gap", 0.7),
+    ("say", "L04", "She's the one her family leans on.", "Ia tumpuan keluarganya.", {}),
+    ("gap", 0.4),
+    ("cue", "toomuch"),
+    ("say", "L05", "Lately, it has all been too much.", "Akhir-akhir ini, semuanya terasa terlalu berat.", {"speed": 0.94}),
+    ("gap", 0.6),
     ("shot", "weight"),
-    ("say", "L07", "Now she carries her mother, two younger siblings, and a school, on her shoulders.",
-     "Kini ia memikul ibunya, dua adiknya, dan sekolahnya, di pundaknya.", {}),
+    ("say", "L07", "Lessons. Exams. A school event. The bills at home.",
+     "Pelajaran. Ujian. Acara sekolah. Tagihan di rumah.", {}),
     ("gap", 0.55),
     ("cue", "alone"),
     ("say", "L08", "And she has no one to tell.", "Dan ia tak punya siapa pun untuk bercerita.", {"speed": 0.92}),
@@ -64,7 +62,7 @@ EDL = [
     ("gap", 0.45),
     ("say", "L10", "Come home.", "“Ayo pulang.”", {"speed": 0.92}),
     ("gap", 0.25),
-    ("say", "L11", "Four, five times a day.", "Empat, lima kali sehari.", {}),
+    ("say", "L11", "Again. And again.", "Lagi. Dan lagi.", {"speed": 0.94}),
     ("gap", 0.45),
     ("cue", "shadow"),
     ("say", "L12", "A black shadow walks toward her.", "Bayangan hitam berjalan mendekatinya.", {}),
@@ -73,8 +71,7 @@ EDL = [
     ("say", "L13", "She covers her ears.", "Ia menutup telinganya.", {}),
     ("gap", 0.5),
     ("shot", "hospital"),
-    ("say", "L14", "In May, her family brings her to a psychiatric hospital.",
-     "Bulan Mei, keluarganya membawanya ke rumah sakit jiwa.", {}),
+    ("say", "L14", "Her family brings her to a hospital.", "Keluarganya membawanya ke rumah sakit.", {}),
     ("gap", 1.1),
 
     ("shot", "data"),
@@ -111,7 +108,8 @@ EDL = [
      "Hari ketiga: pegunungan yang dulu sering ia gambar bersama ayah dan ibunya.", {}),
     ("gap", 1.3),
     ("cue", "chart"),
-    ("say", "L24", "Nine signs of hallucination became one.", "Sembilan tanda halusinasi, tinggal satu.", {}),
+    ("say", "L24", "In a real case study, nine signs of hallucination became one.",
+     "Dalam sebuah studi kasus nyata, sembilan tanda halusinasi tinggal satu.", {}),
     ("gap", 0.5),
     ("cue", "inside_out"),
     ("say", "L25", "Drawing put what was inside, outside.", "Menggambar memindahkan yang ada di dalam, ke luar.", {"speed": 0.94}),
@@ -222,10 +220,9 @@ EDL = [
     ("gap", 0.25),
     ("cue", "p3"),
     ("say", "L52", "Everything stays on her phone.", "Semua data tetap di ponselnya.", {}),
-    ("gap", 0.25),
+    ("gap", 0.3),
     ("cue", "p4"),
-    ("say", "L53", "And the parts cost about one million rupiah.", "Komponennya sekitar satu juta rupiah.", {}),
-    ("gap", 1.1),
+    ("gap", 2.2),
 
     ("chapter", "Epilogue"),
     ("shot", "close"),

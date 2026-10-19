@@ -16,15 +16,15 @@
  {
   "id": "story1",
   "layout": "story",
-  "kicker": "A real story · West Java, June 2024",
+  "kicker": "Meet Senja · a fictional story",
   "title": "She had no one to tell.",
   "lines": [
-   "Senja is 24. She is a low-paid honorary teacher at a junior-high school, and the eldest child of a family that no longer holds together.",
-   "Her parents divorced three years ago. Six months before she was admitted, her father died. Now she supports her mother and two younger siblings, and runs a school event on top of her classes.",
-   "The report notes she had nobody to share stories with or pour out her feelings to. She kept all of it inside."
+   "Senja is a young teacher in West Java. She stays late every day, and her family leans on her.",
+   "Lessons, exams, a school event, the bills at home. Lately, it has all been too much.",
+   "And she has no one to tell."
   ],
-  "source": "Amelia, Rafiyah & Widianti, “Penerapan intervensi menggambar pada pasien skizofrenia…”, SINERGI 2(2), 2025. We call her Senja; the report calls her “Ny. G”.",
-  "notes": "This is a published, anonymised nursing case report (Universitas Padjadjaran). Tell it as a story, but do not add details that are not in the paper."
+  "source": "Senja is fictional. Her story reflects what many people who hear voices live with.",
+  "notes": "Say it plainly: Senja is a fictional character; the science and the drawing-therapy data are real."
  },
  {
   "id": "story2",
@@ -33,11 +33,11 @@
   "title": "“Ayo pulang.” Come home.",
   "quote": "Ayo pulang.",
   "lines": [
-   "On 28 May 2024 her family brought her to a psychiatric hospital, in distress. She said she wanted to die.",
-   "Days later, calmer, she described a black shadow that walked toward her, 5–7 times a day for 1–2 minutes. And whispers saying “ayo pulang”, 4–5 times a day, up to 5 minutes, usually too faint to make out.",
-   "She pressed her hands over her ears. She talked to herself. She could not concentrate."
+   "Then the whispers begin. “Ayo pulang” — come home. Again, and again.",
+   "A black shadow walks toward her. She covers her ears.",
+   "Her family brings her to a hospital, where her nurses try something simple: paper, and a box of crayons."
   ],
-  "notes": "Diagnosis: schizophrenia unspecified. Medication and standard coping (rebuking the voice, chatting, taking pills) were already in place; she said she still struggled to control the voices."
+  "notes": "Fictional scene. Voices and shadows like these are common experiences in schizophrenia."
  },
  {
   "id": "story3",
@@ -55,7 +55,7 @@
    "Day 3 · the mountains she used to draw as a child, with her parents. She said she missed her family’s harmony."
   ],
   "chart": {
-   "title": "Hallucination signs present (of 21 checked)",
+   "title": "A real case study: hallucination signs present (of 21 checked)",
    "labels": [
     "Before",
     "Day 1",
@@ -69,8 +69,8 @@
     1
    ]
   },
-  "source": "Drawings recreated with the film’s crayon engine — not the patient’s own drawings. Counts from Table 1 of the report. One patient, no control group: encouraging, not proof.",
-  "notes": "Crayons were chosen on purpose because of her suicide history. Whispers fell from 4–5 to 2–3 a day by day 2. By day 3 only the shadow, occasionally, remained."
+  "source": "Drawings are illustrations from the film. The numbers come from a real 2025 case report (Amelia, Rafiyah & Widianti, SINERGI 2(2)): one patient, no control group — encouraging, not proof.",
+  "notes": "The 9 → 5 → 3 → 1 data is from the published case report, not from Senja (who is fictional)."
  },
  {
   "id": "turn",
@@ -269,7 +269,7 @@
    "Ayo pulang. Come home, to yourself."
   ],
   "cta": "Open the live demo",
-  "notes": "End on the story, not the tech."
+  "notes": "End on the story. Senja is fictional; the feeling is real."
  },
  {
   "id": "sources",

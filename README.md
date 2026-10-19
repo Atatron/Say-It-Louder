@@ -29,7 +29,5 @@ everything else is generated from it:
 
 The Python tools need a Python 3.12 venv with `kokoro soundfile scipy misaki[en] faster-whisper pyloudnorm`;
 the capture needs Playwright + Chromium and the site served on `localhost:8765`.
-Senja is a fictional character ("Senja is fictional. The science is real."). The drawing-therapy numbers
-(9 → 5 → 3 → 1 hallucination signs) come from a real case report (Amelia, Rafiyah & Widianti, 2025) and are
-credited to it on screen. The device scene is labelled as a demo scenario with a simulated signal.
-The cartoon characters are drawn by `film/js/toon.js` (faces that blink, breathe and change expression).
+The story is dramatised from a published, anonymised case report (Amelia, Rafiyah & Widianti, 2025);
+"Senja" is our name for "Ny. G". The "imagine" scene is labelled as imagined, with a simulated signal.

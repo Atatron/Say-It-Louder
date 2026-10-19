@@ -88,7 +88,7 @@ def build():
     bars = [(a0, "Dm", ["A4", "G4", "F4"]),
             (a0 + 3.6, "Bb", ["F4", "D4", "C4"]),
             (SHOT["family"]["start"], "F", ["C5", "A4", "G4"]),
-            (C["toomuch"], "Gm", ["Bb4", None, "A4"]),
+            (C["father"], "Gm", ["Bb4", None, "A4"]),
             (SHOT["weight"]["start"], "Dm", ["A4", "G4", "F4", "E4"]),
             (SHOT["weight"]["start"] + 2.5, "Bb", ["D4", None, "C4"])]
     for i, (t, chord, mel) in enumerate(bars):
@@ -100,8 +100,9 @@ def build():
     # room: a clock that becomes the only sound
     amb.add(clock_ticks(C["alone"] + 2.6 - a0), a0, gain=0.9, p=0.35)
     amb.add(hiss_room(SHOT["weight"]["end"] - a0, 0.012), a0)
-    sfx.add(reverse_swell(1.4, vel=0.14), C["toomuch"] - 1.0)
-    for w, d in (("lessons", 19.4), ("exams", 20.4), ("school", 21.4), ("bills", 22.6)):
+    sfx.add(paper_tear(), C["tear"] + 0.05, gain=0.9, p=0.1)
+    sfx.add(reverse_swell(1.4, vel=0.18), C["father"] - 1.0)
+    for w, d in (("mother", 22.0), ("siblings", 23.2), ("school", 24.4)):
         tt = word_time("L07", w, d)
         sfx.add(sub("D1", 0.3, 0.16, rel=0.4), tt + 0.05)
         sfx.add(paper_slide(0.25, seed=int(tt * 10), vel=0.14), tt + 0.02, p=0.2)
@@ -265,7 +266,7 @@ def build():
 
     # ------------------------------------------------ VII · The promise
     p0 = SHOT["promise"]["start"]
-    pr = [(C["p1"], "Bb"), (C["p2"], "F"), (C["p3"], "C/E"), (C["p4"], "Dm"), (C["p4"] + 1.3, "C")]
+    pr = [(C["p1"], "Bb"), (C["p2"], "F"), (C["p3"], "C/E"), (C["p4"], "Dm"), (C["p4"] + 2.3, "C")]
     for i, (t, ch) in enumerate(pr):
         t1 = pr[i + 1][0] if i + 1 < len(pr) else SHOT["close"]["start"]
         rolled(music, t, ch, t1 - t + 0.5, vel=0.3, top=3)

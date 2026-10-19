@@ -212,16 +212,15 @@
       F.drawWhisper(ctx, 1330 - (t - 3.6) * 10, 720 - (t - 3.6) * 5, 1.12, a2 * 0.8, '#f1d8c8', 'warm1');
       const c = F.pulse(t, C().card, 0.9, 2.2, 0.9);
       if (c > 0) {
-        F.text(ctx, 'Senja is fictional.', W / 2, 520, { family: 'Fraunces', style: 'italic', size: 64, align: 'center', color: P.cream, alpha: c });
-        F.text(ctx, 'THE SCIENCE IS REAL', W / 2, 586, { size: 21, weight: 600, tracking: 8, align: 'center', color: P.amber, alpha: c });
-        F.text(ctx, 'A short film about You, Yourself — inspired by research on voice-hearing and drawing therapy.', W / 2, 640,
-          { size: 18, align: 'center', color: 'rgba(220,214,230,0.72)', alpha: c });
+        F.text(ctx, 'Based on a true story', W / 2, 520, { family: 'Fraunces', style: 'italic', size: 60, align: 'center', color: P.cream, alpha: c });
+        F.text(ctx, 'WEST JAVA · INDONESIA · 2024', W / 2, 584, { size: 20, weight: 600, tracking: 7, align: 'center', color: P.amber, alpha: c });
+        F.text(ctx, 'Names changed. Dramatised from a published nursing case report.', W / 2, 640,
+          { size: 18, align: 'center', color: 'rgba(220,214,230,0.7)', alpha: c });
       }
     },
   };
 
   // ------------------------------------------------------------------ I · SENJA (classroom, dusk)
-  const Ln = (id) => F.TL.lines.find((l) => l.id === id);
   S.class = {
     bars: 1, trans: 1.1,
     draw(ctx, t, lt, d) {
@@ -229,96 +228,126 @@
       ctx.save(); F.cam(ctx, F.lerp(960, 1010, k), F.lerp(560, 585, k), F.lerp(1.0, 1.08, k));
       ctx.drawImage(roomBg(0), -RP.x, -RP.y); clockHands(ctx, t);
       rays(ctx, t, 1);
-      const up = F.ease.inOut(F.seg(t, C().late - 0.1, C().late + 0.7));
-      const o = { facing: -1, pose: 'write', t, seed: 1, tilt: F.lerp(0.12, -0.04, up), rim: '#ffb27a', rimDir: -1, rimW: 3,
-        tint: 'rgba(120,60,110,0.12)',
-        expr: { mouth: up > 0.5 ? 'smile' : 'neutral', smile: 0.25, inner: 0.35 * up, look: [F.lerp(0.2, 0.95, up), F.lerp(0.8, -0.25, up)] } };
-      F.toon(ctx, 1165, 470, 1.15, Object.assign({ part: 'body' }, o));
+      F.drawSenja(ctx, 1165, 470, 1.15, { pose: 'write', k: t * 0.9, tilt: 0.12, facing: -1, color: '#1a1222', rim: '#ffb27a', rimW: 5, face: '#2a1c2a' });
       ctx.drawImage(deskFg(0), 0, 0);
-      F.toon(ctx, 1165, 470, 1.15, Object.assign({ part: 'front' }, o));
       ctx.restore();
       // lower third
-      const l1 = Ln('L01');
-      const a = F.pulse(t, l1.start - 0.1, 0.7, 4.0, 0.8);
+      const a = F.pulse(t, F.TL.lines[0].start - 0.1, 0.7, 4.6, 0.8);
       if (a > 0) {
-        const y = 846, x = 150, rise = (1 - F.ease.out(F.seg(t, l1.start - 0.1, l1.start + 0.7))) * 18;
+        const y = 846, x = 150, rise = (1 - F.ease.out(F.seg(t, F.TL.lines[0].start - 0.1, F.TL.lines[0].start + 0.7))) * 18;
         const g = ctx.createLinearGradient(0, 700, 0, 948); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${0.55 * a})`);
         ctx.fillStyle = g; ctx.fillRect(0, 700, 900, 248);
         F.text(ctx, 'Senja', x, y - 30 + rise, { family: 'Fraunces', style: 'italic', size: 76, color: P.cream, alpha: a });
-        ctx.fillStyle = F.rgba(P.amber, a); ctx.fillRect(x + 4, y - 4 + rise, 64 * F.ease.out(F.seg(t, l1.start + 0.2, l1.start + 1.1)), 2);
-        F.text(ctx, 'a young teacher · West Java', x + 2, y + 34 + rise, { size: 23, weight: 500, color: 'rgba(240,232,220,0.85)', alpha: a * F.seg(t, l1.start + 1.1, l1.start + 1.7) });
+        ctx.fillStyle = F.rgba(P.amber, a); ctx.fillRect(x + 4, y - 4 + rise, 64 * F.ease.out(F.seg(t, 9.3, 10.2)), 2);
+        F.text(ctx, '24 · honorary teacher · junior high · West Java', x + 2, y + 34 + rise, { size: 23, weight: 500, color: 'rgba(240,232,220,0.85)', alpha: a * F.seg(t, 10.2, 10.8) });
       }
     },
   };
 
   // ------------------------------------------------------------------ family photo
   const PHOTO = { w: 760, h: 500 };
-  function photoSprite() {
-    return F.sprite('photoToon', PHOTO.w, PHOTO.h, (g, w, h) => {
+  function figure(g, x, base, h, hijab, col) {
+    g.fillStyle = col;
+    const hr = h * 0.13;
+    g.beginPath(); g.ellipse(x, base - h + hr, hr * (hijab ? 1.1 : 0.95), hr * (hijab ? 1.15 : 1), 0, 0, Math.PI * 2); g.fill();
+    g.beginPath(); g.moveTo(x - hr * (hijab ? 1.3 : 0.6), base - h + hr * 1.7);
+    g.quadraticCurveTo(x - h * 0.24, base - h * 0.55, x - h * 0.22, base); g.lineTo(x + h * 0.22, base);
+    g.quadraticCurveTo(x + h * 0.24, base - h * 0.55, x + hr * (hijab ? 1.3 : 0.6), base - h + hr * 1.7); g.closePath(); g.fill();
+  }
+  function photoSprite(withFather) {
+    return F.sprite('photo' + withFather, PHOTO.w, PHOTO.h, (g, w, h) => {
       const sk = g.createLinearGradient(0, 0, 0, h);
       sk.addColorStop(0, '#d9b98f'); sk.addColorStop(0.55, '#f0cf9a'); sk.addColorStop(1, '#c9a274');
       g.fillStyle = sk; g.fillRect(0, 0, w, h);
-      F.glowDot(g, w * 0.5, h * 0.4, 260, '#fff2cf', 0.8);
+      F.glowDot(g, w * 0.5, h * 0.48, 260, '#fff2cf', 0.8);
       g.fillStyle = '#9c8a6a';
-      g.beginPath(); g.moveTo(0, h * 0.5); g.lineTo(w * 0.22, h * 0.2); g.lineTo(w * 0.42, h * 0.42); g.lineTo(w * 0.6, h * 0.24); g.lineTo(w, h * 0.55); g.lineTo(w, h); g.lineTo(0, h); g.fill();
-      const fam = F.TOON_FAMILY, sep = 'rgba(130,90,45,0.33)';
-      const people = [[0.15, 0.44, fam.father, 1], [0.36, 0.41, null, 1], [0.86, 0.3, fam.sister, -1], [0.71, 0.33, fam.brother, -1], [0.55, 0.38, 'senja', -1]];
-      people.forEach(([fx, sc, look, facing]) => {
-        const style = look === 'senja' ? { child: false } : look || fam.mother;
-        F.toon(g, w * fx, h - 440 * sc + 20, sc, { facing, pose: 'down', t: 0.4, style, tint: sep,
-          expr: { mouth: 'smile', smile: 0.85, lift: 2, look: [0, 0.05] } });
-      });
+      g.beginPath(); g.moveTo(0, h * 0.62); g.lineTo(w * 0.22, h * 0.3); g.lineTo(w * 0.42, h * 0.55); g.lineTo(w * 0.6, h * 0.36); g.lineTo(w, h * 0.66); g.lineTo(w, h); g.lineTo(0, h); g.fill();
+      g.fillStyle = '#86775a'; g.fillRect(0, h * 0.78, w, h * 0.22);
+      const col = '#4a3a2c';
+      if (withFather) figure(g, w * 0.16, h * 0.97, h * 0.66, false, col);
+      figure(g, w * 0.4, h * 0.97, h * 0.58, true, col);
+      figure(g, w * 0.58, h * 0.97, h * 0.52, true, col);
+      figure(g, w * 0.73, h * 0.97, h * 0.4, false, col);
+      figure(g, w * 0.86, h * 0.97, h * 0.33, true, col);
+      // age: vignette + speckle
       const v = g.createRadialGradient(w / 2, h / 2, h * 0.3, w / 2, h / 2, h * 0.9);
       v.addColorStop(0, 'rgba(60,40,20,0)'); v.addColorStop(1, 'rgba(60,40,20,0.45)'); g.fillStyle = v; g.fillRect(0, 0, w, h);
       const r = F.rng(3); for (let i = 0; i < 600; i++) { g.fillStyle = `rgba(255,250,230,${r() * 0.12})`; g.fillRect(r() * w, r() * h, 1.5, 1.5); }
     });
   }
-  const CRACK = (() => { const r = F.rng(29), out = []; for (let i = 0; i < 7; i++) { const a = (i / 7) * Math.PI * 2 + r() * 0.5; const pts = [[0, 0]];
-    let x = 0, y = 0; for (let k = 0; k < 5; k++) { x += Math.cos(a + (r() - 0.5) * 0.8) * (30 + r() * 40); y += Math.sin(a + (r() - 0.5) * 0.8) * (30 + r() * 40); pts.push([x, y]); } out.push(pts); } return out; })();
+  const TEAR_X = 0.29;
+  const tearPts = (() => { const r = F.rng(17), pts = []; for (let i = 0; i <= 26; i++) pts.push([PHOTO.w * TEAR_X + (r() - 0.5) * 22, (i / 26) * PHOTO.h]); return pts; })();
+  function photoHalf(ctx, left, img) {
+    ctx.save(); ctx.beginPath();
+    if (left) { ctx.moveTo(0, 0); tearPts.forEach((p) => ctx.lineTo(p[0], p[1])); ctx.lineTo(0, PHOTO.h); }
+    else { ctx.moveTo(PHOTO.w, 0); tearPts.forEach((p) => ctx.lineTo(p[0], p[1])); ctx.lineTo(PHOTO.w, PHOTO.h); }
+    ctx.closePath(); ctx.clip(); ctx.drawImage(img, 0, 0);
+    ctx.strokeStyle = 'rgba(255,252,240,0.9)'; ctx.lineWidth = 3; ctx.beginPath(); tearPts.forEach((p, i) => (i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.stroke();
+    ctx.restore();
+  }
   S.family = {
     bars: 1, trans: 0.9,
     draw(ctx, t, lt, d) {
+      // desk at night under a lamp
       const g = ctx.createRadialGradient(700, 300, 50, 900, 560, 1100);
       g.addColorStop(0, '#5a3a26'); g.addColorStop(0.5, '#2a1a12'); g.addColorStop(1, '#0c0807');
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
       const r = F.rng(4); ctx.strokeStyle = 'rgba(0,0,0,0.18)'; ctx.lineWidth = 2;
       for (let i = 0; i < 40; i++) { const y = r() * H; ctx.beginPath(); ctx.moveTo(0, y); ctx.bezierCurveTo(600, y + 20, 1200, y - 20, W, y + 10); ctx.stroke(); }
       const k = F.ease.sine(F.clamp(lt / d));
-      ctx.save(); F.cam(ctx, 960, 540, F.lerp(1.02, 1.14, k));
+      ctx.save(); F.cam(ctx, 960, 540, F.lerp(1.02, 1.12, k));
       ctx.translate(960 - PHOTO.w / 2, 540 - PHOTO.h / 2); ctx.rotate(-0.025);
+      // frame + shadow
       ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(18, 24, PHOTO.w + 40, PHOTO.h + 40);
       ctx.fillStyle = '#3b2416'; ctx.fillRect(-20, -20, PHOTO.w + 40, PHOTO.h + 40);
       ctx.strokeStyle = '#6a4630'; ctx.lineWidth = 3; ctx.strokeRect(-12, -12, PHOTO.w + 24, PHOTO.h + 24);
-      ctx.drawImage(photoSprite(), 0, 0);
-      // Senja, the one everyone leans on
-      const e = F.pulse(t, Ln('L04').start, 0.4, 1.2, 0.6);
-      if (e > 0) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; F.glowDot(ctx, PHOTO.w * 0.55, PHOTO.h * 0.62, 130, '#ffe7b0', 0.45 * e); ctx.restore(); }
-      // "too much": the glass cracks
-      const ck = F.ease.out(F.seg(t, C().toomuch + 0.35, C().toomuch + 1.0));
-      if (ck > 0) {
-        ctx.save(); ctx.translate(PHOTO.w * 0.62, PHOTO.h * 0.3); ctx.strokeStyle = 'rgba(255,255,255,0.75)'; ctx.lineWidth = 1.6;
-        CRACK.forEach((pts) => { const q = F.partial(pts, ck); ctx.beginPath(); q.forEach((p, i) => (i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.stroke(); });
+      const tearK = F.ease.out(F.seg(t, C().tear + 0.05, C().tear + 0.9));
+      const fade = F.smooth(t, C().father + 0.2, C().father + 2.4);
+      if (tearK <= 0) { ctx.drawImage(photoSprite(true), 0, 0); }
+      else {
+        ctx.fillStyle = '#120a06'; ctx.fillRect(0, 0, PHOTO.w, PHOTO.h);
+        photoHalf(ctx, false, photoSprite(true));
+        ctx.save(); ctx.translate(-34 * tearK, 10 * tearK); ctx.rotate(-0.05 * tearK);
+        ctx.globalAlpha = 1 - 0.55 * fade;
+        photoHalf(ctx, true, photoSprite(false));
+        ctx.globalAlpha = 1 - fade;
+        ctx.save(); ctx.beginPath(); ctx.rect(0, 0, PHOTO.w * TEAR_X - 12, PHOTO.h); ctx.clip(); ctx.drawImage(photoSprite(true), 0, 0); ctx.restore();
         ctx.restore();
+        // father dissolves into light
+        if (fade > 0 && fade < 1) {
+          const pr = F.rng(23);
+          ctx.save(); ctx.globalCompositeOperation = 'lighter';
+          for (let i = 0; i < 90; i++) {
+            const sx = PHOTO.w * 0.16 + (pr() - 0.5) * 120 - 34, sy = PHOTO.h * (0.4 + pr() * 0.55);
+            const life = F.seg(fade, pr() * 0.4, 0.6 + pr() * 0.4);
+            if (life <= 0 || life >= 1) continue;
+            ctx.fillStyle = `rgba(255,226,170,${0.6 * Math.sin(life * Math.PI)})`;
+            ctx.beginPath(); ctx.arc(sx + Math.sin(i + life * 3) * 20, sy - life * 220, 1.5 + pr() * 2.5, 0, Math.PI * 2); ctx.fill();
+          }
+          ctx.restore();
+        }
       }
+      // "the eldest" glow
+      const e = F.pulse(t, F.TL.lines.find((l) => l.id === 'L04').start, 0.4, 0.9, 0.6);
+      if (e > 0) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; F.glowDot(ctx, PHOTO.w * 0.58, PHOTO.h * 0.7, 120, '#ffe7b0', 0.5 * e); ctx.restore(); }
+      // glass glare
       ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.08;
       const gl = ctx.createLinearGradient(0, 0, PHOTO.w, PHOTO.h); gl.addColorStop(0.2, 'rgba(255,255,255,0)'); gl.addColorStop(0.35, 'rgba(255,255,255,1)'); gl.addColorStop(0.5, 'rgba(255,255,255,0)');
       ctx.fillStyle = gl; ctx.fillRect(0, 0, PHOTO.w, PHOTO.h); ctx.restore();
       ctx.restore();
-      const dim = F.seg(t, C().toomuch, C().toomuch + 1.6);
-      ctx.save(); ctx.globalCompositeOperation = 'lighter'; F.glowDot(ctx, 560, 240, 700, '#ffb070', 0.18 * (1 - 0.6 * dim)); ctx.restore();
-      if (dim > 0) { ctx.fillStyle = `rgba(0,0,0,${0.3 * dim})`; ctx.fillRect(0, 0, W, H); }
+      // lamp light
+      ctx.save(); ctx.globalCompositeOperation = 'lighter'; F.glowDot(ctx, 560, 240, 700, '#ffb070', 0.18); ctx.restore();
     },
   };
 
   // ------------------------------------------------------------------ the weight
   const BOOKS = [
-    { word: 'lessons', label: 'PELAJARAN', col: '#3f5a7a', w: 250 },
-    { word: 'exams', label: 'UJIAN', col: '#8a4a5a', w: 210 },
-    { word: 'school', label: 'ACARA SEKOLAH', col: '#5a6a3a', w: 290 },
-    { word: 'bills', label: 'TAGIHAN', col: '#7a5a2a', w: 240 },
+    { word: 'mother', label: 'IBU', col: '#8a4a5a', w: 250 },
+    { word: 'siblings', label: '2 ADIK', col: '#3f5a7a', w: 230 },
+    { word: 'school', label: 'SEKOLAH · UJIAN · EVENT', col: '#5a6a3a', w: 300 },
   ];
-  const wordT = (id, w) => { const ln = F.TL.lines.find((l) => l.id === id); const x = ln.words.find((q) => q.w.toLowerCase().replace(/[^a-z]/g, '').startsWith(w)); return x ? x.s : ln.start; };
-  function nightRoom(ctx, t) {
+  const wordT = (id, w) => { const ln = F.TL.lines.find((l) => l.id === id); const x = ln.words.find((q) => q.w.toLowerCase().startsWith(w)); return x ? x.s : ln.start; };
+  function nightRoom(ctx, t, lampOn, flick, extraDark) {
     ctx.drawImage(roomBg(1), -RP.x, -RP.y); clockHands(ctx, t);
   }
   S.weight = {
@@ -329,32 +358,29 @@
       ctx.save(); F.cam(ctx, cx, cy, z);
       nightRoom(ctx, t);
       lamp(ctx, 1 - 0.35 * pull);
+      // sinking posture as the weight lands
       let sink = 0; BOOKS.forEach((b) => { sink += F.ease.outBack(F.seg(t, wordT('L07', b.word), wordT('L07', b.word) + 0.45)); });
-      const tear = F.seg(t, al + 0.4, al + 2.8);
-      const o = { facing: -1, pose: 'rest', t, seed: 2, tilt: 0.1 + sink * 0.025, rim: '#ffab6b', rimDir: -1, rimW: 3, tint: 'rgba(40,30,80,0.28)',
-        expr: { mouth: 'sad', inner: 0.6 + 0.1 * sink, look: [0.3, 0.8], closed: 0.15 * sink, tear: tear > 0 ? tear : 0, glisten: F.seg(t, al - 0.2, al + 0.4) } };
-      F.toon(ctx, 1165, 470 + sink * 6, 1.15, Object.assign({ part: 'body' }, o));
+      F.drawSenja(ctx, 1165, 470 + sink * 7, 1.15, { pose: 'rest', tilt: 0.16 + sink * 0.05, facing: -1, color: '#100c18', rim: '#ffab6b', rimW: 4, face: '#1d1520' });
       ctx.drawImage(deskFg(1), 0, 0);
-      F.toon(ctx, 1165, 470 + sink * 6, 1.15, Object.assign({ part: 'front' }, o));
-      // the burdens stack on her shoulder
+      // books stacking on her shoulders
       const fadeB = 1 - F.seg(t, al + 0.3, al + 1.6);
-      let y = 620;
+      let y = 640;
       BOOKS.forEach((b, i) => {
-        const ts = wordT('L07', b.word), kk = F.seg(t, ts - 0.05, ts + 0.45);
-        if (kk <= 0) return;
-        const yy = F.lerp(y - 260, y, F.ease.outBack(kk)), x = 1350 - b.w / 2 + (i % 2 ? 14 : -10);
-        ctx.save(); ctx.globalAlpha = fadeB * F.seg(t, ts - 0.05, ts + 0.15); ctx.translate(x + b.w / 2, yy); ctx.rotate((i - 1.5) * 0.04);
+        const ts = wordT('L07', b.word), k = F.seg(t, ts - 0.05, ts + 0.45);
+        if (k <= 0) return;
+        const yy = F.lerp(y - 260, y, F.ease.outBack(k)), x = 1395 - b.w / 2 + (i % 2 ? 14 : -10);
+        ctx.save(); ctx.globalAlpha = fadeB * F.seg(t, ts - 0.05, ts + 0.15); ctx.translate(x + b.w / 2, yy); ctx.rotate((i - 1) * 0.04);
         ctx.fillStyle = b.col; F.rrect(ctx, -b.w / 2, -30, b.w, 46, 6); ctx.fill();
         ctx.fillStyle = 'rgba(255,255,255,0.12)'; ctx.fillRect(-b.w / 2 + 8, -24, b.w - 16, 4);
         F.text(ctx, b.label, 0, 2, { size: 19, weight: 700, tracking: 3, align: 'center', color: 'rgba(255,246,230,0.9)' });
         ctx.restore();
         y -= 50;
       });
-      // an empty speech bubble with no one to go to
+      // an empty speech bubble that has no one to go to
       const sb = F.pulse(t, al + 0.6, 0.6, 1.0, 1.0);
       if (sb > 0) {
         ctx.save(); ctx.globalAlpha = sb * 0.38; ctx.strokeStyle = '#d9cfe8'; ctx.lineWidth = 1.6; ctx.setLineDash([6, 8]);
-        const bx = 880 - (t - al) * 60, by = 380 - (t - al) * 22;
+        const bx = 900 - (t - al) * 60, by = 400 - (t - al) * 22;
         F.rrect(ctx, bx - 90, by - 50, 180, 100, 40); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(bx + 40, by + 48); ctx.lineTo(bx + 80, by + 92); ctx.lineTo(bx + 10, by + 50); ctx.stroke();
         ctx.restore();
@@ -367,46 +393,39 @@
   S.voice = {
     bars: 1, trans: 0.5,
     draw(ctx, t, lt, d) {
-      const s0 = t - lt, c = C();
-      const shake = F.seg(t, c.shadow, c.ears + 0.8) * 5;
+      const shake = F.seg(t, C().shadow, C().ears + 0.8) * 5;
       const sx = F.noise1(t * 9, 1) * shake, sy = F.noise1(t * 8, 2) * shake;
       const k = F.ease.sine(F.clamp(lt / d));
       ctx.save(); F.cam(ctx, F.lerp(1100, 1120, k) + sx, F.lerp(540, 520, k) + sy, F.lerp(1.0, 1.14, k));
       nightRoom(ctx, t);
-      const flick = (lt > 0.2 && lt < 1.0) ? (Math.sin(t * 90) > 0.2 ? 0.9 : 0) : 0;
-      const lampOn = 0.7 * (1 - F.seg(lt, 0.9, 1.7) * 0.75);
+      const flick = (t > 29.1 && t < 29.9) ? (Math.sin(t * 90) > 0.2 ? 0.9 : 0) : 0;
+      const lampOn = 0.7 * (1 - F.seg(t, 29.8, 30.6) * 0.75);
       lamp(ctx, lampOn, flick);
-      const cold = F.seg(lt, 0.7, 2.1);
+      // cold indigo takes the room
+      const cold = F.seg(t, 29.6, 31.0);
       ctx.save(); ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = F.mixc('#ffffff', '#6a70c8', cold); ctx.fillRect(0, 0, W, H); ctx.restore();
-      const sh = F.seg(t, c.shadow - 0.3, c.ears + 1.2);
-      shadow(ctx, F.lerp(380, 760, F.ease.inOut(sh)), 900, F.lerp(0.75, 1.05, sh), F.smooth(t, c.shadow - 0.4, c.shadow + 0.8), t);
-      // her face: worried at the flicker, frightened at the whisper, eyes darting, then hands over her ears
-      const w3 = W_('w3');
-      const fright = F.seg(t, w3.start - 0.2, w3.start + 0.3), ears = F.ease.inOut(F.seg(t, c.ears - 0.05, c.ears + 0.45));
-      const dart = F.seg(t, w3.end, c.shadow) * (1 - F.seg(t, c.shadow, c.shadow + 0.2));
-      const atShadow = F.seg(t, c.shadow, c.shadow + 0.4);
-      const tremble = (fright * 0.5 + ears) * 2.2;
-      const look = [F.lerp(F.lerp(0.2, 0.7 * Math.sin(t * 5.5), dart), 1.0, atShadow), F.lerp(0.4, -0.15, fright)];
-      const o = { facing: -1, pose: ears > 0 ? 'ears' : 'rest', from: 'rest', k: ears, t, seed: 3,
-        tilt: 0.06 + 0.06 * ears + F.noise1(t * 14, 4) * 0.012 * tremble, rim: F.mixc('#ffab6b', '#8a7dff', cold), rimDir: -1, rimW: 3,
-        tint: `rgba(40,40,120,${0.12 + 0.3 * cold})`,
-        expr: ears > 0.5 ? { mouth: 'tense', closed: 1, eyes: 'squeeze', inner: 1 }
-          : { mouth: fright > 0.5 ? (atShadow > 0.5 ? 'gasp' : 'worried') : 'sad', inner: 0.5 + 0.5 * fright, lift: 5 * fright, look } };
-      const jx = F.noise1(t * 22, 6) * tremble, jy = F.noise1(t * 19, 7) * tremble * 0.5;
-      F.toon(ctx, 1165 + jx, 470 + jy, 1.15, Object.assign({ part: 'body' }, o));
+      // the shadow walks in from the window corner
+      const sh = F.seg(t, C().shadow - 0.3, C().ears + 1.2);
+      shadow(ctx, F.lerp(380, 760, F.ease.inOut(sh)), 900, F.lerp(0.75, 1.05, sh), F.smooth(t, C().shadow - 0.4, C().shadow + 0.8), t);
+      const ears = F.ease.inOut(F.seg(t, C().ears - 0.05, C().ears + 0.45));
+      F.drawSenja(ctx, 1165, 470, 1.15, { pose: ears > 0 ? 'ears' : 'rest', k: ears, tilt: 0.16 + 0.12 * ears, facing: -1, color: '#0b0a14', rim: F.mixc('#ffab6b', '#8a7dff', cold), rimW: 5, face: '#161424', armColor: '#2a2546' });
       ctx.drawImage(deskFg(1), 0, 0);
-      F.toon(ctx, 1165 + jx, 470 + jy, 1.15, Object.assign({ part: 'front' }, o));
       // whispers orbit her head
-      const base = wEnv(t, w3, 0.1, 4.5);
-      const surge = F.seg(t, c.ears - 0.6, c.ears + 0.4) * (1 - F.seg(t, s0 + d - 0.6, 99));
+      const w3 = W_('w3'), base = wEnv(t, w3, 0.1, 4.5);
+      const surge = F.seg(t, C().ears - 0.6, C().ears + 0.4) * (1 - F.seg(t, d + F.TL.shots.find((s) => s.name === 'voice').start - 0.6, 99));
       const n = 3 + Math.floor(5 * surge);
       for (let i = 0; i < n; i++) {
-        const ang = t * (0.35 + i * 0.05) + i * 2.1, rr = 300 + i * 26 + F.noise1(t + i, 5) * 20;
+        const ang = t * (0.35 + i * 0.05) + i * 2.1, rr = 230 + i * 26 + F.noise1(t + i, 5) * 20;
         const a = (i < 3 ? base : surge) * (0.4 + 0.3 * Math.sin(t * 2 + i));
-        F.drawWhisper(ctx, 1110 + Math.cos(ang) * rr, 330 + Math.sin(ang) * rr * 0.5, 0.42 + 0.08 * (i % 3), Math.max(a, base * 0.6 * (i === 0)), '#ffb8c8', 'rose', Math.sin(ang) * 0.12);
+        F.drawWhisper(ctx, 1080 + Math.cos(ang) * rr, 360 + Math.sin(ang) * rr * 0.45, 0.42 + 0.08 * (i % 3), Math.max(a, base * 0.6 * (i === 0)), '#ffb8c8', 'rose', Math.sin(ang) * 0.12);
       }
       ctx.restore();
-      const cut = F.seg(t, s0 + d - 0.48, s0 + d - 0.42);
+      // data chips
+      const l11 = F.TL.lines.find((l) => l.id === 'L11');
+      F.callout(ctx, 1350, 170, 'WHISPERS', '4–5× a day · ≤ 5 min', 'case report, Amelia et al. 2025', { alpha: F.pulse(t, l11.start - 0.1, 0.5, 2.6, 0.6), accent: P.rose, w: 470 });
+      F.callout(ctx, 1350, 330, 'BLACK SHADOW', '5–7× a day · 1–2 min', 'case report, Amelia et al. 2025', { alpha: F.pulse(t, C().shadow + 0.1, 0.5, 2.4, 0.6), accent: P.rose, w: 470 });
+      // hard cut to black with the tinnitus
+      const cut = F.seg(t, F.TL.shots.find((s) => s.name === 'voice').end - 0.48, F.TL.shots.find((s) => s.name === 'voice').end - 0.42);
       if (cut > 0) { ctx.fillStyle = `rgba(0,0,0,${cut})`; ctx.fillRect(0, 0, W, H); }
     },
   };
@@ -439,6 +458,9 @@
       });
       ctx.drawImage(bg, 0, 0);
       ctx.restore();
+      const stamp = 'Admitted · 28 May 2024';
+      const n = Math.floor(F.seg(t, F.TL.shots.find((s) => s.name === 'hospital').start + 1.1, F.TL.shots.find((s) => s.name === 'hospital').start + 2.4) * stamp.length);
+      F.text(ctx, stamp.slice(0, n) + (n < stamp.length && n > 0 ? '▌' : ''), 150, 880, { family: 'JetBrains Mono', size: 30, color: P.cream, alpha: 0.9 });
     },
   };
 

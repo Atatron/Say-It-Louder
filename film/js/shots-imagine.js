@@ -35,8 +35,6 @@
       g.fillStyle = '#6b7f8a'; g.fillRect(1500, 800, 46, 56);
     });
   }
-  F.imagineRoom = (ctx) => ctx.drawImage(room(), -RP.x, -RP.y);
-  F.imagineDesk = (ctx) => ctx.drawImage(room(), 0, 830 + RP.y, W + RP.x * 2, H + RP.y - 830, -RP.x, 830, W + RP.x * 2, H + RP.y - 830);
   function hud(ctx, x, y, w, h, title, a, accent) {
     ctx.save(); ctx.globalAlpha *= a;
     F.rrect(ctx, x, y, w, h, 18); ctx.fillStyle = 'rgba(10,8,20,0.72)'; ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,0.16)'; ctx.lineWidth = 1.5; ctx.stroke();
@@ -111,32 +109,22 @@
       // the shadow behind her back, until she hums
       const sh = F.seg(t, c.emg - 1.6, c.emg) * (1 - F.seg(t, c.hum + 0.4, c.hum + 2.2));
       F.shadowFigure(ctx, 330, 900, 0.95, 0.75 * sh, t);
-      // Senja's face through the scene: calm → the whisper (worried, glancing behind) → reading → taps (relief) → humming → smiling
-      const w4 = F.TL.whispers.find((w) => w.id === 'w4');
-      const worry = F.seg(t, w4.start - 0.2, w4.start + 0.3) * (1 - F.seg(t, c.taps, c.taps + 0.8));
-      const glance = F.pulse(t, w4.start, 0.25, 0.9, 0.35);
-      const humming = F.seg(t, c.hum - 0.1, c.hum + 0.3) * (1 - F.seg(t, c.hum + 2.3, c.hum + 2.7));
-      const relief = F.seg(t, c.taps + 0.5, c.taps + 1.4);
-      const happy = F.seg(t, c.hum + 2.4, c.hum + 3.2);
-      const tilt = 0.04 - 0.09 * humming;
+      const tilt = 0.06 - 0.1 * F.ease.inOut(F.seg(t, c.hum - 0.4, c.hum + 0.3)) * (1 - F.seg(t, c.diary, c.diary + 1));
       const led = 0.35 + 0.35 * Math.sin(t * 3) + 0.6 * F.pulse(t, c.taps, 0.03, 0.08, 0.15) + 0.6 * F.pulse(t, c.taps + 0.27, 0.03, 0.08, 0.15);
-      const lookPhone = [0.35, 0.75], lookBack = [-0.95, -0.1];
-      const look = [F.lerp(lookPhone[0], lookBack[0], glance), F.lerp(lookPhone[1], lookBack[1], glance)];
-      const expr = humming > 0.5 ? { mouth: 'hum', closed: 1, lift: 1 }
-        : { mouth: happy > 0.5 ? 'smile' : (worry > 0.5 ? 'worried' : (relief > 0.5 ? 'smile' : 'neutral')), smile: 0.4 + 0.5 * happy,
-            inner: 0.8 * worry, lift: 4 * F.pulse(t, c.taps, 0.1, 0.4, 0.5), look };
-      const so = { facing: 1, pose: 'phone', t, seed: 5, tilt, rim: F.mixc('#ffb27a', '#ffd38a', warm), rimDir: 1, rimW: 3, tint: 'rgba(120,60,90,0.12)',
-        sensor: true, led: F.clamp(led), expr, screen: '#f4f3fb' };
-      F.toon(ctx, SX, SY, SS, so);
-      ctx.drawImage(room(), 0, 830 + RP.y, W + RP.x * 2, H + RP.y - 830, -RP.x, 830, W + RP.x * 2, H + RP.y - 830);
-      const hp = F.toonPoint('phone', SX, SY, SS, so);
-      ctx.save(); ctx.globalCompositeOperation = 'lighter'; F.glowDot(ctx, hp[0], hp[1] - 90, 200, '#b9c2ff', 0.14); ctx.restore();
+      F.drawSenja(ctx, SX, SY, SS, { pose: 'phone', k: 1, tilt, facing: 1, color: '#1a1220', rim: F.mixc('#ffb27a', '#ffd38a', warm), rimW: 5, face: '#2c1f2a', sensor: true, led: F.clamp(led), armColor: '#21182a', eyes: hum > 0 && t < c.diary ? 'closed' : 'open' });
+      // her phone, in her hand
+      const hp = [SX + 176 * SS, SY + 226 * SS];
+      ctx.save(); ctx.translate(hp[0], hp[1]); ctx.rotate(-0.35);
+      ctx.fillStyle = '#0d0f17'; F.rrect(ctx, -22, -40, 44, 80, 7); ctx.fill(); ctx.fillStyle = '#e9e8f6'; F.rrect(ctx, -18, -35, 36, 70, 5); ctx.fill();
+      ctx.restore();
+      ctx.save(); ctx.globalCompositeOperation = 'lighter'; F.glowDot(ctx, hp[0], hp[1] - 30, 160, '#b9c2ff', 0.18); ctx.restore();
       // the whisper returns
+      const w4 = F.TL.whispers.find((w) => w.id === 'w4');
       const wa = F.seg(t, w4.start - 0.1, w4.start + 0.3) * (1 - F.seg(t, c.hum + 0.2, c.hum + 1.6));
       const shiver = F.pulse(t, c.taps, 0.05, 0.4, 0.3) * 6;
       for (let i = 0; i < 4; i++) {
-        const ang = t * (0.3 + i * 0.05) + i * 1.9, rr = 285 + i * 30;
-        const x = SX + 20 + Math.cos(ang) * rr + F.noise1(t * 20 + i, 3) * shiver, y = SY - 110 + Math.sin(ang) * rr * 0.5;
+        const ang = t * (0.3 + i * 0.05) + i * 1.9, rr = 210 + i * 30;
+        const x = SX + 20 + Math.cos(ang) * rr + F.noise1(t * 20 + i, 3) * shiver, y = SY - 40 + Math.sin(ang) * rr * 0.42;
         F.drawWhisper(ctx, x, y, 0.42 + 0.06 * (i % 2), wa * (0.45 + 0.25 * Math.sin(t * 2 + i)), '#ffb8c8', 'rose', Math.sin(ang) * 0.1);
       }
       // dissolving into gold
@@ -152,12 +140,12 @@
       // the hum: golden waves from her lips
       const humOn = F.seg(t, c.hum, c.hum + 0.3) * (1 - F.seg(t, c.hum + 2.2, c.hum + 2.9));
       if (humOn > 0) {
-        const lp = F.toonPoint('lips', SX, SY, SS, so), lx = lp[0] + 14, ly = lp[1];
+        const lp = F.senjaHeadPoint(F.SENJA_ANCHORS.lips, tilt), lx = SX + lp[0] * SS + 10, ly = SY + lp[1] * SS;
         for (let i = 0; i < 6; i++) { const ph = ((t - c.hum) * 0.9 + i / 6) % 1;
           ctx.strokeStyle = `rgba(255,200,110,${humOn * 0.75 * (1 - ph)})`; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(lx, ly, 20 + ph * 280, -0.55, 0.55); ctx.stroke(); }
       }
       // two taps from the collar pod
-      const cp = F.toonPoint('collar', SX, SY, SS, so);
+      const cp = [SX + F.SENJA_ANCHORS.collar[0] * SS + 10, SY + F.SENJA_ANCHORS.collar[1] * SS - 2];
       for (const tt of [c.taps, c.taps + 0.27]) {
         const q = F.seg(t, tt, tt + 0.9);
         if (q > 0 && q < 1) { ctx.strokeStyle = `rgba(63,192,174,${0.9 * (1 - q)})`; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(cp[0], cp[1], 14 + q * 110, 0, Math.PI * 2); ctx.stroke(); }
@@ -192,7 +180,7 @@
       }
       phoneScreen(ctx, 1540, 540, 450, 740, t, toPhone);
       // honesty label
-      F.text(ctx, 'DEMO SCENARIO  ·  SIMULATED SIGNAL', 90, 186, { family: 'JetBrains Mono', size: 17, weight: 600, tracking: 3, color: P.amber, alpha: 0.85 * F.seg(lt, 0.4, 1.2) });
+      F.text(ctx, 'IMAGINED SCENARIO  ·  SIMULATED SIGNAL', 90, 186, { family: 'JetBrains Mono', size: 17, weight: 600, tracking: 3, color: P.amber, alpha: 0.85 * F.seg(lt, 0.4, 1.2) });
     },
   };
 })();

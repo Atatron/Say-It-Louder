@@ -70,7 +70,7 @@ for s in slides:
         text(sl, .75, 2.2, 4.8, 4, s["lines"], 17)
         pic(sl, s["image"], 5.9, 2.2, 6.7)
         if s.get("cta"):
-            url = "<your-vercel-url>/" + ("ide.html" if s["id"] == "hardware" else "#sim")
+            url = "you-yourself.vercel.app/" + ("ide.html" if s["id"] == "hardware" else "#sim")
             text(sl, .75, 6.3, 4.8, .5, s["cta"] + " → " + url, 13, GOLD, True)
     elif L == "list":
         for k, (a, b) in enumerate(s["items"]):

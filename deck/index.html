@@ -31,7 +31,7 @@ p,li{font-size:23px;line-height:1.5;color:#e4e2f2;margin:0 0 14px}
 .stat span{display:block;font-size:17px;color:#cfcde6;margin-top:10px;line-height:1.4}
 .shot{width:100%;border-radius:12px;border:1px solid var(--line);box-shadow:0 20px 60px #0008}
 .imgcol{flex:1.35}.txt{flex:1}
-.cta{display:inline-block;margin-top:8px;background:var(--gold);color:#241800;font-weight:700;font-size:20px;padding:12px 22px;border-radius:12px;text-decoration:none}
+.cta{display:inline-block;align-self:flex-start;margin-top:8px;background:var(--gold);color:#241800;font-weight:700;font-size:20px;padding:12px 22px;border-radius:12px;text-decoration:none}
 .draws{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px}
 .draws figure{margin:0}.draws img{width:100%;border-radius:10px;display:block;border:4px solid #f3ecdc}
 .draws figcaption{font-size:16px;color:#d6d4ea;margin-top:8px;line-height:1.35}
@@ -58,7 +58,7 @@ p,li{font-size:23px;line-height:1.5;color:#e4e2f2;margin:0 0 14px}
 const DEMO = "../index.html#sim", IDE = "../ide.html";
 const esc = s => String(s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 const ps = a => (a || []).map(t => `<p>${esc(t)}</p>`).join("");
-const cta = s => s.cta ? `<a class="cta" href="${s.id === "hardware" ? IDE : DEMO}" target="_blank" rel="noopener">${esc(s.cta)} ↗</a>` : "";
+const cta = s => s.cta ? `<a class="cta" href="${s.href || (s.id === "hardware" ? IDE : DEMO)}" target="_blank" rel="noopener">${esc(s.cta)} ↗</a>` : "";
 const src = s => s.source ? `<div class="src">${esc(s.source)}</div>` : "";
 const head = s => `<div class="kicker">${esc(s.kicker || "")}</div>`;
 const R = {
@@ -89,6 +89,7 @@ fetch("slides.json").then(r => r.json()).then(d => {
   show((parseInt(location.hash.slice(1)) || 1) - 1); fit();
 });
 addEventListener("resize", fit);
+addEventListener("hashchange", () => { const n = (parseInt(location.hash.slice(1)) || 1) - 1; if (n !== i) show(n); });
 addEventListener("keydown", e => {
   if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); show(i + 1); }
   else if (["ArrowLeft", "PageUp"].includes(e.key)) show(i - 1);

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You, Yourself · The Film</title>
+<meta name="description" content="A 3-minute film: Senja's story, the science of the 'this is me' signal, and the You, Yourself wearable.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--bg:#000;--ink:#f4f1e8;--mute:#a7a6c4;--gold:#f5c04e;--line:rgba(255,255,255,.16)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow:hidden}
+#stage{position:fixed;inset:0;display:grid;place-items:center}
+canvas{width:min(100vw,calc(100vh*16/9));height:auto;aspect-ratio:16/9;display:block;background:#000}
+body.render #ui,body.render #start{display:none}
+#start{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(900px 500px at 50% 60%,#2a1d3f 0%,#000 70%);z-index:5;cursor:pointer;text-align:center;padding:16px}
+#start h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(2.2rem,7vw,5rem);margin:.2em 0}
+#start p{color:var(--mute);margin:.3em 0}
+#start .play{width:88px;height:88px;border-radius:50%;background:var(--gold);display:grid;place-items:center;margin:28px auto 10px;box-shadow:0 0 60px #f5c04e66}
+#start .play i{width:0;height:0;border-left:26px solid #241800;border-top:16px solid transparent;border-bottom:16px solid transparent;margin-left:8px}
+#start small{color:var(--mute);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+#ui{position:fixed;left:0;right:0;bottom:0;padding:14px 16px 16px;background:linear-gradient(transparent,rgba(0,0,0,.85));transition:opacity .4s;z-index:4}
+body.idle #ui{opacity:0}
+.bar{position:relative;height:22px;cursor:pointer;margin-bottom:8px}
+.bar .track{position:absolute;left:0;right:0;top:9px;height:4px;border-radius:2px;background:rgba(255,255,255,.18)}
+.bar .fill{position:absolute;left:0;top:9px;height:4px;border-radius:2px;background:var(--gold)}
+.bar .mk{position:absolute;top:5px;width:2px;height:12px;background:rgba(255,255,255,.5)}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+button,a.btn{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink);border-radius:10px;padding:8px 12px;font:600 .85rem Inter,sans-serif;cursor:pointer;text-decoration:none}
+button:hover,a.btn:hover{border-color:var(--gold)}
+#time{font:500 .85rem "JetBrains Mono",monospace;color:var(--mute);min-width:96px}
+#chapters{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+#chapters button{font-weight:500;padding:6px 10px;font-size:.78rem}
+#chapters button.on{border-color:var(--gold);color:var(--gold)}
+.sp{flex:1}
+@media(max-width:700px){#chapters{display:none}}
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="c" width="1920" height="1080"></canvas></div>
+<div id="start" role="button" tabindex="0" aria-label="Play the film">
+  <div>
+    <small>A 3-minute film · English · Indonesian subtitles</small>
+    <h1>You, Yourself</h1>
+    <p>Senja’s story, the science of the “this is me” signal, and the device we built.</p>
+    <div class="play"><i></i></div>
+    <p style="font-size:.85rem">Sound on. Press space to pause, arrows to skip.</p>
+  </div>
+</div>
+<div id="ui">
+  <div class="bar" id="bar"><div class="track"></div><div class="fill" id="fill"></div></div>
+  <div class="row">
+    <button id="pp">Pause</button>
+    <span id="time">0:00 / 0:00</span>
+    <div id="chapters"></div>
+    <a class="btn" href="you-yourself-film.mp4" download>Download MP4</a>
+    <a class="btn" href="../index.html#sim">Try the demo</a>
+    <button id="fs">Fullscreen</button>
+  </div>
+</div>
+<audio id="a" preload="auto"><source src="audio/film.m4a" type="audio/mp4"><source src="audio/film.ogg" type="audio/ogg; codecs=opus"></audio>
+<script src="js/core.js"></script>
+<script src="js/senja.js"></script>
+<script src="js/shots-story.js"></script>
+<script src="js/shots-crayons.js"></script>
+<script src="js/shots-tech.js"></script>
+<script src="js/shots-imagine.js"></script>
+<script src="js/main.js"></script>
+<script>
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const canvas = document.getElementById('c');
+  if (q.has('render')) document.body.classList.add('render');
+  const tl = await F.boot(canvas);
+  window.FILM_READY = true;
+  if (q.has('render')) { F.renderAt(parseFloat(q.get('t') || '0')); return; }
+
+  const a = document.getElementById('a'), fill = document.getElementById('fill'), bar = document.getElementById('bar');
+  const pp = document.getElementById('pp'), time = document.getElementById('time'), chWrap = document.getElementById('chapters');
+  const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  let t0 = parseFloat(q.get('t') || '0');
+  tl.chapters.forEach((c) => {
+    const m = document.createElement('div'); m.className = 'mk'; m.style.left = (c.t / tl.duration * 100) + '%'; bar.appendChild(m);
+    const b = document.createElement('button'); b.textContent = c.label; b.onclick = () => seek(c.t + 0.01); chWrap.appendChild(b);
+  });
+  const seek = (s) => { a.currentTime = F.clamp(s, 0, tl.duration); if (a.paused) F.renderAt(a.currentTime); };
+  const loop = () => {
+    const t = a.currentTime;
+    F.renderAt(t);
+    fill.style.width = (t / tl.duration * 100) + '%';
+    time.textContent = `${fmt(t)} / ${fmt(tl.duration)}`;
+    const cur = [...tl.chapters].reverse().find((c) => t >= c.t);
+    [...chWrap.children].forEach((b) => b.classList.toggle('on', cur && b.textContent === cur.label));
+    requestAnimationFrame(loop);
+  };
+  const toggle = () => { if (a.paused) { a.play(); pp.textContent = 'Pause'; } else { a.pause(); pp.textContent = 'Play'; } };
+  const start = document.getElementById('start');
+  const begin = () => { start.style.display = 'none'; a.currentTime = t0; a.play(); };
+  start.onclick = begin; start.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') begin(); };
+  pp.onclick = toggle;
+  bar.onclick = (e) => { const r = bar.getBoundingClientRect(); seek((e.clientX - r.left) / r.width * tl.duration); };
+  document.getElementById('fs').onclick = () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  addEventListener('keydown', (e) => {
+    if (start.style.display !== 'none') return;
+    if (e.key === ' ') { e.preventDefault(); toggle(); }
+    else if (e.key === 'ArrowRight') seek(a.currentTime + 5);
+    else if (e.key === 'ArrowLeft') seek(a.currentTime - 5);
+    else if (e.key.toLowerCase() === 'f') document.getElementById('fs').click();
+    else if (/^[1-9]$/.test(e.key) && tl.chapters[+e.key - 1]) seek(tl.chapters[+e.key - 1].t + 0.01);
+  });
+  let idle; addEventListener('mousemove', () => { document.body.classList.remove('idle'); clearTimeout(idle); idle = setTimeout(() => document.body.classList.add('idle'), 2500); });
+  a.onended = () => { pp.textContent = 'Play'; };
+  F.renderAt(t0);
+  loop();
+})();
+</script>
+</body>
+</html>

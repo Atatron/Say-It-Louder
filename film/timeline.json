@@ -1,0 +1,2871 @@
+{
+ "duration": 170.158,
+ "fps": 30,
+ "shots": [
+  {
+   "name": "open",
+   "start": 0.0,
+   "end": 8.509
+  },
+  {
+   "name": "class",
+   "start": 8.509,
+   "end": 15.562
+  },
+  {
+   "name": "family",
+   "start": 15.562,
+   "end": 21.063
+  },
+  {
+   "name": "weight",
+   "start": 21.063,
+   "end": 28.924
+  },
+  {
+   "name": "voice",
+   "start": 28.924,
+   "end": 38.699
+  },
+  {
+   "name": "hospital",
+   "start": 38.699,
+   "end": 43.022
+  },
+  {
+   "name": "data",
+   "start": 43.022,
+   "end": 53.033
+  },
+  {
+   "name": "crayons",
+   "start": 53.033,
+   "end": 76.963
+  },
+  {
+   "name": "science",
+   "start": 76.963,
+   "end": 93.823
+  },
+  {
+   "name": "title",
+   "start": 93.823,
+   "end": 97.884
+  },
+  {
+   "name": "machine",
+   "start": 97.884,
+   "end": 109.784
+  },
+  {
+   "name": "detector",
+   "start": 109.784,
+   "end": 118.721
+  },
+  {
+   "name": "outside",
+   "start": 118.721,
+   "end": 126.998
+  },
+  {
+   "name": "imagine",
+   "start": 126.998,
+   "end": 148.485
+  },
+  {
+   "name": "promise",
+   "start": 148.485,
+   "end": 156.74
+  },
+  {
+   "name": "close",
+   "start": 156.74,
+   "end": 163.658
+  },
+  {
+   "name": "end",
+   "start": 163.658,
+   "end": 170.158
+  }
+ ],
+ "chapters": [
+  {
+   "label": "Prologue",
+   "t": 0.0
+  },
+  {
+   "label": "I · Senja",
+   "t": 8.509
+  },
+  {
+   "label": "II · The voice",
+   "t": 28.924
+  },
+  {
+   "label": "III · Crayons",
+   "t": 53.033
+  },
+  {
+   "label": "IV · The science",
+   "t": 76.963
+  },
+  {
+   "label": "V · The machine",
+   "t": 93.823
+  },
+  {
+   "label": "VI · Imagine",
+   "t": 126.998
+  },
+  {
+   "label": "VII · The promise",
+   "t": 148.485
+  },
+  {
+   "label": "Epilogue",
+   "t": 156.74
+  }
+ ],
+ "cues": {
+  "card": 4.909,
+  "tear": 16.863,
+  "father": 18.405,
+  "alone": 25.931,
+  "shadow": 34.806,
+  "ears": 36.982,
+  "millions": 44.377,
+  "seven": 47.35,
+  "three": 49.205,
+  "box": 54.958,
+  "day1": 57.523,
+  "day2": 61.246,
+  "day3": 65.303,
+  "chart": 71.053,
+  "inside_out": 73.708,
+  "copy": 80.317,
+  "weak": 85.252,
+  "someone": 88.289,
+  "lips": 91.127,
+  "electrodes": 97.884,
+  "myoware": 100.585,
+  "esp32": 104.1,
+  "calib": 109.784,
+  "murmur": 112.825,
+  "swallow": 116.388,
+  "chew": 117.344,
+  "mic": 118.721,
+  "norec": 122.25,
+  "verdict": 123.921,
+  "emg": 130.587,
+  "quiet_room": 132.049,
+  "press": 133.712,
+  "taps": 135.012,
+  "hum": 139.537,
+  "diary": 143.937,
+  "p1": 148.485,
+  "p2": 149.655,
+  "p3": 151.692,
+  "p4": 153.405
+ },
+ "lines": [
+  {
+   "id": "L01",
+   "start": 9.109,
+   "end": 9.978,
+   "en": "This is Senja.",
+   "sub": "Ini Senja.",
+   "words": [
+    {
+     "w": "This",
+     "s": 9.104,
+     "e": 9.279
+    },
+    {
+     "w": "is",
+     "s": 9.279,
+     "e": 9.417
+    },
+    {
+     "w": "Senja",
+     "s": 9.417,
+     "e": 10.154
+    }
+   ]
+  },
+  {
+   "id": "L02",
+   "start": 10.228,
+   "end": 11.168,
+   "en": "She's twenty-four.",
+   "sub": "Usianya dua puluh empat tahun.",
+   "words": [
+    {
+     "w": "She's",
+     "s": 10.26,
+     "e": 10.484
+    },
+    {
+     "w": "twenty-four",
+     "s": 10.484,
+     "e": 11.334
+    }
+   ]
+  },
+  {
+   "id": "L03",
+   "start": 11.518,
+   "end": 14.762,
+   "en": "A junior-high teacher in West Java, on an honorary wage.",
+   "sub": "Guru honorer di sebuah SMP di Jawa Barat.",
+   "words": [
+    {
+     "w": "A",
+     "s": 11.515,
+     "e": 11.603
+    },
+    {
+     "w": "junior-high",
+     "s": 11.603,
+     "e": 12.09
+    },
+    {
+     "w": "teacher",
+     "s": 12.09,
+     "e": 12.465
+    },
+    {
+     "w": "in",
+     "s": 12.465,
+     "e": 12.565
+    },
+    {
+     "w": "West",
+     "s": 12.565,
+     "e": 12.815
+    },
+    {
+     "w": "Java",
+     "s": 12.815,
+     "e": 13.34
+    },
+    {
+     "w": "on",
+     "s": 13.465,
+     "e": 13.603
+    },
+    {
+     "w": "an",
+     "s": 13.603,
+     "e": 13.728
+    },
+    {
+     "w": "honorary",
+     "s": 13.728,
+     "e": 14.265
+    },
+    {
+     "w": "wage",
+     "s": 14.265,
+     "e": 14.915
+    }
+   ]
+  },
+  {
+   "id": "L04",
+   "start": 15.562,
+   "end": 16.563,
+   "en": "The eldest child.",
+   "sub": "Anak sulung.",
+   "words": [
+    {
+     "w": "The",
+     "s": 15.557,
+     "e": 15.682
+    },
+    {
+     "w": "eldest",
+     "s": 15.682,
+     "e": 16.069
+    },
+    {
+     "w": "child",
+     "s": 16.069,
+     "e": 16.757
+    }
+   ]
+  },
+  {
+   "id": "L05",
+   "start": 16.863,
+   "end": 18.055,
+   "en": "Her parents divorced.",
+   "sub": "Orang tuanya bercerai.",
+   "words": [
+    {
+     "w": "Her",
+     "s": 16.846,
+     "e": 16.971
+    },
+    {
+     "w": "parents",
+     "s": 16.971,
+     "e": 17.396
+    },
+    {
+     "w": "divorced",
+     "s": 17.396,
+     "e": 18.171
+    }
+   ]
+  },
+  {
+   "id": "L06",
+   "start": 18.405,
+   "end": 20.363,
+   "en": "Six months ago, her father died.",
+   "sub": "Enam bulan lalu, ayahnya meninggal.",
+   "words": [
+    {
+     "w": "Six",
+     "s": 18.459,
+     "e": 18.709
+    },
+    {
+     "w": "months",
+     "s": 18.709,
+     "e": 18.947
+    },
+    {
+     "w": "ago",
+     "s": 18.947,
+     "e": 19.334
+    },
+    {
+     "w": "her",
+     "s": 19.409,
+     "e": 19.559
+    },
+    {
+     "w": "father",
+     "s": 19.559,
+     "e": 19.934
+    },
+    {
+     "w": "died",
+     "s": 19.934,
+     "e": 20.584
+    }
+   ]
+  },
+  {
+   "id": "L07",
+   "start": 21.063,
+   "end": 25.381,
+   "en": "Now she carries her mother, two younger siblings, and a school, on her shoulders.",
+   "sub": "Kini ia memikul ibunya, dua adiknya, dan sekolahnya, di pundaknya.",
+   "words": [
+    {
+     "w": "Now",
+     "s": 21.07,
+     "e": 21.27
+    },
+    {
+     "w": "she",
+     "s": 21.27,
+     "e": 21.42
+    },
+    {
+     "w": "carries",
+     "s": 21.42,
+     "e": 21.758
+    },
+    {
+     "w": "her",
+     "s": 21.758,
+     "e": 21.87
+    },
+    {
+     "w": "mother",
+     "s": 21.87,
+     "e": 22.345
+    },
+    {
+     "w": "two",
+     "s": 22.458,
+     "e": 22.67
+    },
+    {
+     "w": "younger",
+     "s": 22.67,
+     "e": 23.02
+    },
+    {
+     "w": "siblings",
+     "s": 23.02,
+     "e": 23.595
+    },
+    {
+     "w": "and",
+     "s": 23.67,
+     "e": 23.783
+    },
+    {
+     "w": "a",
+     "s": 23.783,
+     "e": 23.858
+    },
+    {
+     "w": "school",
+     "s": 23.858,
+     "e": 24.395
+    },
+    {
+     "w": "on",
+     "s": 24.47,
+     "e": 24.608
+    },
+    {
+     "w": "her",
+     "s": 24.608,
+     "e": 24.758
+    },
+    {
+     "w": "shoulders",
+     "s": 24.758,
+     "e": 25.57
+    }
+   ]
+  },
+  {
+   "id": "L08",
+   "start": 25.931,
+   "end": 27.324,
+   "en": "And she has no one to tell.",
+   "sub": "Dan ia tak punya siapa pun untuk bercerita.",
+   "words": [
+    {
+     "w": "And",
+     "s": 25.918,
+     "e": 26.08
+    },
+    {
+     "w": "she",
+     "s": 26.08,
+     "e": 26.243
+    },
+    {
+     "w": "has",
+     "s": 26.243,
+     "e": 26.48
+    },
+    {
+     "w": "no",
+     "s": 26.48,
+     "e": 26.68
+    },
+    {
+     "w": "one",
+     "s": 26.68,
+     "e": 26.805
+    },
+    {
+     "w": "to",
+     "s": 26.805,
+     "e": 26.918
+    },
+    {
+     "w": "tell",
+     "s": 26.918,
+     "e": 27.543
+    }
+   ]
+  },
+  {
+   "id": "L09",
+   "start": 28.924,
+   "end": 30.25,
+   "en": "Then the whispers began.",
+   "sub": "Lalu bisikan itu mulai datang.",
+   "words": [
+    {
+     "w": "Then",
+     "s": 28.957,
+     "e": 29.17
+    },
+    {
+     "w": "the",
+     "s": 29.17,
+     "e": 29.257
+    },
+    {
+     "w": "whispers",
+     "s": 29.257,
+     "e": 29.682
+    },
+    {
+     "w": "began",
+     "s": 29.682,
+     "e": 30.432
+    }
+   ]
+  },
+  {
+   "id": "L10",
+   "start": 32.024,
+   "end": 32.74,
+   "en": "Come home.",
+   "sub": "“Ayo pulang.”",
+   "words": [
+    {
+     "w": "Come",
+     "s": 32.031,
+     "e": 32.256
+    },
+    {
+     "w": "home",
+     "s": 32.256,
+     "e": 32.981
+    }
+   ]
+  },
+  {
+   "id": "L11",
+   "start": 32.99,
+   "end": 34.356,
+   "en": "Four, five times a day.",
+   "sub": "Empat, lima kali sehari.",
+   "words": [
+    {
+     "w": "Four",
+     "s": 32.999,
+     "e": 33.274
+    },
+    {
+     "w": "five",
+     "s": 33.349,
+     "e": 33.649
+    },
+    {
+     "w": "times",
+     "s": 33.649,
+     "e": 33.937
+    },
+    {
+     "w": "a",
+     "s": 33.937,
+     "e": 33.999
+    },
+    {
+     "w": "day",
+     "s": 33.999,
+     "e": 34.549
+    }
+   ]
+  },
+  {
+   "id": "L12",
+   "start": 34.806,
+   "end": 36.382,
+   "en": "A black shadow walks toward her.",
+   "sub": "Bayangan hitam berjalan mendekatinya.",
+   "words": [
+    {
+     "w": "A",
+     "s": 34.805,
+     "e": 34.88
+    },
+    {
+     "w": "black",
+     "s": 34.88,
+     "e": 35.205
+    },
+    {
+     "w": "shadow",
+     "s": 35.205,
+     "e": 35.555
+    },
+    {
+     "w": "walks",
+     "s": 35.555,
+     "e": 35.88
+    },
+    {
+     "w": "toward",
+     "s": 35.88,
+     "e": 36.142
+    },
+    {
+     "w": "her",
+     "s": 36.142,
+     "e": 36.58
+    }
+   ]
+  },
+  {
+   "id": "L13",
+   "start": 36.982,
+   "end": 38.199,
+   "en": "She covers her ears.",
+   "sub": "Ia menutup telinganya.",
+   "words": [
+    {
+     "w": "She",
+     "s": 37.001,
+     "e": 37.163
+    },
+    {
+     "w": "covers",
+     "s": 37.163,
+     "e": 37.538
+    },
+    {
+     "w": "her",
+     "s": 37.538,
+     "e": 37.688
+    },
+    {
+     "w": "ears",
+     "s": 37.688,
+     "e": 38.351
+    }
+   ]
+  },
+  {
+   "id": "L14",
+   "start": 38.699,
+   "end": 41.922,
+   "en": "In May, her family brings her to a psychiatric hospital.",
+   "sub": "Bulan Mei, keluarganya membawanya ke rumah sakit jiwa.",
+   "words": [
+    {
+     "w": "In",
+     "s": 38.699,
+     "e": 38.824
+    },
+    {
+     "w": "May",
+     "s": 38.824,
+     "e": 39.249
+    },
+    {
+     "w": "her",
+     "s": 39.349,
+     "e": 39.512
+    },
+    {
+     "w": "family",
+     "s": 39.512,
+     "e": 39.924
+    },
+    {
+     "w": "brings",
+     "s": 39.924,
+     "e": 40.212
+    },
+    {
+     "w": "her",
+     "s": 40.212,
+     "e": 40.374
+    },
+    {
+     "w": "to",
+     "s": 40.374,
+     "e": 40.499
+    },
+    {
+     "w": "a",
+     "s": 40.499,
+     "e": 40.612
+    },
+    {
+     "w": "psychiatric",
+     "s": 40.612,
+     "e": 41.299
+    },
+    {
+     "w": "hospital",
+     "s": 41.299,
+     "e": 42.149
+    }
+   ]
+  },
+  {
+   "id": "L15",
+   "start": 43.022,
+   "end": 44.077,
+   "en": "She is not alone.",
+   "sub": "Ia tidak sendirian.",
+   "words": [
+    {
+     "w": "She",
+     "s": 43.058,
+     "e": 43.208
+    },
+    {
+     "w": "is",
+     "s": 43.208,
+     "e": 43.358
+    },
+    {
+     "w": "not",
+     "s": 43.358,
+     "e": 43.583
+    },
+    {
+     "w": "alone",
+     "s": 43.583,
+     "e": 44.283
+    }
+   ]
+  },
+  {
+   "id": "L16",
+   "start": 44.377,
+   "end": 46.95,
+   "en": "Twenty-four million people live with schizophrenia.",
+   "sub": "24 juta orang di dunia hidup dengan skizofrenia.",
+   "words": [
+    {
+     "w": "Twenty-four",
+     "s": 44.367,
+     "e": 44.917
+    },
+    {
+     "w": "million",
+     "s": 44.917,
+     "e": 45.317
+    },
+    {
+     "w": "people",
+     "s": 45.317,
+     "e": 45.73
+    },
+    {
+     "w": "live",
+     "s": 45.73,
+     "e": 45.955
+    },
+    {
+     "w": "with",
+     "s": 45.955,
+     "e": 46.117
+    },
+    {
+     "w": "schizophrenia",
+     "s": 46.117,
+     "e": 47.192
+    }
+   ]
+  },
+  {
+   "id": "L17",
+   "start": 47.35,
+   "end": 48.905,
+   "en": "Seven in ten hear voices.",
+   "sub": "Tujuh dari sepuluh mendengar suara-suara.",
+   "words": [
+    {
+     "w": "Seven",
+     "s": 47.393,
+     "e": 47.718
+    },
+    {
+     "w": "in",
+     "s": 47.718,
+     "e": 47.868
+    },
+    {
+     "w": "ten",
+     "s": 47.868,
+     "e": 48.093
+    },
+    {
+     "w": "hear",
+     "s": 48.093,
+     "e": 48.293
+    },
+    {
+     "w": "voices",
+     "s": 48.293,
+     "e": 49.093
+    }
+   ]
+  },
+  {
+   "id": "L18",
+   "start": 49.205,
+   "end": 51.833,
+   "en": "For up to three in ten, medicine is not enough.",
+   "sub": "Bagi hingga tiga dari sepuluh, obat saja tidak cukup.",
+   "words": [
+    {
+     "w": "For",
+     "s": 49.184,
+     "e": 49.296
+    },
+    {
+     "w": "up",
+     "s": 49.296,
+     "e": 49.459
+    },
+    {
+     "w": "to",
+     "s": 49.459,
+     "e": 49.584
+    },
+    {
+     "w": "three",
+     "s": 49.584,
+     "e": 49.809
+    },
+    {
+     "w": "in",
+     "s": 49.809,
+     "e": 49.959
+    },
+    {
+     "w": "ten",
+     "s": 49.959,
+     "e": 50.459
+    },
+    {
+     "w": "medicine",
+     "s": 50.596,
+     "e": 51.084
+    },
+    {
+     "w": "is",
+     "s": 51.084,
+     "e": 51.234
+    },
+    {
+     "w": "not",
+     "s": 51.234,
+     "e": 51.421
+    },
+    {
+     "w": "enough",
+     "s": 51.421,
+     "e": 52.059
+    }
+   ]
+  },
+  {
+   "id": "L19",
+   "start": 53.033,
+   "end": 54.658,
+   "en": "Her nurses tried something simple.",
+   "sub": "Perawatnya mencoba sesuatu yang sederhana.",
+   "words": [
+    {
+     "w": "Her",
+     "s": 53.008,
+     "e": 53.133
+    },
+    {
+     "w": "nurses",
+     "s": 53.133,
+     "e": 53.558
+    },
+    {
+     "w": "tried",
+     "s": 53.558,
+     "e": 53.858
+    },
+    {
+     "w": "something",
+     "s": 53.858,
+     "e": 54.195
+    },
+    {
+     "w": "simple",
+     "s": 54.195,
+     "e": 54.858
+    }
+   ]
+  },
+  {
+   "id": "L20",
+   "start": 54.958,
+   "end": 56.823,
+   "en": "Paper. And a box of crayons.",
+   "sub": "Kertas. Dan sekotak krayon.",
+   "words": [
+    {
+     "w": "Paper",
+     "s": 54.951,
+     "e": 55.426
+    },
+    {
+     "w": "And",
+     "s": 55.501,
+     "e": 55.638
+    },
+    {
+     "w": "a",
+     "s": 55.638,
+     "e": 55.701
+    },
+    {
+     "w": "box",
+     "s": 55.701,
+     "e": 56.013
+    },
+    {
+     "w": "of",
+     "s": 56.013,
+     "e": 56.101
+    },
+    {
+     "w": "crayons",
+     "s": 56.101,
+     "e": 57.001
+    }
+   ]
+  },
+  {
+   "id": "L21",
+   "start": 57.523,
+   "end": 59.546,
+   "en": "Day one: a tangle of black thread.",
+   "sub": "Hari pertama: gumpalan benang hitam yang kusut.",
+   "words": [
+    {
+     "w": "Day",
+     "s": 57.517,
+     "e": 57.742
+    },
+    {
+     "w": "one",
+     "s": 57.742,
+     "e": 58.142
+    },
+    {
+     "w": "a",
+     "s": 58.242,
+     "e": 58.342
+    },
+    {
+     "w": "tangle",
+     "s": 58.342,
+     "e": 58.729
+    },
+    {
+     "w": "of",
+     "s": 58.729,
+     "e": 58.817
+    },
+    {
+     "w": "black",
+     "s": 58.817,
+     "e": 59.142
+    },
+    {
+     "w": "thread",
+     "s": 59.142,
+     "e": 59.742
+    }
+   ]
+  },
+  {
+   "id": "L22",
+   "start": 61.246,
+   "end": 63.803,
+   "en": "Day two: the room around her, in careful detail.",
+   "sub": "Hari kedua: ruangan di sekitarnya, digambar dengan teliti.",
+   "words": [
+    {
+     "w": "Day",
+     "s": 61.23,
+     "e": 61.467
+    },
+    {
+     "w": "two",
+     "s": 61.467,
+     "e": 61.805
+    },
+    {
+     "w": "the",
+     "s": 61.905,
+     "e": 62.03
+    },
+    {
+     "w": "room",
+     "s": 62.03,
+     "e": 62.255
+    },
+    {
+     "w": "around",
+     "s": 62.255,
+     "e": 62.567
+    },
+    {
+     "w": "her",
+     "s": 62.567,
+     "e": 62.73
+    },
+    {
+     "w": "in",
+     "s": 62.767,
+     "e": 62.905
+    },
+    {
+     "w": "careful",
+     "s": 62.905,
+     "e": 63.28
+    },
+    {
+     "w": "detail",
+     "s": 63.28,
+     "e": 64.03
+    }
+   ]
+  },
+  {
+   "id": "L23",
+   "start": 65.303,
+   "end": 69.753,
+   "en": "Day three: the mountains she used to draw as a child, with her mother and father.",
+   "sub": "Hari ketiga: pegunungan yang dulu sering ia gambar bersama ayah dan ibunya.",
+   "words": [
+    {
+     "w": "Day",
+     "s": 65.285,
+     "e": 65.522
+    },
+    {
+     "w": "three",
+     "s": 65.522,
+     "e": 66.01
+    },
+    {
+     "w": "the",
+     "s": 66.135,
+     "e": 66.26
+    },
+    {
+     "w": "mountains",
+     "s": 66.26,
+     "e": 66.785
+    },
+    {
+     "w": "she",
+     "s": 66.785,
+     "e": 66.935
+    },
+    {
+     "w": "used",
+     "s": 66.935,
+     "e": 67.122
+    },
+    {
+     "w": "to",
+     "s": 67.122,
+     "e": 67.21
+    },
+    {
+     "w": "draw",
+     "s": 67.21,
+     "e": 67.56
+    },
+    {
+     "w": "as",
+     "s": 67.56,
+     "e": 67.672
+    },
+    {
+     "w": "a",
+     "s": 67.672,
+     "e": 67.747
+    },
+    {
+     "w": "child",
+     "s": 67.747,
+     "e": 68.46
+    },
+    {
+     "w": "with",
+     "s": 68.56,
+     "e": 68.722
+    },
+    {
+     "w": "her",
+     "s": 68.722,
+     "e": 68.86
+    },
+    {
+     "w": "mother",
+     "s": 68.86,
+     "e": 69.185
+    },
+    {
+     "w": "and",
+     "s": 69.185,
+     "e": 69.322
+    },
+    {
+     "w": "father",
+     "s": 69.322,
+     "e": 69.96
+    }
+   ]
+  },
+  {
+   "id": "L24",
+   "start": 71.053,
+   "end": 73.208,
+   "en": "Nine signs of hallucination became one.",
+   "sub": "Sembilan tanda halusinasi, tinggal satu.",
+   "words": [
+    {
+     "w": "Nine",
+     "s": 71.08,
+     "e": 71.367
+    },
+    {
+     "w": "signs",
+     "s": 71.367,
+     "e": 71.717
+    },
+    {
+     "w": "of",
+     "s": 71.717,
+     "e": 71.792
+    },
+    {
+     "w": "hallucination",
+     "s": 71.792,
+     "e": 72.53
+    },
+    {
+     "w": "became",
+     "s": 72.53,
+     "e": 72.905
+    },
+    {
+     "w": "one",
+     "s": 72.905,
+     "e": 73.455
+    }
+   ]
+  },
+  {
+   "id": "L25",
+   "start": 73.708,
+   "end": 75.763,
+   "en": "Drawing put what was inside, outside.",
+   "sub": "Menggambar memindahkan yang ada di dalam, ke luar.",
+   "words": [
+    {
+     "w": "Drawing",
+     "s": 73.714,
+     "e": 74.014
+    },
+    {
+     "w": "put",
+     "s": 74.014,
+     "e": 74.202
+    },
+    {
+     "w": "what",
+     "s": 74.202,
+     "e": 74.327
+    },
+    {
+     "w": "was",
+     "s": 74.327,
+     "e": 74.464
+    },
+    {
+     "w": "inside",
+     "s": 74.464,
+     "e": 75.064
+    },
+    {
+     "w": "outside",
+     "s": 75.139,
+     "e": 75.964
+    }
+   ]
+  },
+  {
+   "id": "L26",
+   "start": 76.963,
+   "end": 79.767,
+   "en": "So we asked: could the voice itself be put outside?",
+   "sub": "Maka kami bertanya: bisakah suara itu sendiri dibawa ke luar?",
+   "words": [
+    {
+     "w": "So",
+     "s": 76.994,
+     "e": 77.144
+    },
+    {
+     "w": "we",
+     "s": 77.144,
+     "e": 77.294
+    },
+    {
+     "w": "asked",
+     "s": 77.294,
+     "e": 77.844
+    },
+    {
+     "w": "could",
+     "s": 77.944,
+     "e": 78.081
+    },
+    {
+     "w": "the",
+     "s": 78.081,
+     "e": 78.169
+    },
+    {
+     "w": "voice",
+     "s": 78.169,
+     "e": 78.469
+    },
+    {
+     "w": "itself",
+     "s": 78.469,
+     "e": 78.856
+    },
+    {
+     "w": "be",
+     "s": 78.856,
+     "e": 78.994
+    },
+    {
+     "w": "put",
+     "s": 78.994,
+     "e": 79.156
+    },
+    {
+     "w": "outside",
+     "s": 79.156,
+     "e": 79.969
+    }
+   ]
+  },
+  {
+   "id": "L27",
+   "start": 80.317,
+   "end": 84.752,
+   "en": "When you speak, even silently, your brain sends a copy that says: this is me.",
+   "sub": "Saat kita bicara, bahkan dalam hati, otak mengirim salinan yang berkata: ini aku.",
+   "words": [
+    {
+     "w": "When",
+     "s": 80.282,
+     "e": 80.407
+    },
+    {
+     "w": "you",
+     "s": 80.407,
+     "e": 80.545
+    },
+    {
+     "w": "speak",
+     "s": 80.545,
+     "e": 81.007
+    },
+    {
+     "w": "even",
+     "s": 81.082,
+     "e": 81.395
+    },
+    {
+     "w": "silently",
+     "s": 81.395,
+     "e": 81.982
+    },
+    {
+     "w": "your",
+     "s": 82.057,
+     "e": 82.232
+    },
+    {
+     "w": "brain",
+     "s": 82.232,
+     "e": 82.582
+    },
+    {
+     "w": "sends",
+     "s": 82.582,
+     "e": 82.795
+    },
+    {
+     "w": "a",
+     "s": 82.795,
+     "e": 82.857
+    },
+    {
+     "w": "copy",
+     "s": 82.857,
+     "e": 83.207
+    },
+    {
+     "w": "that",
+     "s": 83.207,
+     "e": 83.382
+    },
+    {
+     "w": "says",
+     "s": 83.382,
+     "e": 83.957
+    },
+    {
+     "w": "this",
+     "s": 84.082,
+     "e": 84.282
+    },
+    {
+     "w": "is",
+     "s": 84.282,
+     "e": 84.457
+    },
+    {
+     "w": "me",
+     "s": 84.457,
+     "e": 84.982
+    }
+   ]
+  },
+  {
+   "id": "L28",
+   "start": 85.252,
+   "end": 88.089,
+   "en": "In many people who hear voices, that copy is weak.",
+   "sub": "Pada banyak orang yang mendengar suara, salinan itu lemah.",
+   "words": [
+    {
+     "w": "In",
+     "s": 85.254,
+     "e": 85.354
+    },
+    {
+     "w": "many",
+     "s": 85.354,
+     "e": 85.579
+    },
+    {
+     "w": "people",
+     "s": 85.579,
+     "e": 85.929
+    },
+    {
+     "w": "who",
+     "s": 85.929,
+     "e": 86.054
+    },
+    {
+     "w": "hear",
+     "s": 86.054,
+     "e": 86.254
+    },
+    {
+     "w": "voices",
+     "s": 86.254,
+     "e": 86.954
+    },
+    {
+     "w": "that",
+     "s": 87.054,
+     "e": 87.229
+    },
+    {
+     "w": "copy",
+     "s": 87.229,
+     "e": 87.579
+    },
+    {
+     "w": "is",
+     "s": 87.579,
+     "e": 87.729
+    },
+    {
+     "w": "weak",
+     "s": 87.729,
+     "e": 88.304
+    }
+   ]
+  },
+  {
+   "id": "L29",
+   "start": 88.289,
+   "end": 90.727,
+   "en": "Their own inner speech can sound like someone else.",
+   "sub": "Suara batin mereka sendiri bisa terdengar seperti orang lain.",
+   "words": [
+    {
+     "w": "Their",
+     "s": 88.262,
+     "e": 88.437
+    },
+    {
+     "w": "own",
+     "s": 88.437,
+     "e": 88.65
+    },
+    {
+     "w": "inner",
+     "s": 88.65,
+     "e": 88.887
+    },
+    {
+     "w": "speech",
+     "s": 88.887,
+     "e": 89.387
+    },
+    {
+     "w": "can",
+     "s": 89.387,
+     "e": 89.6
+    },
+    {
+     "w": "sound",
+     "s": 89.6,
+     "e": 89.9
+    },
+    {
+     "w": "like",
+     "s": 89.9,
+     "e": 90.087
+    },
+    {
+     "w": "someone",
+     "s": 90.087,
+     "e": 90.325
+    },
+    {
+     "w": "else",
+     "s": 90.325,
+     "e": 90.912
+    }
+   ]
+  },
+  {
+   "id": "L30",
+   "start": 91.127,
+   "end": 92.923,
+   "en": "And their lips can move while they hear it.",
+   "sub": "Dan bibir mereka bisa bergerak saat mendengarnya.",
+   "words": [
+    {
+     "w": "And",
+     "s": 91.102,
+     "e": 91.215
+    },
+    {
+     "w": "their",
+     "s": 91.215,
+     "e": 91.352
+    },
+    {
+     "w": "lips",
+     "s": 91.352,
+     "e": 91.627
+    },
+    {
+     "w": "can",
+     "s": 91.627,
+     "e": 91.827
+    },
+    {
+     "w": "move",
+     "s": 91.827,
+     "e": 92.177
+    },
+    {
+     "w": "while",
+     "s": 92.177,
+     "e": 92.34
+    },
+    {
+     "w": "they",
+     "s": 92.34,
+     "e": 92.477
+    },
+    {
+     "w": "hear",
+     "s": 92.477,
+     "e": 92.702
+    },
+    {
+     "w": "it",
+     "s": 92.702,
+     "e": 93.102
+    }
+   ]
+  },
+  {
+   "id": "L31",
+   "start": 94.323,
+   "end": 95.431,
+   "en": "This is You, Yourself.",
+   "sub": "Inilah You, Yourself.",
+   "words": [
+    {
+     "w": "This",
+     "s": 94.343,
+     "e": 94.518
+    },
+    {
+     "w": "is",
+     "s": 94.518,
+     "e": 94.668
+    },
+    {
+     "w": "You",
+     "s": 94.668,
+     "e": 94.793
+    },
+    {
+     "w": "Yourself",
+     "s": 94.831,
+     "e": 95.618
+    }
+   ]
+  },
+  {
+   "id": "L32",
+   "start": 95.731,
+   "end": 97.084,
+   "en": "Ini Aku. It's me.",
+   "sub": "Ini Aku.",
+   "words": [
+    {
+     "w": "Ini",
+     "s": 95.75,
+     "e": 95.975
+    },
+    {
+     "w": "Aku",
+     "s": 95.975,
+     "e": 96.4
+    },
+    {
+     "w": "It's",
+     "s": 96.5,
+     "e": 96.75
+    },
+    {
+     "w": "me",
+     "s": 96.75,
+     "e": 97.275
+    }
+   ]
+  },
+  {
+   "id": "L33",
+   "start": 97.884,
+   "end": 100.335,
+   "en": "Inside: two electrodes under the lower lip.",
+   "sub": "Kanal dalam: dua elektroda di bawah bibir bawah.",
+   "words": [
+    {
+     "w": "Inside",
+     "s": 97.893,
+     "e": 98.568
+    },
+    {
+     "w": "two",
+     "s": 98.681,
+     "e": 98.893
+    },
+    {
+     "w": "electrodes",
+     "s": 98.893,
+     "e": 99.456
+    },
+    {
+     "w": "under",
+     "s": 99.456,
+     "e": 99.631
+    },
+    {
+     "w": "the",
+     "s": 99.631,
+     "e": 99.718
+    },
+    {
+     "w": "lower",
+     "s": 99.718,
+     "e": 100.043
+    },
+    {
+     "w": "lip",
+     "s": 100.043,
+     "e": 100.518
+    }
+   ]
+  },
+  {
+   "id": "L34",
+   "start": 100.585,
+   "end": 103.85,
+   "en": "A MyoWare sensor turns muscle activity into a signal.",
+   "sub": "Sensor MyoWare mengubah aktivitas otot menjadi sinyal.",
+   "words": [
+    {
+     "w": "A",
+     "s": 100.578,
+     "e": 100.665
+    },
+    {
+     "w": "MyoWare",
+     "s": 100.665,
+     "e": 101.153
+    },
+    {
+     "w": "sensor",
+     "s": 101.153,
+     "e": 101.803
+    },
+    {
+     "w": "turns",
+     "s": 101.803,
+     "e": 102.165
+    },
+    {
+     "w": "muscle",
+     "s": 102.165,
+     "e": 102.54
+    },
+    {
+     "w": "activity",
+     "s": 102.54,
+     "e": 103.103
+    },
+    {
+     "w": "into",
+     "s": 103.103,
+     "e": 103.315
+    },
+    {
+     "w": "a",
+     "s": 103.315,
+     "e": 103.415
+    },
+    {
+     "w": "signal",
+     "s": 103.415,
+     "e": 104.078
+    }
+   ]
+  },
+  {
+   "id": "L35",
+   "start": 104.1,
+   "end": 109.284,
+   "en": "An E.S.P. thirty-two samples it a thousand times a second, and streams it to her phone.",
+   "sub": "ESP32 membacanya seribu kali per detik, lalu mengirimkannya ke ponselnya.",
+   "words": [
+    {
+     "w": "An",
+     "s": 104.087,
+     "e": 104.225
+    },
+    {
+     "w": "E.S.P.",
+     "s": 104.225,
+     "e": 104.875
+    },
+    {
+     "w": "thirty-two",
+     "s": 104.875,
+     "e": 105.687
+    },
+    {
+     "w": "samples",
+     "s": 105.687,
+     "e": 106.187
+    },
+    {
+     "w": "it",
+     "s": 106.187,
+     "e": 106.312
+    },
+    {
+     "w": "a",
+     "s": 106.312,
+     "e": 106.437
+    },
+    {
+     "w": "thousand",
+     "s": 106.437,
+     "e": 106.887
+    },
+    {
+     "w": "times",
+     "s": 106.887,
+     "e": 107.2
+    },
+    {
+     "w": "a",
+     "s": 107.2,
+     "e": 107.262
+    },
+    {
+     "w": "second",
+     "s": 107.262,
+     "e": 107.887
+    },
+    {
+     "w": "and",
+     "s": 107.987,
+     "e": 108.125
+    },
+    {
+     "w": "streams",
+     "s": 108.125,
+     "e": 108.487
+    },
+    {
+     "w": "it",
+     "s": 108.487,
+     "e": 108.612
+    },
+    {
+     "w": "to",
+     "s": 108.612,
+     "e": 108.7
+    },
+    {
+     "w": "her",
+     "s": 108.7,
+     "e": 108.85
+    },
+    {
+     "w": "phone",
+     "s": 108.85,
+     "e": 109.512
+    }
+   ]
+  },
+  {
+   "id": "L36",
+   "start": 109.784,
+   "end": 112.375,
+   "en": "Three seconds of rest set her personal baseline.",
+   "sub": "Tiga detik istirahat menentukan ambang pribadinya.",
+   "words": [
+    {
+     "w": "Three",
+     "s": 109.767,
+     "e": 110.029
+    },
+    {
+     "w": "seconds",
+     "s": 110.029,
+     "e": 110.379
+    },
+    {
+     "w": "of",
+     "s": 110.379,
+     "e": 110.467
+    },
+    {
+     "w": "rest",
+     "s": 110.467,
+     "e": 111.017
+    },
+    {
+     "w": "set",
+     "s": 111.017,
+     "e": 111.229
+    },
+    {
+     "w": "her",
+     "s": 111.229,
+     "e": 111.342
+    },
+    {
+     "w": "personal",
+     "s": 111.342,
+     "e": 111.767
+    },
+    {
+     "w": "baseline",
+     "s": 111.767,
+     "e": 112.592
+    }
+   ]
+  },
+  {
+   "id": "L37",
+   "start": 112.825,
+   "end": 116.138,
+   "en": "Above the line for three hundred milliseconds: speech muscles.",
+   "sub": "Di atas garis selama tiga ratus milidetik: otot bicara.",
+   "words": [
+    {
+     "w": "Above",
+     "s": 112.831,
+     "e": 113.093
+    },
+    {
+     "w": "the",
+     "s": 113.093,
+     "e": 113.181
+    },
+    {
+     "w": "line",
+     "s": 113.181,
+     "e": 113.531
+    },
+    {
+     "w": "for",
+     "s": 113.531,
+     "e": 113.693
+    },
+    {
+     "w": "three",
+     "s": 113.693,
+     "e": 113.893
+    },
+    {
+     "w": "hundred",
+     "s": 113.893,
+     "e": 114.118
+    },
+    {
+     "w": "milliseconds",
+     "s": 114.118,
+     "e": 115.006
+    },
+    {
+     "w": "speech",
+     "s": 115.156,
+     "e": 115.531
+    },
+    {
+     "w": "muscles",
+     "s": 115.531,
+     "e": 116.306
+    }
+   ]
+  },
+  {
+   "id": "L38",
+   "start": 116.388,
+   "end": 117.144,
+   "en": "Not a swallow.",
+   "sub": "Bukan menelan.",
+   "words": [
+    {
+     "w": "Not",
+     "s": 116.401,
+     "e": 116.564
+    },
+    {
+     "w": "a",
+     "s": 116.564,
+     "e": 116.626
+    },
+    {
+     "w": "swallow",
+     "s": 116.626,
+     "e": 117.326
+    }
+   ]
+  },
+  {
+   "id": "L39",
+   "start": 117.344,
+   "end": 118.121,
+   "en": "Not chewing.",
+   "sub": "Bukan mengunyah.",
+   "words": [
+    {
+     "w": "Not",
+     "s": 117.381,
+     "e": 117.644
+    },
+    {
+     "w": "chewing",
+     "s": 117.644,
+     "e": 118.331
+    }
+   ]
+  },
+  {
+   "id": "L40",
+   "start": 118.721,
+   "end": 122.0,
+   "en": "Outside: the microphone checks if anyone is really speaking.",
+   "sub": "Kanal luar: mikrofon memeriksa apakah ada orang yang benar-benar berbicara.",
+   "words": [
+    {
+     "w": "Outside",
+     "s": 118.709,
+     "e": 119.434
+    },
+    {
+     "w": "the",
+     "s": 119.534,
+     "e": 119.634
+    },
+    {
+     "w": "microphone",
+     "s": 119.634,
+     "e": 120.197
+    },
+    {
+     "w": "checks",
+     "s": 120.197,
+     "e": 120.534
+    },
+    {
+     "w": "if",
+     "s": 120.534,
+     "e": 120.684
+    },
+    {
+     "w": "anyone",
+     "s": 120.684,
+     "e": 121.034
+    },
+    {
+     "w": "is",
+     "s": 121.034,
+     "e": 121.184
+    },
+    {
+     "w": "really",
+     "s": 121.184,
+     "e": 121.459
+    },
+    {
+     "w": "speaking",
+     "s": 121.459,
+     "e": 122.209
+    }
+   ]
+  },
+  {
+   "id": "L41",
+   "start": 122.25,
+   "end": 123.471,
+   "en": "Nothing is recorded.",
+   "sub": "Tidak ada yang direkam.",
+   "words": [
+    {
+     "w": "Nothing",
+     "s": 122.306,
+     "e": 122.706
+    },
+    {
+     "w": "is",
+     "s": 122.706,
+     "e": 122.856
+    },
+    {
+     "w": "recorded",
+     "s": 122.856,
+     "e": 123.656
+    }
+   ]
+  },
+  {
+   "id": "L42",
+   "start": 123.921,
+   "end": 125.998,
+   "en": "Two channels. One gentle answer.",
+   "sub": "Dua kanal. Satu jawaban yang lembut.",
+   "words": [
+    {
+     "w": "Two",
+     "s": 123.925,
+     "e": 124.112
+    },
+    {
+     "w": "channels",
+     "s": 124.112,
+     "e": 124.75
+    },
+    {
+     "w": "One",
+     "s": 124.862,
+     "e": 125.125
+    },
+    {
+     "w": "gentle",
+     "s": 125.125,
+     "e": 125.5
+    },
+    {
+     "w": "answer",
+     "s": 125.5,
+     "e": 126.2
+    }
+   ]
+  },
+  {
+   "id": "L43",
+   "start": 126.998,
+   "end": 128.663,
+   "en": "Now imagine Senja, with it.",
+   "sub": "Sekarang bayangkan Senja, memakainya.",
+   "words": [
+    {
+     "w": "Now",
+     "s": 127.034,
+     "e": 127.209
+    },
+    {
+     "w": "imagine",
+     "s": 127.209,
+     "e": 127.609
+    },
+    {
+     "w": "Senja",
+     "s": 127.609,
+     "e": 128.084
+    },
+    {
+     "w": "with",
+     "s": 128.159,
+     "e": 128.396
+    },
+    {
+     "w": "it",
+     "s": 128.396,
+     "e": 128.859
+    }
+   ]
+  },
+  {
+   "id": "L44",
+   "start": 130.587,
+   "end": 131.799,
+   "en": "Her lips move, barely.",
+   "sub": "Bibirnya bergerak, nyaris tak terlihat.",
+   "words": [
+    {
+     "w": "Her",
+     "s": 130.584,
+     "e": 130.709
+    },
+    {
+     "w": "lips",
+     "s": 130.709,
+     "e": 130.959
+    },
+    {
+     "w": "move",
+     "s": 130.959,
+     "e": 131.234
+    },
+    {
+     "w": "barely",
+     "s": 131.284,
+     "e": 131.959
+    }
+   ]
+  },
+  {
+   "id": "L45",
+   "start": 132.049,
+   "end": 133.312,
+   "en": "No one else is speaking.",
+   "sub": "Tak ada orang lain yang berbicara.",
+   "words": [
+    {
+     "w": "No",
+     "s": 132.075,
+     "e": 132.263
+    },
+    {
+     "w": "one",
+     "s": 132.263,
+     "e": 132.388
+    },
+    {
+     "w": "else",
+     "s": 132.388,
+     "e": 132.613
+    },
+    {
+     "w": "is",
+     "s": 132.613,
+     "e": 132.725
+    },
+    {
+     "w": "speaking",
+     "s": 132.725,
+     "e": 133.5
+    }
+   ]
+  },
+  {
+   "id": "L46",
+   "start": 135.812,
+   "end": 137.619,
+   "en": "Two soft taps. This is you.",
+   "sub": "Dua ketukan lembut. Ini kamu.",
+   "words": [
+    {
+     "w": "Two",
+     "s": 135.82,
+     "e": 136.007
+    },
+    {
+     "w": "soft",
+     "s": 136.007,
+     "e": 136.32
+    },
+    {
+     "w": "taps",
+     "s": 136.32,
+     "e": 136.845
+    },
+    {
+     "w": "This",
+     "s": 136.945,
+     "e": 137.145
+    },
+    {
+     "w": "is",
+     "s": 137.145,
+     "e": 137.295
+    },
+    {
+     "w": "you",
+     "s": 137.295,
+     "e": 137.77
+    }
+   ]
+  },
+  {
+   "id": "L47",
+   "start": 138.119,
+   "end": 139.537,
+   "en": "She hums one soft note,",
+   "sub": "Ia bersenandung satu nada lembut,",
+   "words": [
+    {
+     "w": "She",
+     "s": 138.164,
+     "e": 138.289
+    },
+    {
+     "w": "hums",
+     "s": 138.289,
+     "e": 138.589
+    },
+    {
+     "w": "one",
+     "s": 138.589,
+     "e": 138.826
+    },
+    {
+     "w": "soft",
+     "s": 138.826,
+     "e": 139.139
+    },
+    {
+     "w": "note",
+     "s": 139.139,
+     "e": 139.714
+    }
+   ]
+  },
+  {
+   "id": "L48",
+   "start": 141.937,
+   "end": 143.337,
+   "en": "and the voice grows quiet.",
+   "sub": "dan suara itu mereda.",
+   "words": [
+    {
+     "w": "and",
+     "s": 141.958,
+     "e": 142.046
+    },
+    {
+     "w": "the",
+     "s": 142.046,
+     "e": 142.133
+    },
+    {
+     "w": "voice",
+     "s": 142.133,
+     "e": 142.433
+    },
+    {
+     "w": "grows",
+     "s": 142.433,
+     "e": 142.783
+    },
+    {
+     "w": "quiet",
+     "s": 142.783,
+     "e": 143.508
+    }
+   ]
+  },
+  {
+   "id": "L49",
+   "start": 143.937,
+   "end": 147.485,
+   "en": "Each moment is saved in a diary, for her doctors and nurses.",
+   "sub": "Setiap momen tercatat di buku harian, untuk dokter dan perawatnya.",
+   "words": [
+    {
+     "w": "Each",
+     "s": 143.919,
+     "e": 144.194
+    },
+    {
+     "w": "moment",
+     "s": 144.194,
+     "e": 144.519
+    },
+    {
+     "w": "is",
+     "s": 144.519,
+     "e": 144.657
+    },
+    {
+     "w": "saved",
+     "s": 144.657,
+     "e": 145.032
+    },
+    {
+     "w": "in",
+     "s": 145.032,
+     "e": 145.107
+    },
+    {
+     "w": "a",
+     "s": 145.107,
+     "e": 145.169
+    },
+    {
+     "w": "diary",
+     "s": 145.169,
+     "e": 145.869
+    },
+    {
+     "w": "for",
+     "s": 145.994,
+     "e": 146.107
+    },
+    {
+     "w": "her",
+     "s": 146.107,
+     "e": 146.244
+    },
+    {
+     "w": "doctors",
+     "s": 146.244,
+     "e": 146.769
+    },
+    {
+     "w": "and",
+     "s": 146.769,
+     "e": 146.894
+    },
+    {
+     "w": "nurses",
+     "s": 146.894,
+     "e": 147.669
+    }
+   ]
+  },
+  {
+   "id": "L50",
+   "start": 148.485,
+   "end": 149.405,
+   "en": "It's not a cure.",
+   "sub": "Ini bukan obat.",
+   "words": [
+    {
+     "w": "It's",
+     "s": 148.462,
+     "e": 148.687
+    },
+    {
+     "w": "not",
+     "s": 148.687,
+     "e": 148.849
+    },
+    {
+     "w": "a",
+     "s": 148.849,
+     "e": 148.924
+    },
+    {
+     "w": "cure",
+     "s": 148.924,
+     "e": 149.562
+    }
+   ]
+  },
+  {
+   "id": "L51",
+   "start": 149.655,
+   "end": 151.442,
+   "en": "It reads muscles, never thoughts.",
+   "sub": "Ia membaca otot, bukan pikiran.",
+   "words": [
+    {
+     "w": "It",
+     "s": 149.63,
+     "e": 149.755
+    },
+    {
+     "w": "reads",
+     "s": 149.755,
+     "e": 150.03
+    },
+    {
+     "w": "muscles",
+     "s": 150.03,
+     "e": 150.58
+    },
+    {
+     "w": "never",
+     "s": 150.655,
+     "e": 150.93
+    },
+    {
+     "w": "thoughts",
+     "s": 150.93,
+     "e": 151.605
+    }
+   ]
+  },
+  {
+   "id": "L52",
+   "start": 151.692,
+   "end": 153.155,
+   "en": "Everything stays on her phone.",
+   "sub": "Semua data tetap di ponselnya.",
+   "words": [
+    {
+     "w": "Everything",
+     "s": 151.682,
+     "e": 152.132
+    },
+    {
+     "w": "stays",
+     "s": 152.132,
+     "e": 152.469
+    },
+    {
+     "w": "on",
+     "s": 152.469,
+     "e": 152.569
+    },
+    {
+     "w": "her",
+     "s": 152.569,
+     "e": 152.719
+    },
+    {
+     "w": "phone",
+     "s": 152.719,
+     "e": 153.357
+    }
+   ]
+  },
+  {
+   "id": "L53",
+   "start": 153.405,
+   "end": 155.64,
+   "en": "And the parts cost about one million rupiah.",
+   "sub": "Komponennya sekitar satu juta rupiah.",
+   "words": [
+    {
+     "w": "And",
+     "s": 153.374,
+     "e": 153.486
+    },
+    {
+     "w": "the",
+     "s": 153.486,
+     "e": 153.574
+    },
+    {
+     "w": "parts",
+     "s": 153.574,
+     "e": 153.924
+    },
+    {
+     "w": "cost",
+     "s": 153.924,
+     "e": 154.211
+    },
+    {
+     "w": "about",
+     "s": 154.211,
+     "e": 154.486
+    },
+    {
+     "w": "one",
+     "s": 154.486,
+     "e": 154.749
+    },
+    {
+     "w": "million",
+     "s": 154.749,
+     "e": 155.099
+    },
+    {
+     "w": "rupiah",
+     "s": 155.099,
+     "e": 155.849
+    }
+   ]
+  },
+  {
+   "id": "L54",
+   "start": 156.74,
+   "end": 158.895,
+   "en": "Senja found her way home with crayons.",
+   "sub": "Senja menemukan jalan pulang lewat krayon.",
+   "words": [
+    {
+     "w": "Senja",
+     "s": 156.793,
+     "e": 157.218
+    },
+    {
+     "w": "found",
+     "s": 157.218,
+     "e": 157.48
+    },
+    {
+     "w": "her",
+     "s": 157.48,
+     "e": 157.593
+    },
+    {
+     "w": "way",
+     "s": 157.593,
+     "e": 157.818
+    },
+    {
+     "w": "home",
+     "s": 157.818,
+     "e": 158.055
+    },
+    {
+     "w": "with",
+     "s": 158.055,
+     "e": 158.218
+    },
+    {
+     "w": "crayons",
+     "s": 158.218,
+     "e": 159.093
+    }
+   ]
+  },
+  {
+   "id": "L55",
+   "start": 161.061,
+   "end": 162.358,
+   "en": "Come home, to yourself.",
+   "sub": "Pulanglah, kepada dirimu sendiri.",
+   "words": [
+    {
+     "w": "Come",
+     "s": 161.073,
+     "e": 161.298
+    },
+    {
+     "w": "home",
+     "s": 161.298,
+     "e": 161.623
+    },
+    {
+     "w": "to",
+     "s": 161.673,
+     "e": 161.761
+    },
+    {
+     "w": "yourself",
+     "s": 161.761,
+     "e": 162.573
+    }
+   ]
+  }
+ ],
+ "whispers": [
+  {
+   "id": "w1",
+   "start": 1.8,
+   "end": 2.741,
+   "style": "far",
+   "pan": -0.55,
+   "words": [
+    {
+     "w": "Ayo",
+     "s": 1.894,
+     "e": 2.182
+    },
+    {
+     "w": "pulang",
+     "s": 2.182,
+     "e": 3.094
+    }
+   ]
+  },
+  {
+   "id": "w2",
+   "start": 3.641,
+   "end": 4.509,
+   "style": "near",
+   "pan": 0.45,
+   "words": [
+    {
+     "w": "Ayo",
+     "s": 3.713,
+     "e": 3.988
+    },
+    {
+     "w": "pulang",
+     "s": 3.988,
+     "e": 4.838
+    }
+   ]
+  },
+  {
+   "id": "w3",
+   "start": 30.75,
+   "end": 31.574,
+   "style": "close",
+   "pan": -0.2,
+   "words": [
+    {
+     "w": "Ayo",
+     "s": 30.802,
+     "e": 31.052
+    },
+    {
+     "w": "pulang",
+     "s": 31.052,
+     "e": 31.877
+    }
+   ]
+  },
+  {
+   "id": "w4",
+   "start": 129.463,
+   "end": 130.287,
+   "style": "close",
+   "pan": 0.25,
+   "words": [
+    {
+     "w": "Ayo",
+     "s": 129.515,
+     "e": 129.765
+    },
+    {
+     "w": "pulang",
+     "s": 129.765,
+     "e": 130.59
+    }
+   ]
+  },
+  {
+   "id": "w5",
+   "start": 159.795,
+   "end": 160.561,
+   "style": "warm",
+   "pan": 0.0,
+   "words": [
+    {
+     "w": "Ayo",
+     "s": 159.841,
+     "e": 160.066
+    },
+    {
+     "w": "pulang",
+     "s": 160.066,
+     "e": 160.841
+    }
+   ]
+  }
+ ],
+ "subs": [
+  {
+   "start": 9.059,
+   "end": 10.148,
+   "text": "Ini Senja."
+  },
+  {
+   "start": 10.178,
+   "end": 11.438,
+   "text": "Usianya dua puluh empat tahun."
+  },
+  {
+   "start": 11.468,
+   "end": 15.112,
+   "text": "Guru honorer di sebuah SMP di Jawa Barat."
+  },
+  {
+   "start": 15.512,
+   "end": 16.783,
+   "text": "Anak sulung."
+  },
+  {
+   "start": 16.813,
+   "end": 18.325,
+   "text": "Orang tuanya bercerai."
+  },
+  {
+   "start": 18.355,
+   "end": 20.713,
+   "text": "Enam bulan lalu, ayahnya meninggal."
+  },
+  {
+   "start": 21.013,
+   "end": 25.731,
+   "text": "Kini ia memikul ibunya, dua adiknya, dan sekolahnya, di pundaknya."
+  },
+  {
+   "start": 25.881,
+   "end": 27.674,
+   "text": "Dan ia tak punya siapa pun untuk bercerita."
+  },
+  {
+   "start": 28.874,
+   "end": 30.6,
+   "text": "Lalu bisikan itu mulai datang."
+  },
+  {
+   "start": 31.974,
+   "end": 32.91,
+   "text": "“Ayo pulang.”"
+  },
+  {
+   "start": 32.94,
+   "end": 34.706,
+   "text": "Empat, lima kali sehari."
+  },
+  {
+   "start": 34.756,
+   "end": 36.732,
+   "text": "Bayangan hitam berjalan mendekatinya."
+  },
+  {
+   "start": 36.932,
+   "end": 38.549,
+   "text": "Ia menutup telinganya."
+  },
+  {
+   "start": 38.649,
+   "end": 42.272,
+   "text": "Bulan Mei, keluarganya membawanya ke rumah sakit jiwa."
+  },
+  {
+   "start": 42.972,
+   "end": 44.297,
+   "text": "Ia tidak sendirian."
+  },
+  {
+   "start": 44.327,
+   "end": 47.27,
+   "text": "24 juta orang di dunia hidup dengan skizofrenia."
+  },
+  {
+   "start": 47.3,
+   "end": 49.125,
+   "text": "Tujuh dari sepuluh mendengar suara-suara."
+  },
+  {
+   "start": 49.155,
+   "end": 52.183,
+   "text": "Bagi hingga tiga dari sepuluh, obat saja tidak cukup."
+  },
+  {
+   "start": 52.983,
+   "end": 54.878,
+   "text": "Perawatnya mencoba sesuatu yang sederhana."
+  },
+  {
+   "start": 54.908,
+   "end": 57.173,
+   "text": "Kertas. Dan sekotak krayon."
+  },
+  {
+   "start": 57.473,
+   "end": 59.896,
+   "text": "Hari pertama: gumpalan benang hitam yang kusut."
+  },
+  {
+   "start": 61.196,
+   "end": 64.153,
+   "text": "Hari kedua: ruangan di sekitarnya, digambar dengan teliti."
+  },
+  {
+   "start": 65.253,
+   "end": 70.103,
+   "text": "Hari ketiga: pegunungan yang dulu sering ia gambar bersama ayah dan ibunya."
+  },
+  {
+   "start": 71.003,
+   "end": 73.558,
+   "text": "Sembilan tanda halusinasi, tinggal satu."
+  },
+  {
+   "start": 73.658,
+   "end": 76.113,
+   "text": "Menggambar memindahkan yang ada di dalam, ke luar."
+  },
+  {
+   "start": 76.913,
+   "end": 80.117,
+   "text": "Maka kami bertanya: bisakah suara itu sendiri dibawa ke luar?"
+  },
+  {
+   "start": 80.267,
+   "end": 85.102,
+   "text": "Saat kita bicara, bahkan dalam hati, otak mengirim salinan yang berkata: ini aku."
+  },
+  {
+   "start": 85.202,
+   "end": 88.209,
+   "text": "Pada banyak orang yang mendengar suara, salinan itu lemah."
+  },
+  {
+   "start": 88.239,
+   "end": 91.047,
+   "text": "Suara batin mereka sendiri bisa terdengar seperti orang lain."
+  },
+  {
+   "start": 91.077,
+   "end": 93.273,
+   "text": "Dan bibir mereka bisa bergerak saat mendengarnya."
+  },
+  {
+   "start": 94.273,
+   "end": 95.651,
+   "text": "Inilah You, Yourself."
+  },
+  {
+   "start": 95.681,
+   "end": 97.434,
+   "text": "Ini Aku."
+  },
+  {
+   "start": 97.834,
+   "end": 100.505,
+   "text": "Kanal dalam: dua elektroda di bawah bibir bawah."
+  },
+  {
+   "start": 100.535,
+   "end": 104.02,
+   "text": "Sensor MyoWare mengubah aktivitas otot menjadi sinyal."
+  },
+  {
+   "start": 104.05,
+   "end": 109.634,
+   "text": "ESP32 membacanya seribu kali per detik, lalu mengirimkannya ke ponselnya."
+  },
+  {
+   "start": 109.734,
+   "end": 112.725,
+   "text": "Tiga detik istirahat menentukan ambang pribadinya."
+  },
+  {
+   "start": 112.775,
+   "end": 116.308,
+   "text": "Di atas garis selama tiga ratus milidetik: otot bicara."
+  },
+  {
+   "start": 116.338,
+   "end": 117.264,
+   "text": "Bukan menelan."
+  },
+  {
+   "start": 117.294,
+   "end": 118.641,
+   "text": "Bukan mengunyah."
+  },
+  {
+   "start": 118.671,
+   "end": 122.17,
+   "text": "Kanal luar: mikrofon memeriksa apakah ada orang yang benar-benar berbicara."
+  },
+  {
+   "start": 122.2,
+   "end": 123.821,
+   "text": "Tidak ada yang direkam."
+  },
+  {
+   "start": 123.871,
+   "end": 126.348,
+   "text": "Dua kanal. Satu jawaban yang lembut."
+  },
+  {
+   "start": 126.948,
+   "end": 129.013,
+   "text": "Sekarang bayangkan Senja, memakainya."
+  },
+  {
+   "start": 130.537,
+   "end": 131.969,
+   "text": "Bibirnya bergerak, nyaris tak terlihat."
+  },
+  {
+   "start": 131.999,
+   "end": 133.662,
+   "text": "Tak ada orang lain yang berbicara."
+  },
+  {
+   "start": 135.762,
+   "end": 137.969,
+   "text": "Dua ketukan lembut. Ini kamu."
+  },
+  {
+   "start": 138.069,
+   "end": 139.887,
+   "text": "Ia bersenandung satu nada lembut,"
+  },
+  {
+   "start": 141.887,
+   "end": 143.687,
+   "text": "dan suara itu mereda."
+  },
+  {
+   "start": 143.887,
+   "end": 147.835,
+   "text": "Setiap momen tercatat di buku harian, untuk dokter dan perawatnya."
+  },
+  {
+   "start": 148.435,
+   "end": 149.575,
+   "text": "Ini bukan obat."
+  },
+  {
+   "start": 149.605,
+   "end": 151.612,
+   "text": "Ia membaca otot, bukan pikiran."
+  },
+  {
+   "start": 151.642,
+   "end": 153.325,
+   "text": "Semua data tetap di ponselnya."
+  },
+  {
+   "start": 153.355,
+   "end": 155.99,
+   "text": "Komponennya sekitar satu juta rupiah."
+  },
+  {
+   "start": 156.69,
+   "end": 159.245,
+   "text": "Senja menemukan jalan pulang lewat krayon."
+  },
+  {
+   "start": 161.011,
+   "end": 162.708,
+   "text": "Pulanglah, kepada dirimu sendiri."
+  }
+ ]
+}

@@ -40,6 +40,9 @@ for s in slides:
         text(sl, .75, 1.6, 11.8, 1.6, s["title"], 72 if len(s["title"]) < 16 else 50, INK, True, SERIF)
         text(sl, .75, 3.4, 11, .6, s.get("sub", ""), 24, GOLD)
         text(sl, .75, 4.5, 11, 1.6, s["lines"], 26, INK, False, SERIF)
+        if s.get("cta"):
+            url = "you-yourself.vercel.app/" + ("film/" if s.get("href", "").endswith("film/") else "#sim")
+            text(sl, .75, 6.3, 11, .5, s["cta"] + " → " + url, 16, GOLD, True)
     else:
         text(sl, .75, .95, 11.8, 1.2, s["title"], (52 if L == "statement" else 34 if len(s["title"]) <= 42 else 28), INK, True, SERIF)
     if L == "story":

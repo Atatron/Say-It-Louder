@@ -28,6 +28,8 @@ MOVES = {
     "C1": {"dur": 7.4, "par": 0.10, "keys": [(0.0, 0.48, 0.47, 1.18), (7.4, 0.49, 0.52, 1.03)]},
     # the whispers begin: creeping in on her back
     "D1": {"dur": 4.0, "par": 0.08, "keys": [(0.0, 0.44, 0.50, 1.04), (4.0, 0.42, 0.47, 1.12)]},
+    # the shadow on the wall: closing in on it
+    "D2": {"dur": 5.1, "par": 0.10, "keys": [(0.0, 0.45, 0.50, 1.02), (5.1, 0.40, 0.52, 1.16)]},
     # following them in from the rain, toward the lit door
     "E1": {"dur": 5.0, "par": 0.10, "keys": [(0.0, 0.50, 0.52, 1.03), (5.0, 0.50, 0.46, 1.13)]},
     # day three: drifting toward the green lines as she draws

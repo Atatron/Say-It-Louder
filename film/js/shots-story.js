@@ -253,10 +253,10 @@
         F.text(ctx, 'Based on a true story.', W / 2, 512, { family: 'Fraunces', style: 'italic', size: 58, align: 'center', color: P.cream, alpha: c });
         F.text(ctx, 'Names and identifying details have been changed.', W / 2, 574,
           { size: 20, weight: 500, tracking: 1.5, align: 'center', color: 'rgba(226,219,232,0.8)', alpha: c * F.seg(t, c0 + 0.4, c0 + 1.1) });
-        F.text(ctx, 'Adapted from a published, anonymised nursing case report.', W / 2, 610,
-          { size: 17, align: 'center', color: 'rgba(200,194,214,0.6)', alpha: c * F.seg(t, c0 + 0.7, c0 + 1.4) });
-        if (F.PLATES && F.PLATES.length) F.text(ctx, 'Dramatization: scenes are recreated with AI-generated imagery. No one shown is a real person from this story.', W / 2, 640,
-          { size: 17, align: 'center', color: 'rgba(200,194,214,0.6)', alpha: c * F.seg(t, c0 + 0.7, c0 + 1.4) });
+        F.text(ctx, 'Adapted from a published, anonymised nursing case report.', W / 2, 612,
+          { size: 18, align: 'center', color: 'rgba(206,200,220,0.72)', alpha: c * F.seg(t, c0 + 0.7, c0 + 1.4) });
+        if (F.PLATES && F.PLATES.length) F.text(ctx, 'Dramatization: scenes are recreated with AI-generated imagery. No one shown is a real person from this story.', W / 2, 644,
+          { size: 18, align: 'center', color: 'rgba(206,200,220,0.72)', alpha: c * F.seg(t, c0 + 0.7, c0 + 1.4) });
       }
     },
   };
@@ -268,11 +268,13 @@
       const a = F.pulse(t, l1.start - 0.1, 0.7, l2.end - l1.start + 0.6, 0.8);
       if (a > 0) {
         const y = 846, x = 150, rise = (1 - F.ease.out(F.seg(t, l1.start - 0.1, l1.start + 0.7))) * 18;
-        const g = ctx.createLinearGradient(0, 700, 0, 948); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${0.5 * a})`);
-        ctx.fillStyle = g; ctx.fillRect(0, 700, 900, 248);
+        // a soft shade in the corner keeps the card readable over a busy frame
+        const g = ctx.createRadialGradient(x + 120, y + 10, 40, x + 120, y + 10, 520);
+        g.addColorStop(0, `rgba(0,0,0,${0.62 * a})`); g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g; ctx.fillRect(0, 560, 1000, 388);
         F.text(ctx, 'Senja', x, y - 30 + rise, { family: 'Fraunces', style: 'italic', size: 76, color: P.cream, alpha: a });
         ctx.fillStyle = F.rgba(P.amber, a); ctx.fillRect(x + 4, y - 4 + rise, 64 * F.ease.out(F.seg(t, l1.start + 0.3, l1.start + 1.2)), 2);
-        F.text(ctx, 'not her real name', x + 2, y + 32 + rise, { size: 22, weight: 500, tracking: 1, color: 'rgba(240,232,220,0.8)', alpha: a * F.seg(t, l2.start - 0.1, l2.start + 0.5) });
+        F.text(ctx, 'not her real name', x + 2, y + 32 + rise, { size: 22, weight: 500, tracking: 1, color: 'rgba(240,232,220,0.95)', alpha: a * F.seg(t, l2.start - 0.1, l2.start + 0.5) });
       }
   }
   S.class = {

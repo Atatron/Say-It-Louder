@@ -1,5 +1,129 @@
 {
  "fps": 24,
  "root": "../tools/film/build/plates",
- "plates": []
+ "plates": [
+  {
+   "id": "A1",
+   "shot": "class",
+   "start": 8.793,
+   "end": 16.424,
+   "frames": 211,
+   "src": 0.0,
+   "fx": [
+    {
+     "type": "dust",
+     "box": [
+      60,
+      120,
+      1300,
+      900
+     ],
+     "n": 70
+    }
+   ]
+  },
+  {
+   "id": "B1",
+   "shot": "family",
+   "start": 16.424,
+   "end": 17.875,
+   "frames": 62,
+   "src": 0.0
+  },
+  {
+   "id": "B2",
+   "shot": "family",
+   "start": 17.875,
+   "end": 21.618,
+   "frames": 115,
+   "src": 0.0
+  },
+  {
+   "id": "C1",
+   "shot": "weight",
+   "start": 21.618,
+   "end": 28.015,
+   "frames": 178,
+   "src": 0.0
+  },
+  {
+   "id": "D1",
+   "shot": "voice",
+   "start": 28.015,
+   "end": 31.003,
+   "frames": 96,
+   "src": 0.0,
+   "fx": [
+    {
+     "type": "flicker",
+     "depth": 0.32
+    }
+   ]
+  },
+  {
+   "id": "D2",
+   "shot": "voice",
+   "start": 31.003,
+   "end": 35.104,
+   "frames": 122,
+   "src": 0.0,
+   "fx": [
+    {
+     "type": "close",
+     "from": 31.103,
+     "to": 35.144,
+     "a": 0.55
+    }
+   ]
+  },
+  {
+   "id": "E1",
+   "shot": "hospital",
+   "start": 37.003,
+   "end": 40.981,
+   "frames": 120,
+   "src": 0.0,
+   "fx": [
+    {
+     "type": "rain",
+     "n": 140,
+     "a": 0.15
+    }
+   ]
+  },
+  {
+   "id": "G3",
+   "shot": "crayons",
+   "start": 63.229,
+   "end": 64.999,
+   "frames": 67,
+   "src": 0.0
+  },
+  {
+   "id": "H3",
+   "shot": "imagine",
+   "start": 131.403,
+   "end": 137.329,
+   "frames": 166,
+   "src": 0.0,
+   "fx": [
+    {
+     "type": "blink",
+     "at": [
+      969,
+      606,
+      970,
+      595
+     ],
+     "from": 131.403,
+     "to": 138.303,
+     "times": [
+      132.803,
+      133.073
+     ],
+     "r": 60
+    }
+   ]
+  }
+ ]
 }

@@ -33,6 +33,7 @@ NEG_PLUS = {  # per-shot additions to NEG, for mistakes a shot kept making
     "G1": "green lines, teal lines, colored lines, marker pen",
     "M1": "drawing on the window glass",
     "I1": "yellow sleeve, paint, paintbrush",
+    "H2": "lipstick, lip gloss, teeth, open mouth, nose, nostril",
 }
 
 HER = "young Indonesian woman with long straight black hair in a low ponytail, dark teal cardigan"
@@ -67,8 +68,8 @@ PROMPTS = {
           "table, a father's large hand resting beside it, sunlight, soft focus",
     "H1": f"over-the-shoulder rear view, a {HER}, face hidden, at a desk by a window at dusk holding a smartphone, "
           "green volcanic mountains of Java outside",
-    "H2": "extreme macro close-up in profile of a young woman's lips and chin only, cropped below the nose, "
-          "a small round skin sensor taped below her lower lip, soft window light",
+    "H2": "extreme close-up in profile of a young woman's closed lips and chin, matte natural skin, no lipstick, "
+          "a small round white electrode patch taped just below her lower lip, thin wire, soft window light",
     "H3": "close-up of a small matte grey clip-on device with a tiny teal light, clipped to the collar of a dark teal "
           "knitted cardigan, strands of long black hair, warm dusk light",
     "H4": f"rear view from behind, one {HER}, alone, face hidden, sitting back calmly at a desk by a window, "

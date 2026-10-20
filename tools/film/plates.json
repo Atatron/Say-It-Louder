@@ -77,6 +77,14 @@
    ]
   },
   {
+   "id": "D3",
+   "shot": "voice",
+   "start": 35.104,
+   "end": 37.003,
+   "frames": 70,
+   "src": 0.0
+  },
+  {
    "id": "E1",
    "shot": "hospital",
    "start": 37.003,
@@ -92,11 +100,51 @@
    ]
   },
   {
+   "id": "F1",
+   "shot": "crayons",
+   "start": 50.992,
+   "end": 55.449,
+   "frames": 132,
+   "src": 0.0
+  },
+  {
+   "id": "G1",
+   "shot": "crayons",
+   "start": 55.449,
+   "end": 56.999,
+   "frames": 62,
+   "src": 0.0
+  },
+  {
    "id": "G3",
    "shot": "crayons",
    "start": 63.229,
    "end": 64.999,
    "frames": 67,
+   "src": 0.0
+  },
+  {
+   "id": "M1",
+   "shot": "crayons",
+   "start": 64.999,
+   "end": 67.499,
+   "frames": 84,
+   "src": 0.0
+  },
+  {
+   "id": "H1",
+   "shot": "imagine",
+   "start": 124.9,
+   "end": 128.298,
+   "frames": 106,
+   "src": 0.0
+  },
+  {
+   "id": "H2",
+   "shot": "imagine",
+   "start": 128.298,
+   "end": 131.403,
+   "frames": 98,
    "src": 0.0
   },
   {
@@ -124,6 +172,30 @@
      "r": 60
     }
    ]
+  },
+  {
+   "id": "H4",
+   "shot": "imagine",
+   "start": 137.329,
+   "end": 146.277,
+   "frames": 240,
+   "src": 0.0,
+   "fx": [
+    {
+     "type": "warm",
+     "from": 137.329,
+     "to": 141.728,
+     "a": 0.28
+    }
+   ]
+  },
+  {
+   "id": "I1",
+   "shot": "close",
+   "start": 154.997,
+   "end": 159.297,
+   "frames": 127,
+   "src": 0.0
   }
  ]
 }

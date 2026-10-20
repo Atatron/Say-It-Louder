@@ -7,7 +7,7 @@ and moves a virtual camera through it: every pixel is warped by its depth, so ne
 and grow faster than far ones, like a slow dolly on a real set.
 Writes 24 fps 1920x1080 frames to tools/film/build/plates/<id>/ for plates.py / the renderer.
 Camera moves live in MOVES: keyframes (t, cx, cy, zoom) in image fractions, plus parallax strength,
-and optional touch-ups on the still (a grade, drawn-in electrodes).
+and optional touch-ups on the still (a grade, drawn-in electrodes, a mirror).
 """
 import os, sys
 import numpy as np
@@ -37,14 +37,28 @@ MOVES = {
     "G3": {"dur": 2.8, "par": 0.08, "keys": [(0.0, 0.50, 0.50, 1.04), (2.8, 0.55, 0.52, 1.10)]},
     # the device at her collar, framed below her chin; plates.py's H3 blink follows this move
     "H3": {"dur": 6.9, "par": 0.06, "keys": [(0.0, 0.50, 0.57, 1.22), (6.9, 0.50, 0.58, 1.28)]},
-    # her hand pressed to her head; graded from lamplight to the blue night of D1 and D2
-    "D3": {"dur": 2.9, "par": 0.08, "keys": [(0.0, 0.50, 0.50, 1.05), (2.9, 0.52, 0.48, 1.11)],
-           "grade": {"wb": (0.66, 1.0, 1.32), "exp": 0.95}},
+    # her hand pressed to her head; graded from lamplight to the blue night of D1 and D2, and mirrored so
+    # the hand is clear of the callout the voice scene draws top right
+    "D3": {"dur": 2.9, "par": 0.08, "keys": [(0.0, 0.50, 0.50, 1.05), (2.9, 0.48, 0.48, 1.11)],
+           "grade": {"wb": (0.66, 1.0, 1.32), "exp": 0.95}, "flip": True},
     # her lips, barely moving; the model left out the sensor, so its two electrodes are drawn on the skin
-    "H2": {"dur": 4.1, "par": 0.06, "keys": [(0.0, 0.56, 0.54, 1.10), (4.1, 0.58, 0.56, 1.16)],
+    # (flipped so her lips sit left of the signal panels the imagine scene draws on the right)
+    "H2": {"dur": 4.1, "par": 0.06, "keys": [(0.0, 0.47, 0.52, 1.10), (4.1, 0.47, 0.53, 1.15)], "flip": True,
            "electrodes": {"at": [(910, 462), (948, 486)], "r": 17, "wire_to": (640, 770)}},
-    # calm at last: warm dusk, a slow drift in (plates.py adds the light filling the room)
-    "H4": {"dur": 10.0, "par": 0.08, "keys": [(0.0, 0.50, 0.50, 1.03), (10.0, 0.49, 0.48, 1.12)]},
+    # calm at last: warm dusk, a slow drift in (plates.py adds the light filling the room); flipped to keep
+    # her clear of the phone panel on the right
+    "H4": {"dur": 10.0, "par": 0.08, "keys": [(0.0, 0.50, 0.50, 1.03), (10.0, 0.49, 0.48, 1.12)], "flip": True},
+    # the nurse's hands, the paper, the box of crayons: settling onto the box
+    "F1": {"dur": 5.5, "par": 0.06, "keys": [(0.0, 0.48, 0.50, 1.04), (5.5, 0.44, 0.45, 1.13)]},
+    # day one: in on the black tangle
+    "G1": {"dur": 2.6, "par": 0.08, "keys": [(0.0, 0.50, 0.50, 1.04), (2.6, 0.46, 0.46, 1.12)]},
+    # the memory: a child's hand and a parent's, warm and soft like an old photo
+    "M1": {"dur": 3.5, "par": 0.08, "keys": [(0.0, 0.50, 0.50, 1.03), (3.5, 0.52, 0.48, 1.09)],
+           "grade": {"wb": (1.1, 1.0, 0.84), "exp": 1.06, "soft": 0.35}},
+    # imagine: her room at dusk, the mountains outside
+    "H1": {"dur": 4.4, "par": 0.10, "keys": [(0.0, 0.50, 0.50, 1.03), (4.4, 0.50, 0.48, 1.10)]},
+    # home: the drawing goes up on the wall
+    "I1": {"dur": 5.3, "par": 0.06, "keys": [(0.0, 0.50, 0.50, 1.03), (5.3, 0.48, 0.48, 1.10)]},
 }
 DEFAULT = {"dur": 8.0, "par": 0.08, "keys": [(0.0, 0.5, 0.5, 1.03), (8.0, 0.5, 0.5, 1.10)]}
 
@@ -120,14 +134,19 @@ def electrodes(img, at, r, wire_to, angle=-25):
 
 def touch_up(src, mv):
     """Fixes on the still itself, so they move with it: a white balance and exposure grade (to match the
-    shots around it) and drawn-in electrodes (coordinates in the still's own pixels)."""
-    if "grade" not in mv and "electrodes" not in mv:
+    shots around it), drawn-in electrodes (coordinates in the still's own pixels), a mirror."""
+    if not ({"grade", "electrodes", "flip"} & set(mv)):
         return src
     img = src.astype(np.float32)
     if "grade" in mv:
-        img *= np.array(mv["grade"].get("wb", (1, 1, 1)), np.float32) * mv["grade"].get("exp", 1.0)
+        g = mv["grade"]
+        img *= np.array(g.get("wb", (1, 1, 1)), np.float32) * g.get("exp", 1.0)
+        if g.get("soft"):  # a glow of its own blurred copy: the soft focus of a memory
+            img = img * (1 - g["soft"]) + cv2.GaussianBlur(img, (0, 0), 9) * g["soft"]
     if "electrodes" in mv:
         img = electrodes(img, **mv["electrodes"])
+    if mv.get("flip"):  # mirrored, after the touch-ups (their coordinates are the still's own)
+        img = img[:, ::-1]
     return np.clip(img, 0, 255).astype(np.uint8)
 
 

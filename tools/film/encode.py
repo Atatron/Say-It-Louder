@@ -37,6 +37,8 @@ def main():
     ap.add_argument("--out", default=os.path.join(ROOT, "film", "you-yourself-film.mp4"))
     ap.add_argument("--audio", default=os.path.join(HERE, "build", "master.wav"))
     ap.add_argument("--crf", default="18")
+    # live action carries more texture than the animation did; the cap keeps the MP4 under GitHub's 100 MB
+    ap.add_argument("--maxrate", default="4.2M")
     ap.add_argument("--still", nargs=2)
     a = ap.parse_args()
     if not os.path.exists(LUT):
@@ -50,7 +52,8 @@ def main():
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-stats",
            "-framerate", str(fps), "-i", os.path.join(a.frames, "f%05d.jpg"), "-i", a.audio,
            "-filter_complex", look(), "-map", "[out]", "-map", "1:a",
-           "-c:v", "libx264", "-preset", "slow", "-crf", a.crf, "-tune", "film", "-profile:v", "high",
+           "-c:v", "libx264", "-preset", "slow", "-crf", a.crf, "-maxrate", a.maxrate,
+           "-bufsize", f"{2 * float(a.maxrate.rstrip('M'))}M", "-tune", "film", "-profile:v", "high",
            "-pix_fmt", "yuv420p", "-g", str(fps * 2), "-r", str(fps),
            "-c:a", "aac", "-b:a", "224k", "-shortest", "-movflags", "+faststart",
            "-metadata", "title=You, Yourself", a.out]

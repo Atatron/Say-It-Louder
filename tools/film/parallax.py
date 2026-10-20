@@ -24,6 +24,10 @@ MOVES = {
     "B1": {"dur": 2.6, "par": 0.08, "keys": [(0.0, 0.58, 0.48, 1.04), (2.6, 0.60, 0.47, 1.11)]},
     # his sandals by the door, unmoved: settle down toward them
     "B2": {"dur": 4.8, "par": 0.10, "keys": [(0.0, 0.46, 0.54, 1.03), (4.8, 0.40, 0.60, 1.13)]},
+    # alone at her desk at night: the camera backs away and leaves her there
+    "C1": {"dur": 7.4, "par": 0.10, "keys": [(0.0, 0.48, 0.47, 1.18), (7.4, 0.49, 0.52, 1.03)]},
+    # the whispers begin: creeping in on her back
+    "D1": {"dur": 4.0, "par": 0.08, "keys": [(0.0, 0.44, 0.50, 1.04), (4.0, 0.42, 0.47, 1.12)]},
 }
 DEFAULT = {"dur": 8.0, "par": 0.08, "keys": [(0.0, 0.5, 0.5, 1.03), (8.0, 0.5, 0.5, 1.10)]}
 

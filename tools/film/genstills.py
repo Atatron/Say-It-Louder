@@ -44,8 +44,8 @@ PROMPTS = {
           "rain on the window, cold blue moonlight",
     "D2": "night, dark corner of a small empty bedroom, a tall human-shaped shadow on the plain wall, "
           "rain light patterns on the wall, cold blue light, eerie, no people",
-    "D3": f"close-up from behind, the back of the head of a {HER}, face hidden, both hands pressed over her ears, "
-          "hunched, cold blue night light",
+    "D3": f"close-up from behind, both hands pressed flat over her ears, fingers in her hair, a {HER}, face hidden, "
+          "hunched, dark bedroom, cold blue night light",
     "E1": "rear view from behind, night, heavy rain, three people walking toward the one lit entrance door of a small "
           "single-storey hospital, two supporting a young woman, wet pavement, fog",
     "F1": "top-down view of a wooden table, a nurse's hands in light blue sleeves placing a blank white sheet of paper "

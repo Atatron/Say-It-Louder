@@ -25,6 +25,11 @@ MODEL = os.environ.get("STILLS_MODEL", "/home/user/models/realvisxl5l")
 W, H = 1344, 768  # SDXL's 16:9-ish bucket; parallax.py crops to 16:9
 FACE_MAX = 0.72  # YuNet face score above which a candidate is rejected (her face is never shown)
 FACE_OK = {"H2"}  # the one planned exception: lips and chin only, no eyes
+NEG_PLUS = {  # per-shot additions to NEG, for mistakes a shot kept making
+    "H1": "snow, snowy peaks",
+    "H4": "two people, two women, duplicate person",
+    "D3": "earphones, headphones",
+}
 
 HER = "young Indonesian woman with long straight black hair in a low ponytail, dark teal cardigan"
 STYLE = "35mm film still, natural light, shallow depth of field, film grain, muted colors, photorealistic"
@@ -57,13 +62,13 @@ PROMPTS = {
     "M1": "nostalgic memory, a small child's hands drawing green crayon mountains and a yellow sun at a wooden table "
           "by a sunny window, parents' hands beside the paper, warm sepia",
     "H1": f"over-the-shoulder rear view, a {HER}, face hidden, at a desk by a window at dusk holding a smartphone, "
-          "a child's crayon drawing of mountains pinned on the wall",
+          "green volcanic mountains of Java outside",
     "H2": "extreme macro close-up in profile of a young woman's lips and chin only, cropped below the nose, "
           "a small round skin sensor taped below her lower lip, soft window light",
     "H3": "close-up of a small matte grey clip-on device with a tiny teal light, clipped to the collar of a dark teal "
           "knitted cardigan, strands of long black hair, warm dusk light",
-    "H4": f"rear view from behind, a {HER}, face hidden, sitting back calmly at a desk by a window, small bedroom "
-          "full of warm golden dusk light, peaceful",
+    "H4": f"rear view from behind, one {HER}, alone, face hidden, sitting back calmly at a desk by a window, "
+          "warm golden dusk light fills the small bedroom",
     "I1": "morning light, close-up, a young woman's hand in a dark teal knitted sleeve pinning a child's crayon drawing "
           "of green mountains and a yellow sun to a pale wall",
 }
@@ -125,8 +130,8 @@ def generate(ids, seed0, tries, keep, steps, cfg):
     from diffusers import (AutoencoderKL, AutoencoderTiny, DPMSolverMultistepScheduler, StableDiffusionXLPipeline,
                            UNet2DConditionModel)
     from PIL import Image
-    emb = encode({**{pid: text(pid) for pid in ids}, "_neg": NEG})
-    neg, neg_pooled = emb.pop("_neg")
+    emb = encode({**{pid: text(pid) for pid in ids},
+                  **{pid + "_neg": f"{NEG}, {NEG_PLUS[pid]}" if pid in NEG_PLUS else NEG for pid in ids}})
     vae = AutoencoderKL.from_pretrained(MODEL, subfolder="vae", variant="fp16", torch_dtype=torch.float32)
     tiny = AutoencoderTiny.from_pretrained(os.path.join(os.path.dirname(MODEL), "taesdxl"), torch_dtype=torch.float32)
     unet = UNet2DConditionModel.from_pretrained(MODEL, subfolder="unet", variant="fp16", torch_dtype=torch.float32)
@@ -139,7 +144,7 @@ def generate(ids, seed0, tries, keep, steps, cfg):
     os.makedirs(CAND, exist_ok=True)
     todo = []
     for pid in ids:
-        pe, pooled, kept = *emb[pid], 0
+        (pe, pooled), (neg, neg_pooled), kept = emb[pid], emb[pid + "_neg"], 0
         for seed in range(seed0, seed0 + tries):
             t0, lat = time.time(), os.path.join(CAND, f"{pid}_s{seed}.pt")
             with torch.no_grad():

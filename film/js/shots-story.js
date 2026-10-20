@@ -443,8 +443,26 @@
     ctx.drawImage(roomBlur(1), -RP.x, -RP.y); clockHands(ctx, t, 1.5);
     rainOnWindows(ctx, t, rain);
   }
+  // over live action: the three names land on their words and stack up beside her, like the books did
+  function burden(ctx, t) {
+    const first = wordT('L07', BOOKS[0].word);
+    if (t < first - 0.1) return;
+    const sh = ctx.createRadialGradient(1560, 690, 30, 1560, 690, 380);
+    sh.addColorStop(0, `rgba(0,0,0,${0.5 * F.seg(t, first - 0.1, first + 0.4)})`); sh.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = sh; ctx.fillRect(1100, 380, 820, 620);
+    BOOKS.forEach((b, i) => {
+      const ts = wordT('L07', b.word), k = F.seg(t, ts - 0.05, ts + 0.35);
+      if (k <= 0) return;
+      const y = 760 - i * 48 - (1 - F.ease.outBack(k)) * 28;
+      ctx.save(); ctx.globalAlpha *= Math.min(1, k * 1.8);
+      ctx.fillStyle = F.rgba(b.col, 0.95); ctx.fillRect(1672, y - 19, 5, 25);   // its book's colour, like a spine
+      F.text(ctx, b.label, 1652, y, { family: 'JetBrains Mono', size: 25, weight: 600, tracking: 6, align: 'right', color: '#f3e9da' });
+      ctx.restore();
+    });
+  }
   S.weight = {
     bars: 1, trans: 0.9,
+    overlay(ctx, t) { burden(ctx, t); },
     draw(ctx, t, lt, d) {
       const al = C().alone, pull = F.ease.inOut(F.seg(t, al - 0.2, al + 2.6));
       const z = F.lerp(1.12, 0.92, pull), cx = F.lerp(1150, 900, pull), cy = F.lerp(560, 540, pull);

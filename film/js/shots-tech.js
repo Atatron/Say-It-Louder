@@ -541,6 +541,7 @@
       F.text(ctx, 'Based on a true story, adapted from a published, anonymised nursing case report (SINERGI, 2025). Names and identifying details changed.', 960, 790, { size: 17, align: 'center', color: 'rgba(220,214,232,0.7)', alpha: a });
       F.text(ctx, 'Evidence: Whitford et al. 2025 · Rapin et al. 2013 · Inouye & Shimizu 1970 · Green & Kinsbourne 1990 · WHO 2022', 960, 822, { size: 17, align: 'center', color: 'rgba(220,214,232,0.7)', alpha: a });
       F.text(ctx, 'Research prototype — not a medical device. Built for people who hear voices, with them.', 960, 864, { size: 19, weight: 600, align: 'center', color: 'rgba(245,192,78,0.85)', alpha: a });
+      if (F.PLATES && F.PLATES.length) F.text(ctx, 'Dramatization: scenes recreated with AI-generated imagery; no one shown is a real person from this story.', 960, 900, { size: 16, align: 'center', color: 'rgba(220,214,232,0.6)', alpha: a });
     },
   };
 })();

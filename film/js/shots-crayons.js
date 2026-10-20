@@ -216,6 +216,11 @@
 
   // ------------------------------------------------------------------ III · CRAYONS
   S.crayons = {
+    overlay(ctx, t) { // over live-action plates: the count as a case note
+      const c = C(), marks = [[c.day1 - 1.0, 9, 'before'], [c.day2 - 0.5, 5, 'after day 1'], [c.day3 - 0.5, 3, 'after day 2'], [c.chart - 0.5, 1, 'after day 3']];
+      let cur = null; for (const m of marks) if (t >= m[0]) cur = m;
+      if (cur) F.callout(ctx, 1350, 170, 'HALLUCINATION SIGNS', `${cur[1]} of 21 · ${cur[2]}`, 'nurses’ checklist · case report', { accent: P.amber, w: 470 });
+    },
     bars: 1, trans: 0.9, grain: 0.06,
     draw(ctx, t, lt, d) {
       const c = C(), s0 = t - lt;

@@ -255,13 +255,29 @@
           { size: 20, weight: 500, tracking: 1.5, align: 'center', color: 'rgba(226,219,232,0.8)', alpha: c * F.seg(t, c0 + 0.4, c0 + 1.1) });
         F.text(ctx, 'Adapted from a published, anonymised nursing case report.', W / 2, 610,
           { size: 17, align: 'center', color: 'rgba(200,194,214,0.6)', alpha: c * F.seg(t, c0 + 0.7, c0 + 1.4) });
+        if (F.PLATES && F.PLATES.length) F.text(ctx, 'Dramatization: scenes are recreated with AI-generated imagery. No one shown is a real person from this story.', W / 2, 640,
+          { size: 17, align: 'center', color: 'rgba(200,194,214,0.6)', alpha: c * F.seg(t, c0 + 0.7, c0 + 1.4) });
       }
     },
   };
 
   // ------------------------------------------------------------------ I · SENJA (classroom, dusk)
+  // name card: "Senja / not her real name"
+  function nameCard(ctx, t) {
+      const l1 = F.TL.lines.find((l) => l.id === 'L01'), l2 = F.TL.lines.find((l) => l.id === 'L02');
+      const a = F.pulse(t, l1.start - 0.1, 0.7, l2.end - l1.start + 0.6, 0.8);
+      if (a > 0) {
+        const y = 846, x = 150, rise = (1 - F.ease.out(F.seg(t, l1.start - 0.1, l1.start + 0.7))) * 18;
+        const g = ctx.createLinearGradient(0, 700, 0, 948); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${0.5 * a})`);
+        ctx.fillStyle = g; ctx.fillRect(0, 700, 900, 248);
+        F.text(ctx, 'Senja', x, y - 30 + rise, { family: 'Fraunces', style: 'italic', size: 76, color: P.cream, alpha: a });
+        ctx.fillStyle = F.rgba(P.amber, a); ctx.fillRect(x + 4, y - 4 + rise, 64 * F.ease.out(F.seg(t, l1.start + 0.3, l1.start + 1.2)), 2);
+        F.text(ctx, 'not her real name', x + 2, y + 32 + rise, { size: 22, weight: 500, tracking: 1, color: 'rgba(240,232,220,0.8)', alpha: a * F.seg(t, l2.start - 0.1, l2.start + 0.5) });
+      }
+  }
   S.class = {
     bars: 1, trans: 1.1,
+    overlay(ctx, t) { nameCard(ctx, t); },
     draw(ctx, t, lt, d) {
       // opens close under the clock, then eases back to find her at her desk, then a slow push
       const rev = F.ease.inOut(F.seg(lt, 0.0, 3.6)), drift = F.ease.sine(F.clamp(lt / (d + 0.6)));
@@ -276,17 +292,7 @@
       ctx.restore();
       // an empty student chair, close to the lens, drifting past
       fgChair(ctx, 230 - (cx - 1000) * 1.4 - lt * 8, 905 - (cy - 570) * 0.5, 1.15, 0.95);
-      // name card
-      const l1 = F.TL.lines.find((l) => l.id === 'L01'), l2 = F.TL.lines.find((l) => l.id === 'L02');
-      const a = F.pulse(t, l1.start - 0.1, 0.7, l2.end - l1.start + 0.6, 0.8);
-      if (a > 0) {
-        const y = 846, x = 150, rise = (1 - F.ease.out(F.seg(t, l1.start - 0.1, l1.start + 0.7))) * 18;
-        const g = ctx.createLinearGradient(0, 700, 0, 948); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${0.5 * a})`);
-        ctx.fillStyle = g; ctx.fillRect(0, 700, 900, 248);
-        F.text(ctx, 'Senja', x, y - 30 + rise, { family: 'Fraunces', style: 'italic', size: 76, color: P.cream, alpha: a });
-        ctx.fillStyle = F.rgba(P.amber, a); ctx.fillRect(x + 4, y - 4 + rise, 64 * F.ease.out(F.seg(t, l1.start + 0.3, l1.start + 1.2)), 2);
-        F.text(ctx, 'not her real name', x + 2, y + 32 + rise, { size: 22, weight: 500, tracking: 1, color: 'rgba(240,232,220,0.8)', alpha: a * F.seg(t, l2.start - 0.1, l2.start + 0.5) });
-      }
+      nameCard(ctx, t);
     },
   };
 
@@ -469,7 +475,18 @@
   };
 
   // ------------------------------------------------------------------ II · THE VOICE
+  function voiceNotes(ctx, t, lt, d) {
+    const c = C(), s1 = t - lt + d;
+      // case notes
+      const l10 = F.TL.lines.find((l) => l.id === 'L10');
+      F.callout(ctx, 1350, 170, 'WHISPERS', '4–5× a day · ≤ 5 min', 'from the case report', { alpha: F.pulse(t, l10.start - 0.1, 0.5, 2.6, 0.6), accent: P.rose, w: 470 });
+      F.callout(ctx, 1350, 330, 'BLACK SHADOW', '5–7× a day · 1–2 min', 'from the case report', { alpha: F.pulse(t, c.shadow + 0.1, 0.5, 2.4, 0.6), accent: P.rose, w: 470 });
+      // hard cut to black with the tinnitus
+      const cut = F.seg(t, s1 - 0.48, s1 - 0.42);
+      if (cut > 0) { ctx.fillStyle = `rgba(0,0,0,${cut})`; ctx.fillRect(0, 0, W, H); }
+  }
   S.voice = {
+    overlay(ctx, t, lt, d) { voiceNotes(ctx, t, lt, d); },
     bars: 1, trans: 0, // a hard cut from the same room: the night goes on, the rain gets heavier
     draw(ctx, t, lt, d) {
       const c = C(), w3 = W_('w3'), s1 = t - lt + d;
@@ -499,13 +516,7 @@
         F.drawWhisper(ctx, 1080 + Math.cos(ang) * rr, 360 + Math.sin(ang) * rr * 0.45, 0.42 + 0.08 * (i % 3), a, '#ffb8c8', 'rose', Math.sin(ang) * 0.12);
       }
       ctx.restore();
-      // case notes
-      const l10 = F.TL.lines.find((l) => l.id === 'L10');
-      F.callout(ctx, 1350, 170, 'WHISPERS', '4–5× a day · ≤ 5 min', 'from the case report', { alpha: F.pulse(t, l10.start - 0.1, 0.5, 2.6, 0.6), accent: P.rose, w: 470 });
-      F.callout(ctx, 1350, 330, 'BLACK SHADOW', '5–7× a day · 1–2 min', 'from the case report', { alpha: F.pulse(t, c.shadow + 0.1, 0.5, 2.4, 0.6), accent: P.rose, w: 470 });
-      // hard cut to black with the tinnitus
-      const cut = F.seg(t, s1 - 0.48, s1 - 0.42);
-      if (cut > 0) { ctx.fillStyle = `rgba(0,0,0,${cut})`; ctx.fillRect(0, 0, W, H); }
+      voiceNotes(ctx, t, lt, d);
     },
   };
 

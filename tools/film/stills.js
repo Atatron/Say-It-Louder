@@ -11,7 +11,7 @@ const fs = require('fs');
   const imgs = [];
   for (const t of ts) {
     const t0 = Date.now();
-    const data = await p.evaluate((t) => { F.renderAt(t); return F.canvasEl.toDataURL('image/jpeg', 0.85); }, parseFloat(t));
+    const data = await p.evaluate(async (t) => { await F.preparePlates(t); F.renderAt(t); return F.canvasEl.toDataURL('image/jpeg', 0.85); }, parseFloat(t));
     imgs.push({ t, data, ms: Date.now() - t0 });
   }
   // contact sheet: 2 columns at 960x540

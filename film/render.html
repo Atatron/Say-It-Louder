@@ -22,11 +22,14 @@ canvas{width:min(100vw,calc(100vh*16/9));height:auto;aspect-ratio:16/9;display:b
 <script src="js/shots-crayons.js"></script>
 <script src="js/shots-tech.js"></script>
 <script src="js/shots-imagine.js"></script>
+<script src="js/plates.js"></script>
 <script src="js/main.js"></script>
 <script>
 (async () => {
   F.RENDER = true; // film grain and the colour grade are added at encode time (tools/film/encode.py)
   await F.boot(document.getElementById('c'));
+  await F.loadPlates('../tools/film/plates.json'); // live-action plates, when they exist
+  await F.preparePlates(parseFloat(new URLSearchParams(location.search).get('t') || '0'));
   window.FILM_READY = true;
   F.renderAt(parseFloat(new URLSearchParams(location.search).get('t') || '0'));
 })();

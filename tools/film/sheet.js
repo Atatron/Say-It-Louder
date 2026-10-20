@@ -7,7 +7,7 @@ const { chromium } = require(process.env.PW || 'playwright');
   const errs = []; p.on('pageerror', (e) => errs.push(e.message));
   await p.goto('http://localhost:8765/film/render.html'); await p.waitForFunction(() => window.FILM_READY === true);
   const ts = [...Array(N)].map((_, i) => +(A + (B - A) * i / (N - 1)).toFixed(2)), imgs = [];
-  for (const t of ts) imgs.push(await p.evaluate((t) => { F.renderAt(t); return F.canvasEl.toDataURL('image/jpeg', 0.8); }, t));
+  for (const t of ts) imgs.push(await p.evaluate(async (t) => { await F.preparePlates(t); F.renderAt(t); return F.canvasEl.toDataURL('image/jpeg', 0.8); }, t));
   for (let s = 0; s < Math.ceil(N / 16); s++) {
     const q = await br.newPage({ viewport: { width: 1920, height: 1080 } });
     await q.setContent('<body style="margin:0;background:#111"><div style="display:grid;grid-template-columns:repeat(4,480px)">' +

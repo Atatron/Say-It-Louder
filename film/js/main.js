@@ -9,9 +9,12 @@
   const spec = (name) => F.SHOTS[name] || { draw: (c) => { c.fillStyle = '#111'; c.fillRect(0, 0, F.W, F.H);
     F.text(c, 'shot: ' + name, 80, 120, { size: 40 }); }, bars: 1 };
 
+  // a live-action plate (plates.js) replaces the painted shot where one exists; the shot then adds only its overlays
   function drawShot(ctx, s, t) {
     ctx.save();
-    spec(s.name).draw(ctx, t, t - s.start, s.end - s.start, s);
+    const sp = spec(s.name), p = F.plateFor && F.plateFor(s, t);
+    if (p) { F.drawPlate(ctx, p, t); if (sp.overlay) sp.overlay(ctx, t, t - s.start, s.end - s.start, p); }
+    else sp.draw(ctx, t, t - s.start, s.end - s.start, s);
     ctx.restore();
   }
 
@@ -65,6 +68,7 @@
     if (n <= 1) { F.renderAt(t); return; }
     const g = F.ctx, W = F.W, H = F.H, i0 = F.shotAt(t), sh = F.TL.shots[i0];
     const acc = F._acc || (F._acc = new Float32Array(W * H * 3)); acc.fill(0);
+    F._frameT = t; // live-action plates already carry their own motion blur: one plate frame per film frame
     for (let k = 0; k < n; k++) {
       let tk = t + ((k + 0.5) / n - 0.5) * shutter;
       if (!(spec(sh.name).trans > 0 && tk - sh.start < spec(sh.name).trans)) tk = F.clamp(tk, sh.start, sh.end - 1e-4);
@@ -75,6 +79,7 @@
     const img = g.createImageData(W, H), o = img.data, m = 4095 / n;
     for (let p = 0, q = 0; p < o.length; p += 4, q += 3) { o[p] = ENC[(acc[q] * m) | 0]; o[p + 1] = ENC[(acc[q + 1] * m) | 0]; o[p + 2] = ENC[(acc[q + 2] * m) | 0]; o[p + 3] = 255; }
     g.putImageData(img, 0, 0);
+    F._frameT = null;
   };
 
   // ---------------------------------------------------------------- boot

@@ -28,7 +28,7 @@ fs.mkdirSync(dir, { recursive: true });
     await page.goto('http://localhost:8765/film/render.html', { waitUntil: 'load' });
     await page.waitForFunction(() => window.FILM_READY === true, null, { timeout: 120000 });
     for (let f = a; f <= b; f++) {
-      const data = await page.evaluate(([t, n, sh]) => { F.renderMB(t, n, sh); return F.canvasEl.toDataURL('image/jpeg', 0.95); }, [f / fps, mb, 0.5 / fps]);
+      const data = await page.evaluate(async ([t, n, sh]) => { await F.preparePlates(t); F.renderMB(t, n, sh); return F.canvasEl.toDataURL('image/jpeg', 0.95); }, [f / fps, mb, 0.5 / fps]);
       fs.writeFileSync(path.join(dir, `f${String(f).padStart(5, '0')}.jpg`), Buffer.from(data.split(',')[1], 'base64'));
       if (++done % 250 === 0) console.log(`${done}/${total} frames · ${((Date.now() - t0) / 1000).toFixed(0)} s`);
     }

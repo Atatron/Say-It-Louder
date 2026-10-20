@@ -97,7 +97,38 @@
     ctx.restore(); ctx.restore();
   }
 
+  // the app's side of the scene: HUD, the phone, the honesty label (also drawn over the live-action plates)
+  function imagineUI(ctx, t, lt, d) {
+    const c = C();
+      // HUD: inside + outside, then the phone
+      const toPhone = F.ease.inOut(F.seg(t, c.press - 0.1, c.press + 0.4));
+      const ha = F.seg(t, c.emg - 0.1, c.emg + 0.4) * (1 - toPhone), hb = F.seg(t, c.quiet_room - 0.1, c.quiet_room + 0.4) * (1 - toPhone);
+      if (ha > 0) {
+        const x = 1330 + (1 - ha) * 60, y = 180;
+        hud(ctx, x, y, 470, 250, 'INSIDE · LIP EMG', ha, P.teal);
+        ctx.save(); ctx.globalAlpha *= ha; ctx.beginPath(); ctx.rect(x + 20, y + 56, 430, 150); ctx.clip();
+        const thrY = y + 130; ctx.strokeStyle = 'rgba(255,107,129,0.8)'; ctx.setLineDash([7, 6]); ctx.beginPath(); ctx.moveTo(x + 20, thrY); ctx.lineTo(x + 450, thrY); ctx.stroke(); ctx.setLineDash([]);
+        ctx.strokeStyle = P.teal; ctx.lineWidth = 2.6; ctx.beginPath();
+        for (let i = 0; i <= 160; i++) { const u = i / 160, tt = t - 2.5 + u * 2.5; const on = F.seg(tt, c.emg, c.emg + 0.25);
+          const v = 0.12 + 0.05 * F.noise1(tt * 30, 2) + on * (0.55 + 0.1 * F.noise1(tt * 11, 4)); const px = x + 24 + u * 422, py = y + 196 - v * 140; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+        ctx.stroke(); ctx.restore();
+        const ok = F.seg(t, c.emg + 0.45, c.emg + 0.8);
+        F.text(ctx, '✓ speech-motor · ≥ 300 ms', x + 446, y + 234, { size: 19, weight: 700, align: 'right', color: P.teal, alpha: ok * ha });
+      }
+      if (hb > 0) {
+        const x = 1330 + (1 - hb) * 60, y = 450;
+        hud(ctx, x, y, 470, 200, 'OUTSIDE · MICROPHONE', hb, P.amber);
+        ctx.save(); ctx.globalAlpha *= hb;
+        for (let i = 0; i < 28; i++) { const v = 0.12 + 0.08 * Math.abs(F.noise1(t * 5 + i, 7)); ctx.fillStyle = 'rgba(245,192,78,0.55)'; F.rrect(ctx, x + 26 + i * 15, y + 176 - v * 220, 10, v * 220, 3); ctx.fill(); }
+        F.text(ctx, 'no speech', x + 446, y + 38, { size: 19, weight: 700, align: 'right', color: P.amber });
+        ctx.restore();
+      }
+      phoneScreen(ctx, 1540, 540, 450, 740, t, toPhone);
+      // honesty label
+      F.text(ctx, 'IMAGINED SCENARIO  ·  SIMULATED SIGNAL', 90, 186, { family: 'JetBrains Mono', size: 17, weight: 600, tracking: 3, color: P.amber, alpha: 0.85 * F.seg(lt, 0.4, 1.2) });
+  }
   S.imagine = {
+    overlay(ctx, t, lt, d) { imagineUI(ctx, t, lt, d); },
     bars: 1, trans: 1.0, grain: 0.05,
     draw(ctx, t, lt, d) {
       const c = C(), s0 = t - lt;
@@ -155,32 +186,7 @@
       ctx.save(); ctx.globalCompositeOperation = 'lighter'; F.glowDot(ctx, 1500, 400, 900, '#ffb070', 0.14 + 0.16 * warm); ctx.restore();
       ctx.restore();
 
-      // HUD: inside + outside, then the phone
-      const toPhone = F.ease.inOut(F.seg(t, c.press - 0.1, c.press + 0.4));
-      const ha = F.seg(t, c.emg - 0.1, c.emg + 0.4) * (1 - toPhone), hb = F.seg(t, c.quiet_room - 0.1, c.quiet_room + 0.4) * (1 - toPhone);
-      if (ha > 0) {
-        const x = 1330 + (1 - ha) * 60, y = 180;
-        hud(ctx, x, y, 470, 250, 'INSIDE · LIP EMG', ha, P.teal);
-        ctx.save(); ctx.globalAlpha *= ha; ctx.beginPath(); ctx.rect(x + 20, y + 56, 430, 150); ctx.clip();
-        const thrY = y + 130; ctx.strokeStyle = 'rgba(255,107,129,0.8)'; ctx.setLineDash([7, 6]); ctx.beginPath(); ctx.moveTo(x + 20, thrY); ctx.lineTo(x + 450, thrY); ctx.stroke(); ctx.setLineDash([]);
-        ctx.strokeStyle = P.teal; ctx.lineWidth = 2.6; ctx.beginPath();
-        for (let i = 0; i <= 160; i++) { const u = i / 160, tt = t - 2.5 + u * 2.5; const on = F.seg(tt, c.emg, c.emg + 0.25);
-          const v = 0.12 + 0.05 * F.noise1(tt * 30, 2) + on * (0.55 + 0.1 * F.noise1(tt * 11, 4)); const px = x + 24 + u * 422, py = y + 196 - v * 140; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
-        ctx.stroke(); ctx.restore();
-        const ok = F.seg(t, c.emg + 0.45, c.emg + 0.8);
-        F.text(ctx, '✓ speech-motor · ≥ 300 ms', x + 446, y + 234, { size: 19, weight: 700, align: 'right', color: P.teal, alpha: ok * ha });
-      }
-      if (hb > 0) {
-        const x = 1330 + (1 - hb) * 60, y = 450;
-        hud(ctx, x, y, 470, 200, 'OUTSIDE · MICROPHONE', hb, P.amber);
-        ctx.save(); ctx.globalAlpha *= hb;
-        for (let i = 0; i < 28; i++) { const v = 0.12 + 0.08 * Math.abs(F.noise1(t * 5 + i, 7)); ctx.fillStyle = 'rgba(245,192,78,0.55)'; F.rrect(ctx, x + 26 + i * 15, y + 176 - v * 220, 10, v * 220, 3); ctx.fill(); }
-        F.text(ctx, 'no speech', x + 446, y + 38, { size: 19, weight: 700, align: 'right', color: P.amber });
-        ctx.restore();
-      }
-      phoneScreen(ctx, 1540, 540, 450, 740, t, toPhone);
-      // honesty label
-      F.text(ctx, 'IMAGINED SCENARIO  ·  SIMULATED SIGNAL', 90, 186, { family: 'JetBrains Mono', size: 17, weight: 600, tracking: 3, color: P.amber, alpha: 0.85 * F.seg(lt, 0.4, 1.2) });
+      imagineUI(ctx, t, lt, d);
     },
   };
 })();

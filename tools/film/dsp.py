@@ -395,6 +395,45 @@ def fluorescent(dur, vel=0.04):
     return y * vel
 
 
+def rain(dur, seed=33, vel=0.05, drops=40.0):
+    """Night rain: a hiss of rain outside, a low wash, and drops ticking on the glass (stereo)."""
+    n = S(dur)
+    t = tvec(n)
+    r = rng(seed)
+    out = np.zeros((n, 2))
+    for c in range(2):
+        body = bp(r.standard_normal(n), 700, 9000, 2) * 0.55 + lp(r.standard_normal(n), 500, 2) * 0.35
+        gust = 0.85 + 0.15 * np.sin(2 * np.pi * 0.07 * t + c) * np.sin(2 * np.pi * 0.13 * t + 1.3 * c)
+        out[:, c] = body * gust
+    m = S(0.03)
+    env = np.exp(-np.arange(m) / S(0.004))
+    for i in r.integers(0, max(1, n - m), int(dur * drops)):
+        tick = hp(r.standard_normal(m), 3000) * env * r.uniform(0.15, 1.0) * 0.6
+        a = (r.uniform(-0.9, 0.9) + 1) * np.pi / 4
+        out[i:i + m, 0] += tick * np.cos(a)
+        out[i:i + m, 1] += tick * np.sin(a)
+    return out * vel
+
+
+def footstep(vel=0.3, seed=35):
+    """A step on wet pavement: a soft thud and a little splash."""
+    n = S(0.2)
+    t = tvec(n)
+    r = rng(seed)
+    thud = lp(r.standard_normal(n), 300, 2) * np.exp(-t / 0.03) * 1.5
+    splash = bp(r.standard_normal(n), 1500, 6000) * np.exp(-t / 0.05) * 0.35
+    return (thud + splash) * vel
+
+
+def pen(dur, seed=37, vel=0.3):
+    """A pen on exam paper: short strokes."""
+    n = S(dur)
+    t = tvec(n)
+    g = bp(noise(n, seed), 2500, 9000, 2)
+    strokes = np.clip(np.sin(2 * np.pi * 3.1 * t + 1.7 * np.sin(2 * np.pi * 0.9 * t)), 0, 1) ** 0.7
+    return g * strokes * env_ar(n, 0.03, 0.08) * vel * 0.12
+
+
 # ---------------------------------------------------------------- spaces + dynamics
 
 def make_ir(rt60=2.6, predelay=0.018, seed=41, bright=0.5):

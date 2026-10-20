@@ -146,14 +146,17 @@
   };
   F.bars = (ctx, k) => { if (k <= 0) return; const h = F.BAR * k; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, F.W, h); ctx.fillRect(0, F.H - h, F.W, h); };
 
-  F.subtitle = (ctx, s, a, barK) => {
+  // English captions: set in the lower letterbox bar when there is one, otherwise on a soft dark band.
+  // Whispers (the voice in her head) are captioned in italics.
+  F.subtitle = (ctx, s, a, barK, italic) => {
     if (!s || a <= 0) return;
     ctx.save(); ctx.globalAlpha = a;
-    const y = barK > 0.5 ? F.H - F.BAR / 2 + 12 : F.H - 74;
-    const o = { size: 34, weight: 500, align: 'center', color: '#f4f1e8' };
-    if (barK <= 0.5) {
-      const w = F.measure(ctx, s, o) + 56; F.rrect(ctx, F.W / 2 - w / 2, y - 44, w, 62, 31);
-      ctx.fillStyle = 'rgba(5,6,14,0.62)'; ctx.fill();
+    const inBar = barK > 0.5, y = inBar ? F.H - F.BAR / 2 + 11 : F.H - 66;
+    const o = italic ? { family: 'Fraunces', style: 'italic', size: 34, weight: 400, align: 'center', color: '#e9d7d2' }
+      : { size: 31, weight: 500, align: 'center', color: '#f1ece2' };
+    if (!inBar) {
+      const w = F.measure(ctx, s, o) + 48; F.rrect(ctx, F.W / 2 - w / 2, y - 40, w, 56, 12);
+      ctx.fillStyle = 'rgba(6,6,12,0.58)'; ctx.fill();
     }
     F.text(ctx, s, F.W / 2, y, o);
     ctx.restore();

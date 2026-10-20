@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You, Yourself · Renderer</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+html,body{margin:0;height:100%;background:#000;overflow:hidden}
+canvas{width:min(100vw,calc(100vh*16/9));height:auto;aspect-ratio:16/9;display:block;margin:auto;position:absolute;inset:0}
+</style>
+</head>
+<body>
+<!-- The film's frame renderer. tools/film/capture.js renders every frame from here; film/index.html plays the finished MP4.
+     Open with ?t=<seconds> to look at one frame. -->
+<canvas id="c" width="1920" height="1080"></canvas>
+<script src="js/core.js"></script>
+<script src="js/senja.js"></script>
+<script src="js/shots-story.js"></script>
+<script src="js/shots-crayons.js"></script>
+<script src="js/shots-tech.js"></script>
+<script src="js/shots-imagine.js"></script>
+<script src="js/main.js"></script>
+<script>
+(async () => {
+  F.RENDER = true; // film grain and the colour grade are added at encode time (tools/film/encode.py)
+  await F.boot(document.getElementById('c'));
+  window.FILM_READY = true;
+  F.renderAt(parseFloat(new URLSearchParams(location.search).get('t') || '0'));
+})();
+</script>
+</body>
+</html>

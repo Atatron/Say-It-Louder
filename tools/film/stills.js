@@ -6,7 +6,7 @@ const fs = require('fs');
   const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--disable-gpu'] });
   const p = await b.newPage({ viewport: { width: 1920, height: 1080 } });
   const errs = []; p.on('pageerror', (e) => errs.push(e.message)); p.on('console', (m) => m.type() === 'error' && errs.push(m.text()));
-  await p.goto('http://localhost:8765/film/index.html?render=1', { waitUntil: 'load' });
+  await p.goto('http://localhost:8765/film/render.html', { waitUntil: 'load' });
   await p.waitForFunction(() => window.FILM_READY === true, null, { timeout: 60000 });
   const imgs = [];
   for (const t of ts) {

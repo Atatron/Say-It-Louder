@@ -122,10 +122,10 @@
       const w4 = F.TL.whispers.find((w) => w.id === 'w4');
       const wa = F.seg(t, w4.start - 0.1, w4.start + 0.3) * (1 - F.seg(t, c.hum + 0.2, c.hum + 1.6));
       const shiver = F.pulse(t, c.taps, 0.05, 0.4, 0.3) * 6;
-      for (let i = 0; i < 4; i++) {
-        const ang = t * (0.3 + i * 0.05) + i * 1.9, rr = 210 + i * 30;
+      for (let i = 0; i < 3; i++) {
+        const ang = t * (0.26 + i * 0.05) + i * 2.4, rr = 250 + i * 42;
         const x = SX + 20 + Math.cos(ang) * rr + F.noise1(t * 20 + i, 3) * shiver, y = SY - 40 + Math.sin(ang) * rr * 0.42;
-        F.drawWhisper(ctx, x, y, 0.42 + 0.06 * (i % 2), wa * (0.45 + 0.25 * Math.sin(t * 2 + i)), '#ffb8c8', 'rose', Math.sin(ang) * 0.1);
+        F.drawWhisper(ctx, x, y, 0.42 + 0.06 * (i % 2), wa * (0.36 + 0.2 * Math.sin(t * 1.6 + i)), '#ffb8c8', 'rose', Math.sin(ang) * 0.1);
       }
       // dissolving into gold
       if (hum > 0 && hum < 1) {

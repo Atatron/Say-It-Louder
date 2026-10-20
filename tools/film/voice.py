@@ -17,7 +17,7 @@ BUILD = os.path.join(HERE, "build")
 CACHE = os.path.join(BUILD, "cache")
 os.makedirs(CACHE, exist_ok=True)
 sys.path.insert(0, HERE)
-from edl import EDL, WHISPER_TEXT  # noqa: E402
+from edl import EDL, WHISPER_TEXT, WHISPER_CAPTION  # noqa: E402
 
 SR_TTS, SR = 24000, 48000
 NARRATOR, MOTHER = "af_heart", "af_bella"
@@ -98,7 +98,7 @@ def main():
             lines.append({
                 "id": lid, "start": round(t, 3), "end": round(t + dur, 3),
                 "en": re.sub(r"\[([^\]]+)\]\(/[^)]*/\)", r"\1", text),
-                "sub": sub,
+                "sub": sub,  # the on-screen English caption
                 "words": [{"w": w, "s": round(t + s - cut, 3), "e": round(t + e - cut, 3)} for w, s, e in words],
             })
             t += dur
@@ -119,19 +119,22 @@ def main():
     shots[-1]["end"] = round(t, 3)
     total = round(t, 3)
 
-    # Subtitles: one per narrator line, held a little past the line, never overlapping the next.
+    # Captions: one per narrator line (and one per whisper, in italics), held a little past the
+    # line, never overlapping the next caption.
+    cues_ = sorted([(ln["start"], ln["end"], ln["sub"], False) for ln in lines if ln["sub"]] +
+                   [(w["start"], w["end"], WHISPER_CAPTION, True) for w in whispers])
     subs = []
-    for i, ln in enumerate(lines):
-        nxt = lines[i + 1]["start"] if i + 1 < len(lines) else total
-        end = min(max(ln["end"] + 0.35, ln["start"] + 1.3), nxt - 0.08)
-        subs.append({"start": round(ln["start"] - 0.05, 3), "end": round(end, 3), "text": ln["sub"]})
+    for i, (st, en, text, italic) in enumerate(cues_):
+        nxt = cues_[i + 1][0] if i + 1 < len(cues_) else total
+        end = min(max(en + 0.35, st + 1.3), nxt - 0.08)
+        subs.append({"start": round(st - 0.05, 3), "end": round(end, 3), "text": text, "italic": italic})
 
     narr = np.zeros(int((total + 1) * SR), np.float32)
     for st, a in placed:
         i = int(st * SR); narr[i:i + len(a)] += a
     sf.write(os.path.join(BUILD, "narration.wav"), narr, SR)
 
-    tl = {"duration": total, "fps": 30, "shots": shots, "chapters": chapters, "cues": cues,
+    tl = {"duration": total, "fps": 24, "shots": shots, "chapters": chapters, "cues": cues,
           "lines": lines, "whispers": whispers, "subs": subs}
     json.dump(tl, open(os.path.join(ROOT, "film", "timeline.json"), "w"), indent=1, ensure_ascii=False)
     print(f"total {total:.2f}s  ({int(total // 60)}:{total % 60:04.1f})  lines {len(lines)}  shots {len(shots)}")

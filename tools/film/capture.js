@@ -1,5 +1,6 @@
-// Render every frame of the film with N parallel headless browsers, then encode with the master audio.
-// Usage: node tools/film/capture.js [--workers 4] [--fps 30] [--from 0] [--to <sec>] [--frames <dir>] [--no-encode]
+// Render every frame of the film with N parallel headless browsers (JPEG frames for tools/film/encode.py).
+// Usage: node tools/film/capture.js [--workers 4] [--fps 24] [--mb 4] [--from 0] [--to <sec>] [--frames <dir>] [--encode (quick preview MP4)]
+// --mb: motion-blur samples per frame (180° shutter). Encode + film look: tools/film/encode.py
 // Needs the site served at http://localhost:8765 and PW=<path to playwright>.
 const { chromium } = require(process.env.PW || 'playwright');
 const fs = require('fs'), path = require('path'), { spawnSync } = require('child_process');
@@ -7,7 +8,7 @@ const fs = require('fs'), path = require('path'), { spawnSync } = require('child
 const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > 0 ? process.argv[i + 1] : d; };
 const ROOT = path.resolve(__dirname, '..', '..');
 const tl = JSON.parse(fs.readFileSync(path.join(ROOT, 'film', 'timeline.json')));
-const fps = +arg('fps', 30), workers = +arg('workers', 4);
+const fps = +arg('fps', 24), workers = +arg('workers', 4), mb = +arg('mb', 4);
 const from = +arg('from', 0), to = Math.min(+arg('to', tl.duration), tl.duration);
 const dir = arg('frames', '/home/user/filmframes');
 const out = arg('out', path.join(ROOT, 'film', 'you-yourself-film.mp4'));
@@ -24,17 +25,17 @@ fs.mkdirSync(dir, { recursive: true });
     const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--disable-gpu'] });
     const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
     page.on('pageerror', (e) => console.error('pageerror', w, e.message));
-    await page.goto('http://localhost:8765/film/index.html?render=1', { waitUntil: 'load' });
+    await page.goto('http://localhost:8765/film/render.html', { waitUntil: 'load' });
     await page.waitForFunction(() => window.FILM_READY === true, null, { timeout: 120000 });
     for (let f = a; f <= b; f++) {
-      const data = await page.evaluate((t) => { F.renderAt(t); return F.canvasEl.toDataURL('image/jpeg', 0.93); }, f / fps);
+      const data = await page.evaluate(([t, n, sh]) => { F.renderMB(t, n, sh); return F.canvasEl.toDataURL('image/jpeg', 0.95); }, [f / fps, mb, 0.5 / fps]);
       fs.writeFileSync(path.join(dir, `f${String(f).padStart(5, '0')}.jpg`), Buffer.from(data.split(',')[1], 'base64'));
       if (++done % 250 === 0) console.log(`${done}/${total} frames · ${((Date.now() - t0) / 1000).toFixed(0)} s`);
     }
     await browser.close();
   }));
   console.log(`rendered ${total} frames in ${((Date.now() - t0) / 1000).toFixed(0)} s`);
-  if (process.argv.includes('--no-encode')) return;
+  if (!process.argv.includes('--encode')) return; // the real encode is tools/film/encode.py
   const audio = path.join(__dirname, 'build', 'master.wav');
   const r = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(fps), '-start_number', String(first), '-i', path.join(dir, 'f%05d.jpg'),
     '-ss', String(from), '-i', audio, '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-preset', 'slow', '-crf', '19', '-pix_fmt', 'yuv420p',

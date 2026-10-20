@@ -1,8 +1,8 @@
-"""Final mix: narrator + whispers + score + sound design → master + web audio.
+"""Final mix: narrator + whispers + score + sound design → tools/film/build/master.wav (encode.py muxes it).
 
 Run: /home/user/.venvs/film/bin/python tools/film/mix.py
 """
-import json, os, subprocess
+import json, os
 import numpy as np
 import soundfile as sf
 import pyloudnorm as pyln
@@ -131,9 +131,6 @@ def main():
 
     out = os.path.join(BUILD, "master.wav")
     sf.write(out, mixd.astype(np.float32), SR, subtype="FLOAT")
-    os.makedirs(os.path.join(ROOT, "film", "audio"), exist_ok=True)
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", out, "-c:a", "aac", "-b:a", "160k",
-                    os.path.join(ROOT, "film", "audio", "film.m4a")], check=True)
 
     # report: what the ear hears (K-weighted) — narrator vs everything else, line by line
     g = 10 ** ((-16.0 - lufs) / 20)

@@ -10,34 +10,34 @@
    "We built an outside one."
   ],
   "notes": "Open quiet. Pause after the first line. Do not say ‘cure’. We are an aid that helps a person decide where a voice might come from.",
-  "cta": "Watch the 3-minute film",
+  "cta": "Watch the film",
   "href": "../film/"
  },
  {
   "id": "story1",
   "layout": "story",
-  "kicker": "Meet Senja · a fictional story",
+  "kicker": "Based on a true story · names and details changed",
   "title": "She had no one to tell.",
   "lines": [
-   "Senja is a young teacher in West Java. She stays late every day, and her family leans on her.",
-   "Lessons, exams, a school event, the bills at home. Lately, it has all been too much.",
-   "And she has no one to tell."
+   "We’ll call her Senja; it isn’t her real name. She is a young teacher, paid very little, and the eldest child.",
+   "When her father died, the family began to lean on her: her mother, her younger siblings, her students.",
+   "The case report notes she had no one to share her feelings with. She kept all of it inside."
   ],
-  "source": "Senja is fictional. Her story reflects what many people who hear voices live with.",
-  "notes": "Say it plainly: Senja is a fictional character; the science and the drawing-therapy data are real."
+  "source": "Adapted from a published, anonymised nursing case report (SINERGI 2(2), 2025). Identifying details are left out.",
+  "notes": "Say it plainly: this is a real, published, anonymised case. Senja is not her real name. Don’t add details that aren’t in the report, and don’t add identifying ones that are."
  },
  {
   "id": "story2",
   "layout": "story",
   "kicker": "What she heard",
-  "title": "“Ayo pulang.” Come home.",
-  "quote": "Ayo pulang.",
+  "title": "“Come home.”",
+  "quote": "Come home.",
   "lines": [
-   "Then the whispers begin. “Ayo pulang” — come home. Again, and again.",
-   "A black shadow walks toward her. She covers her ears.",
-   "Her family brings her to a hospital, where her nurses try something simple: paper, and a box of crayons."
+   "Then the whispers begin: “come home”, four or five times a day, for up to five minutes.",
+   "A black shadow walks toward her, five to seven times a day. She covers her ears.",
+   "Her family takes her to a psychiatric hospital, where her nurses try something simple: paper, and a box of crayons."
   ],
-  "notes": "Fictional scene. Voices and shadows like these are common experiences in schizophrenia."
+  "notes": "From the case report (whispers 4–5×/day, up to 5 min; a black shadow 5–7×/day, 1–2 min). In her own language the voice said “ayo pulang”. Medication and the usual coping were already in place."
  },
  {
   "id": "story3",
@@ -55,7 +55,7 @@
    "Day 3 · the mountains she used to draw as a child, with her parents. She said she missed her family’s harmony."
   ],
   "chart": {
-   "title": "A real case study: hallucination signs present (of 21 checked)",
+   "title": "Hallucination signs present (of 21 checked)",
    "labels": [
     "Before",
     "Day 1",
@@ -69,8 +69,8 @@
     1
    ]
   },
-  "source": "Drawings are illustrations from the film. The numbers come from a real 2025 case report (Amelia, Rafiyah & Widianti, SINERGI 2(2)): one patient, no control group — encouraging, not proof.",
-  "notes": "The 9 → 5 → 3 → 1 data is from the published case report, not from Senja (who is fictional)."
+  "source": "Drawings recreated with the film’s crayon engine, not the patient’s own. Counts from the published case report (SINERGI 2(2), 2025): one patient, no control group. Encouraging, not proof.",
+  "notes": "These are the real case’s numbers (9 → 5 → 3 → 1). Crayons were chosen on purpose, for safety."
  },
  {
   "id": "turn",
@@ -266,10 +266,10 @@
   "sub": "You, Yourself",
   "lines": [
    "We want every voice-hearer to have a way to see where the voice comes from, and someone to tell.",
-   "Ayo pulang. Come home, to yourself."
+   "Come home, to yourself."
   ],
   "cta": "Open the live demo",
-  "notes": "End on the story. Senja is fictional; the feeling is real."
+  "notes": "End on the story. A real case, anonymised; Senja is not her real name."
  },
  {
   "id": "sources",

@@ -6,8 +6,8 @@ Returns stems: music (ducked under the narrator later), sfx, ambience.
 import json, os
 import numpy as np
 from dsp import (Bus, S, fade, midi, rng, piano, strings, bell, pluck, kick, sub, heartbeat, crickets, clock_ticks,
-                 paper_slide, paper_tear, crayon, whoosh, boom, blip, chime, click, motor_tap, hum, tinnitus,
-                 drone, reverse_swell, hiss_room, fluorescent, make_ir, reverb, lp)
+                 paper_slide, crayon, whoosh, boom, blip, chime, click, motor_tap, hum, tinnitus,
+                 drone, reverse_swell, hiss_room, fluorescent, rain, footstep, pen, make_ir, reverb, lp)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TL = json.load(open(os.path.join(HERE, "..", "..", "film", "timeline.json")))
@@ -100,9 +100,11 @@ def build():
     # room: a clock that becomes the only sound
     amb.add(clock_ticks(C["alone"] + 2.6 - a0), a0, gain=0.9, p=0.35)
     amb.add(hiss_room(SHOT["weight"]["end"] - a0, 0.012), a0)
-    sfx.add(paper_tear(), C["tear"] + 0.05, gain=0.9, p=0.1)
-    sfx.add(reverse_swell(1.4, vel=0.18), C["father"] - 1.0)
-    for w, d in (("mother", 22.0), ("siblings", 23.2), ("school", 24.4)):
+    sfx.add(reverse_swell(1.4, vel=0.16), C["father"] - 1.0)
+    for k, (t, d) in enumerate(((a0 + 1.0, 1.4), (a0 + 3.3, 0.9), (a0 + 5.2, 1.5))):  # her pen on the exam papers
+        sfx.add(pen(d, seed=37 + k, vel=0.32), t, p=0.25)
+    w0 = SHOT["weight"]["start"]
+    for w, d in (("mother", w0 + 0.4), ("siblings", w0 + 1.6), ("students", w0 + 2.8)):
         tt = word_time("L07", w, d)
         sfx.add(sub("D1", 0.3, 0.16, rel=0.4), tt + 0.05)
         sfx.add(paper_slide(0.25, seed=int(tt * 10), vel=0.14), tt + 0.02, p=0.2)
@@ -115,17 +117,28 @@ def build():
     bpm_t = v0 + 0.6
     while bpm_t < v1 - 0.55:
         prog = (bpm_t - v0) / (v1 - v0)
-        sfx.add(heartbeat(0.2 + 0.16 * prog), bpm_t)
+        sfx.add(heartbeat(0.18 + 0.14 * prog), bpm_t)
         bpm_t += 60.0 / (68 + 34 * prog)
-    sfx.add(tinnitus(v1 - 0.45 - (C["shadow"] + 0.5), vel=0.011), C["shadow"] + 0.5, p=0.0)
+    sfx.add(tinnitus(v1 - 0.45 - (C["shadow"] + 0.5), vel=0.008), C["shadow"] + 0.5, p=0.0)
     sfx.add(reverse_swell(2.0, vel=0.32), C["shadow"] - 1.6)
     amb.add(hiss_room(v1 - v0, 0.01), v0)
-    # hospital: a heavy door, fluorescent hum, a held low string
+    # rain: muffled behind the classroom windows, then open air at the hospital
+    r0, r1, h0_ = SHOT["weight"]["start"], SHOT["hospital"]["start"], SHOT["hospital"]["start"]
+    indoor = lp(rain(r1 - r0 + 0.6, seed=33, vel=0.042, drops=30), 3200)
+    ramp = np.clip((np.arange(len(indoor)) / 48000 - (v0 - r0 - 1.0)) / 2.0, 0, 1) * 0.3 + 0.55  # heavier once the voice starts
+    amb.add(fade(indoor * ramp[:, None], 2.0, 0.4), r0, gain=1.0)
+    outdoor = lp(rain(SHOT["data"]["start"] - h0_ + 0.8, seed=34, vel=0.026, drops=40), 6000)
+    amb.add(fade(outdoor, 0.15, 1.2), h0_, gain=1.0)
+    # hospital, outside at night: a heavy door far off, footsteps, a held low string
     h0, h1 = SHOT["hospital"]["start"], SHOT["data"]["start"]
     sfx.add(boom(0.22), h0 + 0.05)
     sfx.add(click(0.5, 900), h0 + 0.05)
-    amb.add(fluorescent(h1 - h0 + 0.3, 0.018), h0, p=-0.1)
     music.add(strings(["D2", "A2"], h1 - h0, att=1.2, rel=1.2, bright=900), h0, gain=0.45)
+    for who, (off, pp) in enumerate(((0.0, -0.15), (0.21, 0.0), (0.39, 0.15))):  # three people walking her in
+        ts = h0 + 0.3 + off
+        while ts < h1 - 0.5:
+            sfx.add(footstep(0.13, seed=35 + who * 7 + int(ts * 10)), ts, p=pp)
+            ts += 0.6
 
     # ------------------------------------------------ data: solemn strings, Dm → Bb → Gm → A (unresolved)
     d0 = SHOT["data"]["start"]
@@ -253,7 +266,7 @@ def build():
     sfx.add(motor_tap(0.65), C["taps"], p=0.05)
     sfx.add(motor_tap(0.65), C["taps"] + 0.27, p=0.05)
     # resolution: F major
-    res = [(C["taps"] + 0.05, "F"), (C["hum"] - 0.2, "F"), (word_time("L48", "voice", C["hum"] + 2.4), "C/E"),
+    res = [(C["taps"] + 0.05, "F"), (C["hum"] - 0.2, "F"), (word_time("L47", "voice", C["hum"] + 2.4), "C/E"),
            (C["diary"], "Dm"), (C["diary"] + 2.1, "Bb")]
     for i, (t, ch) in enumerate(res):
         t1 = res[i + 1][0] if i + 1 < len(res) else i1
@@ -278,7 +291,7 @@ def build():
     amb.add(crickets(END - e0 + 2, seed=9, density=0.7), e0, gain=0.55)
     ep = [(e0, "Dm", ["A4", "G4", "F4"]), (e0 + 2.2, "Bb", ["F4", "D4", None]),
           (TL["whispers"][-1]["start"] - 0.05, "F", ["C5", "A4", None]),
-          (word_time("L55", "come", e0 + 4.3), "C", [None, "G4", "E4"])]
+          (word_time("L53", "come", e0 + 4.3), "C", [None, "G4", "E4"])]
     for i, (t, ch, mel) in enumerate(ep):
         t1 = ep[i + 1][0] if i + 1 < len(ep) else SHOT["end"]["start"]
         rolled(music, t, ch, t1 - t + 0.4, vel=0.32)

@@ -168,25 +168,27 @@
       ctx.fillStyle = '#05050c'; ctx.fillRect(0, 0, W, H);
       F.glowDot(ctx, 960, 470, 900, '#2a1d4a', 0.9);
       logo(ctx, 960, 360, 92, F.seg(lt, 0.0, 1.4));
-      const title = 'You, Yourself';
-      ctx.save(); ctx.font = F.font(156, 600, 'Fraunces'); const tw = ctx.measureText(title).width; ctx.restore();
+      // the title builds letter by letter on its own layer; a light sweep then passes over the letters only
+      const title = 'You, Yourself', TL_ = F.layer(1), tg = TL_.getContext('2d');
+      tg.setTransform(1, 0, 0, 1, 0, 0); tg.globalCompositeOperation = 'source-over'; tg.globalAlpha = 1; tg.clearRect(0, 0, W, H);
+      tg.font = F.font(156, 600, 'Fraunces'); const tw = tg.measureText(title).width;
       let x = 960 - tw / 2;
       for (let i = 0; i < title.length; i++) {
         const ch = title[i], k = F.ease.out(F.seg(lt, 0.45 + i * 0.05, 1.1 + i * 0.05));
-        ctx.save(); ctx.font = F.font(156, 600, 'Fraunces'); const cw = ctx.measureText(ch).width; ctx.restore();
-        F.text(ctx, ch, x, 640 + (1 - k) * 30, { family: 'Fraunces', size: 156, weight: 600, color: P.cream, alpha: k });
+        tg.font = F.font(156, 600, 'Fraunces'); const cw = tg.measureText(ch).width;
+        F.text(tg, ch, x, 640 + (1 - k) * 30, { family: 'Fraunces', size: 156, weight: 600, color: P.cream, alpha: k });
         x += cw;
       }
-      // light sweep
       const sw = F.seg(lt, 1.4, 2.6);
       if (sw > 0 && sw < 1) {
-        ctx.save(); ctx.globalCompositeOperation = 'lighter';
-        const gx = F.lerp(500, 1450, sw), g = ctx.createLinearGradient(gx - 120, 0, gx + 120, 0);
-        g.addColorStop(0, 'rgba(255,220,150,0)'); g.addColorStop(0.5, 'rgba(255,220,150,0.35)'); g.addColorStop(1, 'rgba(255,220,150,0)');
-        ctx.fillStyle = g; ctx.fillRect(400, 520, 1120, 150); ctx.restore();
+        tg.save(); tg.globalCompositeOperation = 'source-atop';
+        const gx = F.lerp(500, 1450, sw), g = tg.createLinearGradient(gx - 140, 0, gx + 140, 0);
+        g.addColorStop(0, 'rgba(255,214,140,0)'); g.addColorStop(0.5, 'rgba(255,214,140,0.85)'); g.addColorStop(1, 'rgba(255,214,140,0)');
+        tg.fillStyle = g; tg.fillRect(0, 0, W, H); tg.restore();
       }
-      const l32 = L('L32');
-      F.text(ctx, 'INI AKU  ·  “IT’S ME”', 960, 730, { size: 32, weight: 600, tracking: 12, align: 'center', color: P.gold, alpha: F.seg(t, l32.start - 0.2, l32.start + 0.5) });
+      ctx.drawImage(TL_, 0, 0);
+      const l32 = L('L31'); // 'A second way to know: this is me.'
+      F.text(ctx, '“THIS IS ME.”', 960, 730, { size: 32, weight: 600, tracking: 12, align: 'center', color: P.gold, alpha: F.seg(t, l32.start - 0.2, l32.start + 0.5) });
       F.text(ctx, 'A wearable that tells you which voice is yours', 960, 790, { size: 24, align: 'center', color: 'rgba(230,226,240,0.7)', alpha: F.seg(t, l32.start + 0.6, l32.start + 1.2) });
     },
   };
@@ -338,7 +340,7 @@
       ctx.fillStyle = '#1d1a33'; ctx.fillRect(0, 0, W, 86);
       F.logo(ctx, 70, 43, 18, 1);
       F.text(ctx, 'You, Yourself', 104, 52, { family: 'Fraunces', size: 26, weight: 700, color: '#fff' });
-      F.text(ctx, 'INI AKU · “it’s me”', 300, 51, { size: 17, color: '#f5c04e' });
+      F.text(ctx, '“it’s me”', 300, 51, { size: 17, color: '#f5c04e' });
       ['Overview', 'Products', 'Simulator', 'Method', 'Code', 'Board'].forEach((n, i) => {
         if (n === 'Simulator') { ctx.fillStyle = '#f4f3fb'; F.rrect(ctx, 600 + i * 150 - 18, 30, 150, 56, 10); ctx.fill(); }
         F.text(ctx, n, 600 + i * 150 + 57, 66, { size: 20, weight: 600, align: 'center', color: n === 'Simulator' ? '#1d1a33' : '#c9c6e6' });
@@ -404,6 +406,23 @@
       F.text(ctx, 'you-yourself.vercel.app  ·  the real detector, running in the browser', 960, 900, { family: 'JetBrains Mono', size: 18, align: 'center', color: '#8a87a8' });
     },
   };
+
+  // the app, seen as a screen in a dark room rather than a full-frame screen recording
+  {
+    const ui = S.detector.draw;
+    S.detector.vignette = 0.45;
+    S.detector.draw = function (ctx, t, lt, d) {
+      ctx.fillStyle = '#07060d'; ctx.fillRect(0, 0, W, H);
+      F.glowDot(ctx, 960, 560, 1150, '#3b3566', 0.38);
+      const k = F.ease.sine(F.clamp(lt / d)), sc = F.lerp(0.84, 0.875, k);
+      ctx.save(); ctx.translate(960, 532); ctx.scale(sc, sc); ctx.translate(-960, -540);
+      ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 70; F.rrect(ctx, -16, -16, W + 32, H + 32, 28); ctx.fillStyle = '#121019'; ctx.fill(); ctx.restore();
+      ctx.save(); F.rrect(ctx, 0, 0, W, H, 16); ctx.clip();
+      ui.call(this, ctx, t, lt, d);
+      ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = '#e4e1ec'; ctx.fillRect(0, 0, W, H); // screen brightness
+      ctx.restore(); ctx.restore();
+    };
+  }
 
   // ------------------------------------------------------------------ outside channel
   const BANDS = 56;
@@ -516,10 +535,10 @@
       F.glowDot(ctx, 960, 440, 800, '#3a2350', 0.8);
       F.logo(ctx, 960, 330, 70, F.seg(lt, 0.0, 1.3));
       F.text(ctx, 'You, Yourself', 960, 520, { family: 'Fraunces', size: 108, weight: 600, align: 'center', color: P.cream, alpha: F.seg(lt, 0.3, 1.0) });
-      F.text(ctx, 'INI AKU  ·  “IT’S ME”', 960, 585, { size: 26, weight: 600, tracking: 10, align: 'center', color: P.gold, alpha: F.seg(lt, 0.6, 1.2) });
+      F.text(ctx, '“IT’S ME.”', 960, 585, { size: 26, weight: 600, tracking: 10, align: 'center', color: P.gold, alpha: F.seg(lt, 0.6, 1.2) });
       F.text(ctx, 'Try the live demo  →  you-yourself.vercel.app', 960, 680, { size: 32, weight: 600, align: 'center', color: '#fff', alpha: F.seg(lt, 1.0, 1.6) });
       const a = F.seg(lt, 1.6, 2.4);
-      F.text(ctx, 'Story: Amelia, Rafiyah & Widianti (2025), SINERGI 2(2):730–742 — the woman we call Senja is “Ny. G”. Names changed; dramatised.', 960, 790, { size: 17, align: 'center', color: 'rgba(220,214,232,0.7)', alpha: a });
+      F.text(ctx, 'Based on a true story, adapted from a published, anonymised nursing case report (SINERGI, 2025). Names and identifying details changed.', 960, 790, { size: 17, align: 'center', color: 'rgba(220,214,232,0.7)', alpha: a });
       F.text(ctx, 'Evidence: Whitford et al. 2025 · Rapin et al. 2013 · Inouye & Shimizu 1970 · Green & Kinsbourne 1990 · WHO 2022', 960, 822, { size: 17, align: 'center', color: 'rgba(220,214,232,0.7)', alpha: a });
       F.text(ctx, 'Research prototype — not a medical device. Built for people who hear voices, with them.', 960, 864, { size: 19, weight: 600, align: 'center', color: 'rgba(245,192,78,0.85)', alpha: a });
     },

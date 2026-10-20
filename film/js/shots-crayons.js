@@ -133,8 +133,8 @@
       ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.fillRect(-132 + i * 33, -120, 26, 46);
     });
     ctx.fillStyle = '#e7b23a'; ctx.fillRect(-150, -60, 300, 180);
-    F.text(ctx, 'KRAYON', 0, 40, { size: 34, weight: 700, tracking: 6, align: 'center', color: '#7a2a16' });
-    F.text(ctx, '8 warna', 0, 80, { family: 'Caveat', size: 30, align: 'center', color: '#7a2a16' });
+    F.text(ctx, 'CRAYONS', 0, 40, { size: 32, weight: 700, tracking: 6, align: 'center', color: '#7a2a16' });
+    F.text(ctx, '8 colours', 0, 80, { family: 'Caveat', size: 30, align: 'center', color: '#7a2a16' });
     ctx.restore();
   }
   function nurseHand(ctx, x, y, a, flip = 1) {
@@ -159,13 +159,13 @@
     ctx.fillStyle = '#5a4030'; F.rrect(ctx, -170, -230, 340, 470, 14); ctx.fill();
     ctx.fillStyle = '#fbf8f0'; ctx.fillRect(-150, -196, 300, 420);
     ctx.fillStyle = '#9a9a9a'; F.rrect(ctx, -50, -246, 100, 36, 8); ctx.fill();
-    F.text(ctx, 'Tanda halusinasi', 0, -146, { family: 'Caveat', size: 38, weight: 700, align: 'center', color: '#2a2a3a' });
-    F.text(ctx, 'HALLUCINATION SIGNS', 0, -112, { size: 15, weight: 600, tracking: 3, align: 'center', color: '#6a6a7a' });
+    F.text(ctx, 'Hallucination signs', 0, -146, { family: 'Caveat', size: 38, weight: 700, align: 'center', color: '#2a2a3a' });
+    F.text(ctx, 'NURSES’ CHECKLIST', 0, -112, { size: 15, weight: 600, tracking: 3, align: 'center', color: '#6a6a7a' });
     ctx.globalAlpha *= 0.4 + 0.6 * flip;
     F.text(ctx, String(cur[1]), 0, 60 - (1 - flip) * 18, { family: 'Fraunces', size: 190, weight: 600, align: 'center', color: cur[1] <= 1 ? '#2f7d43' : '#c0392b' });
     ctx.globalAlpha = a;
     F.text(ctx, 'of 21 checked · ' + cur[2], 0, 120, { size: 20, weight: 500, align: 'center', color: '#4a4a5a' });
-    F.text(ctx, 'SDKI checklist', 0, 180, { family: 'JetBrains Mono', size: 15, align: 'center', color: '#8a8a9a' });
+    F.text(ctx, 'standard nursing checklist', 0, 180, { family: 'JetBrains Mono', size: 15, align: 'center', color: '#8a8a9a' });
     ctx.restore();
   }
 
@@ -241,7 +241,7 @@
         const done = paper(ctx, x, y, s, 1, rot);
         const p = F.seg(t, ts + 0.45, ends[k]);
         const tip = drawDay(ctx, k, p, t);
-        if (k > 0) F.text(ctx, 'Hari ' + k, 40, 60, { family: 'Caveat', size: 46, weight: 700, color: '#6a6a72', alpha: F.seg(t, ts, ts + 0.5) });
+        if (k > 0) F.text(ctx, 'Day ' + k, 40, 60, { family: 'Caveat', size: 46, weight: 700, color: '#6a6a72', alpha: F.seg(t, ts, ts + 0.5) });
         if (tip && p > 0 && p < 1 && toStack === 0) tipInfo = { x: x - PW / 2 * s + tip[0] * s, y: y - PH / 2 * s + tip[1] * s, col: DAYCOL[k] };
         done();
       });
@@ -268,7 +268,8 @@
           F.text(ctx, labels[i], x + 55, 916, { size: 20, weight: 600, align: 'center', color: 'rgba(255,248,236,0.8)' });
         });
         F.text(ctx, 'hallucination signs present, of 21 checked', 1440, 760, { size: 22, color: 'rgba(255,248,236,0.85)' });
-        F.text(ctx, 'Amelia, Rafiyah & Widianti, 2025', 1440, 792, { family: 'JetBrains Mono', size: 16, color: 'rgba(255,248,236,0.6)' });
+        F.text(ctx, 'published case report, 2025', 1440, 792, { family: 'JetBrains Mono', size: 16, color: 'rgba(255,248,236,0.6)' });
+        F.text(ctx, 'one patient · no control group', 1440, 818, { family: 'JetBrains Mono', size: 16, color: 'rgba(255,248,236,0.5)' });
         ctx.restore();
       }
       // inside → outside: the tangle glows as we fall into it
@@ -287,12 +288,12 @@
       ctx.save(); F.cam(ctx, 960, F.lerp(470, 490, k), F.lerp(1.3, 1.44, k));
       const done = paper(ctx, 960, 540, 1.6, 1, 0);
       drawDay(ctx, 3, 1, t);
-      // "ayo pulang", reclaimed: warm, written in gold over her sky
+      // "come home", reclaimed: warm, written in gold crayon over her sky
       const w5 = F.TL.whispers.find((w) => w.id === 'w5');
       const a = F.seg(t, w5.start - 0.2, w5.end + 0.3);
       if (a > 0) {
         ctx.save(); ctx.beginPath(); ctx.rect(0, 0, 250 + 520 * a, PH); ctx.clip();
-        F.text(ctx, 'ayo pulang', 240, 150, { family: 'Caveat', size: 92, weight: 700, color: '#e9a81d', alpha: 0.95 });
+        F.text(ctx, 'come home', 240, 196, { family: 'Caveat', size: 92, weight: 700, color: '#e9a81d', alpha: 0.95 });
         ctx.restore();
       }
       done();
@@ -301,7 +302,7 @@
       const g = ctx.createLinearGradient(0, 0, 0, H);
       g.addColorStop(0, 'rgba(90,40,90,0.35)'); g.addColorStop(0.6, 'rgba(230,120,90,0.12)'); g.addColorStop(1, 'rgba(255,190,120,0.2)');
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-      const l55 = F.TL.lines.find((l) => l.id === 'L55');
+      const l55 = F.TL.lines.find((l) => l.id === 'L53');
       const q = F.seg(t, l55.start - 0.1, l55.start + 0.9);
       if (q > 0) {
         ctx.fillStyle = `rgba(10,6,16,${0.45 * q})`; ctx.fillRect(0, 0, W, H);

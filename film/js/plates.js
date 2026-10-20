@@ -12,7 +12,13 @@
       const m = await fetch(manifest).then((r) => (r.ok ? r.json() : null));
       if (!m || !m.plates) return;
       root = m.root; fps = m.fps || 24;
-      F.PLATES = m.plates.filter((p) => p.frames > 0);
+      // keep only plates whose frames are here (they are built locally, not shipped), else the painted shot draws
+      const ok = await Promise.all(m.plates.map(async (p) => {
+        if (!(p.frames > 0)) return false;
+        const img = new Image(); img.src = url(p, 0);
+        try { await img.decode(); return true; } catch (e) { return false; }
+      }));
+      F.PLATES = m.plates.filter((p, i) => ok[i]);
     } catch (e) { F.PLATES = []; }
   };
 

@@ -29,6 +29,8 @@ NEG_PLUS = {  # per-shot additions to NEG, for mistakes a shot kept making
     "H1": "snow, snowy peaks",
     "H4": "two people, two women, duplicate person",
     "D3": "earphones, headphones",
+    "F1": "pens, markers",
+    "G1": "green lines, teal lines, colored lines, marker pen",
 }
 
 HER = "young Indonesian woman with long straight black hair in a low ponytail, dark teal cardigan"
@@ -53,10 +55,10 @@ PROMPTS = {
           "hunched, dark bedroom, cold blue night light",
     "E1": "rear view from behind, night, heavy rain, three people walking toward the one lit entrance door of a small "
           "single-storey hospital, two supporting a young woman, wet pavement, fog",
-    "F1": "top-down view of a wooden table, a nurse's hands in light blue sleeves placing a blank white sheet of paper "
-          "beside an open box of eight wax crayons, soft daylight",
-    "G1": "close-up, a young woman's hand in a dark teal knitted sleeve gripping a black wax crayon, scribbling tangled "
-          "black loops on white paper, soft daylight",
+    "F1": "top-down view, an open cardboard box of eight colorful wax crayons beside a blank white sheet of paper "
+          "on a wooden table, a nurse's hands in light blue sleeves, soft daylight",
+    "G1": "close-up, tangled black crayon scribbles on white paper, a young woman's hand in a dark teal knitted sleeve "
+          "gripping a black wax crayon, pressing hard, soft daylight",
     "G3": "close-up, a young woman's hand in a dark teal knitted sleeve drawing soft green crayon mountain lines "
           "on white paper, calm morning light",
     "M1": "nostalgic memory, a small child's hands drawing green crayon mountains and a yellow sun at a wooden table "

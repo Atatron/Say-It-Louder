@@ -33,6 +33,13 @@ generated from it:
 4. `node tools/film/capture.js` – renders every frame of `film/render.html` at 24 fps with motion blur (180° shutter)
 5. `python3 tools/film/encode.py` – the film look (halation, mist, the `lut.py` grade, grain) + audio → `film/you-yourself-film.mp4`
 
+The story scenes are live action, made with AI. One still per shot (`tools/film/shotlist.md`) comes either
+from Canva's image generator or from `tools/film/genstills.py`, which runs an open photoreal model locally.
+`tools/film/parallax.py` estimates depth and turns each still into a slow camera move, and `tools/film/plates.py`
+lists the results in `tools/film/plates.json`. The renderer draws them under the captions and callouts.
+Her face is never shown, and the opening card and the credits say the scenes are a dramatization with
+AI-generated imagery.
+
 `film/index.html` plays the finished MP4 with chapters; `film/render.html?t=<seconds>` shows any single frame.
 The Python tools need a Python 3.12 venv with `kokoro soundfile scipy misaki[en] faster-whisper pyloudnorm`;
 the capture needs Playwright + Chromium and the site served on `localhost:8765`.

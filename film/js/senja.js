@@ -20,21 +20,27 @@
   // --- geometry (local units: ~1px at scale 1; head centre ≈ (0,0); she faces +x)
   const FACE = [[58, -90], [70, -66], [75, -50], [70, -39], [76, -27], [90, -12], [101, -1], [94, 7], [85, 11],
     [86, 18], [92, 25], [86, 31], [90, 39], [86, 46], [79, 52], [83, 62], [86, 70], [78, 82], [64, 91]];
-  const HOOD_BACK = [[64, 98], [38, 110], [0, 118], [-54, 118], [-98, 100], [-116, 56], [-120, -2], [-108, -58],
-    [-78, -102], [-32, -126], [14, -122], [44, -106]];
-  const HIJAB_INNER = [[58, -90], [36, -84], [16, -62], [8, -24], [12, 22], [26, 60], [46, 88], [64, 91]];
+  // hair tied back: skull and neck, then the low ponytail as its own shape (same winding, so they fill as one)
+  const SKULL_BACK = [[56, 97], [44, 106], [38, 120], [-62, 124], [-56, 96], [-58, 74], [-84, 52], [-106, 22], [-114, -24],
+    [-104, -76], [-70, -114], [-20, -130], [26, -120], [48, -104]];
+  const PONYTAIL = [[-74, 58], [-82, 76], [-88, 108], [-92, 148], [-96, 192], [-102, 224], [-116, 192], [-124, 146],
+    [-122, 102], [-114, 66], [-98, 44], [-76, 40]];
+  // the face plane's back edge: along the hairline, in front of the ear, down the jaw
+  const FACE_INNER = [[58, -90], [34, -92], [12, -76], [0, -46], [-8, -12], [-10, 22], [-4, 52], [18, 78], [42, 94], [64, 91]];
   const BODY = [[30, 96], [70, 118], [96, 176], [118, 250], [128, 340], [-262, 340], [-262, 286], [-246, 238],
     [-212, 196], [-160, 160], [-122, 118], [-60, 108]];
   const PIVOT = [8, 92];
 
-  const headPath = () => {
+  const skullPath = () => {
     const p = new Path2D();
     F.spline(FACE, false, p, true);
-    F.spline(HOOD_BACK, false, p, false);
+    F.spline(SKULL_BACK, false, p, false);
     p.closePath();
     return p;
   };
-  const facePath = () => { const p = new Path2D(); F.spline(FACE, false, p, true); F.spline([...HIJAB_INNER].reverse(), false, p, false); p.closePath(); return p; };
+  const SKULLP = skullPath(), TAILP = F.spline(PONYTAIL, true);
+  const headPath = () => { const p = new Path2D(SKULLP); p.addPath(TAILP); return p; };
+  const facePath = () => { const p = new Path2D(); F.spline(FACE, false, p, true); F.spline([...FACE_INNER].reverse(), false, p, false); p.closePath(); return p; };
   const bodyPath = () => F.spline(BODY, true);
   const HEAD = headPath(), FACEP = facePath(), BODYP = bodyPath();
 
@@ -155,14 +161,19 @@
     ctx.strokeStyle = o.color || F.PAL.cyan; ctx.lineWidth = (o.w || 2.4) / s;
     ctx.globalAlpha *= o.alpha == null ? 1 : o.alpha;
     if (o.glow) { ctx.shadowColor = o.color || F.PAL.cyan; ctx.shadowBlur = o.glow; }
+    // an outline drawing shows only the edges you can see: the neck stops at the body's neckline,
+    // the ponytail only where it hangs clear of her head and back
+    const outside = (...paths) => { for (const q of paths) { const c = new Path2D(); c.rect(-1e4, -1e4, 2e4, 2e4); c.addPath(q); ctx.clip(c, 'evenodd'); } };
+    const poly = (pts) => { ctx.beginPath(); pts.forEach((p, i) => (i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.stroke(); };
     if (o.progress != null && o.progress < 1) {
-      // draw the face profile progressively (thread → profile)
-      const pts = F.splinePts([...FACE, ...HOOD_BACK], false, 10);
-      const part = F.partial(pts, o.progress);
-      ctx.beginPath(); part.forEach((p, i) => (i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.stroke();
+      // draw the profile progressively (thread → profile), the ponytail last
+      ctx.save(); outside(BODYP); poly(F.partial(F.splinePts([...FACE, ...SKULL_BACK, FACE[0]], false, 10), Math.min(1, o.progress / 0.85))); ctx.restore();
+      if (o.progress > 0.85) { ctx.save(); outside(SKULLP, BODYP); poly(F.partial(F.splinePts(PONYTAIL, true, 10), (o.progress - 0.85) / 0.15)); ctx.restore(); }
     } else {
-      ctx.stroke(HEAD); ctx.stroke(BODYP);
-      if (o.inner) { ctx.globalAlpha *= 0.35; ctx.setLineDash([6 / s, 8 / s]); ctx.stroke(new Path2D(F.spline(HIJAB_INNER, false))); }
+      ctx.save(); outside(BODYP); ctx.stroke(SKULLP); ctx.restore();
+      ctx.save(); outside(SKULLP, BODYP); ctx.stroke(TAILP); ctx.restore();
+      ctx.stroke(BODYP);
+      if (o.inner) { ctx.globalAlpha *= 0.35; ctx.setLineDash([6 / s, 8 / s]); ctx.stroke(new Path2D(F.spline(FACE_INNER, false))); }
     }
     ctx.restore();
   };

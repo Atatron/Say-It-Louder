@@ -298,8 +298,8 @@
 
   // ------------------------------------------------------------------ family photo
   const PHOTO = { w: 760, h: 500 };
-  // a person in an old photo: head, neck, shoulders; a hijab drapes over the shoulders
-  function figure(g, x, base, h, hijab, col) {
+  // a person in an old photo: head, neck, shoulders; a hijab drapes over the shoulders, or a ponytail hangs
+  function figure(g, x, base, h, hijab, col, tail) {
     const hr = h * 0.105, hy = base - h + hr * 1.05, sw = h * (h > 250 ? 0.2 : 0.18), sh = hy + hr * 2.15; // sh: shoulder line
     g.fillStyle = col;
     g.beginPath();
@@ -325,6 +325,7 @@
       g.quadraticCurveTo(x + sw * 0.95, sh - hr * 0.45, x + hr * 0.45, sh - hr * 0.55);
     }
     g.closePath(); g.fill();
+    if (tail) { g.beginPath(); g.ellipse(x + hr * 0.05, hy + hr * 1.35, hr * 0.3, hr * 0.95, 0.04, 0, Math.PI * 2); g.fill(); }
     // arms against the body: two faint folds of light
     g.strokeStyle = 'rgba(255,236,200,0.16)'; g.lineWidth = 2;
     for (const d of [-1, 1]) { g.beginPath(); g.moveTo(x + d * sw * 0.66, sh + hr * 1.4); g.quadraticCurveTo(x + d * sw * 0.7, base - h * 0.2, x + d * sw * 0.64, base); g.stroke(); }
@@ -342,7 +343,7 @@
       const col = '#4a3a2c';
       if (withFather) figure(g, w * 0.17, h * 0.99, h * 0.7, false, col);
       figure(g, w * 0.36, h * 0.99, h * 0.62, true, col);
-      figure(g, w * 0.55, h * 0.99, h * 0.56, true, col);
+      figure(g, w * 0.55, h * 0.99, h * 0.56, false, col, true); // Senja
       figure(g, w * 0.71, h * 0.99, h * 0.43, false, col);
       figure(g, w * 0.84, h * 0.99, h * 0.35, true, col);
       g.restore();
@@ -522,7 +523,7 @@
 
   // ------------------------------------------------------------------ hospital
   // a figure seen from behind, walking (feet at y)
-  function walker(ctx, x, y, h, phase, hijab, lean = 0) {
+  function walker(ctx, x, y, h, phase, hijab, lean = 0, tail = false) {
     const step = Math.sin(phase), bob = Math.abs(Math.cos(phase)) * h * 0.014;
     ctx.save(); ctx.translate(x, y - bob); ctx.rotate(lean);
     ctx.fillStyle = '#050509'; ctx.strokeStyle = '#050509'; ctx.lineCap = 'round'; ctx.lineWidth = h * 0.085;
@@ -531,6 +532,7 @@
     ctx.beginPath(); ctx.arc(0, -h * 0.93, h * 0.075, 0, Math.PI * 2); ctx.fill();
     if (hijab) { ctx.beginPath(); ctx.moveTo(-h * 0.08, -h * 0.97); ctx.quadraticCurveTo(-h * 0.17, -h * 0.8, -h * 0.16, -h * 0.68);
       ctx.lineTo(h * 0.16, -h * 0.68); ctx.quadraticCurveTo(h * 0.17, -h * 0.8, h * 0.08, -h * 0.97); ctx.fill(); }
+    if (tail) { ctx.beginPath(); ctx.ellipse(0, -h * 0.84, h * 0.028, h * 0.075, 0, 0, Math.PI * 2); ctx.fill(); }
     ctx.restore();
   }
   S.hospital = {
@@ -567,7 +569,7 @@
       const s0 = t - lt, wk = F.seg(t, s0 - 0.4, s0 + d + 0.6), ph = t * 5.2;
       const by = F.lerp(1010, 905, wk), bh = F.lerp(178, 126, wk), bx = F.lerp(1000, 975, wk);
       walker(ctx, bx - bh * 0.42, by + 4, bh * 1.04, ph + 1.6, false, 0.05);
-      walker(ctx, bx, by, bh * 0.94, ph + 0.4, true, -0.03);
+      walker(ctx, bx, by, bh * 0.94, ph + 0.4, false, -0.03, true); // Senja, between them
       walker(ctx, bx + bh * 0.4, by + 2, bh * 0.98, ph, true, -0.06);
       // fog and rain
       const fog = F.sprite('fogBlob', 700, 220, (g) => { g.filter = 'blur(30px)'; g.fillStyle = 'rgba(150,160,205,0.5)'; g.beginPath(); g.ellipse(350, 110, 280, 60, 0, 0, Math.PI * 2); g.fill(); });

@@ -44,8 +44,14 @@ def windows():
 
 
 # per-plate tweaks: src = seconds into the clip where the window starts; push = slow zoom from→to;
-# offset = [x, y] reframe in pixels
-TUNE = {}
+# offset = [x, y] reframe in pixels; fx = light touches drawn over the plate (see FX in film/js/plates.js)
+TUNE = {
+    "A1": {"fx": [{"type": "dust", "box": [60, 120, 1300, 900], "n": 70}]},
+    "D1": {"fx": [{"type": "flicker", "depth": 0.32}]},
+    "D2": {"fx": [{"type": "close", "from": LINE["L10"]["start"], "to": C["ears"], "a": 0.55}]},
+    "E1": {"fx": [{"type": "rain", "n": 140, "a": 0.15}]},
+    "H4": {"fx": [{"type": "warm", "from": C["hum"], "to": C["diary"], "a": 0.28}]},
+}
 
 
 def extract(pid):

@@ -170,10 +170,11 @@
   }
 
   // the memory: a child drawing mountains at a table, her father and mother leaning in (sepia, backlit, soft)
-  function person(g, x, base, h, lean, hijab, col) {
+  function person(g, x, base, h, lean, hijab, col, tail) {
     g.save(); g.translate(x, base); g.rotate(lean); g.fillStyle = col;
     const hr = h * 0.12;
     g.beginPath(); g.ellipse(0, -h + hr, hr * (hijab ? 1.15 : 1), hr * (hijab ? 1.2 : 1.05), 0, 0, Math.PI * 2); g.fill();
+    if (tail) { g.beginPath(); g.ellipse(hr * 0.08, -h + hr * 2.1, hr * 0.32, hr * 0.95, 0.06, 0, Math.PI * 2); g.fill(); } // a low ponytail
     g.beginPath(); g.moveTo(-hr * (hijab ? 1.35 : 0.55), -h + hr * 1.75);
     g.quadraticCurveTo(-h * 0.26, -h * 0.62, -h * 0.25, 0); g.lineTo(h * 0.25, 0);
     g.quadraticCurveTo(h * 0.26, -h * 0.62, hr * (hijab ? 1.35 : 0.55), -h + hr * 1.75); g.closePath(); g.fill();
@@ -199,7 +200,7 @@
     const col = '#4a2e1c';
     person(g, 600, 790, 470, 0.16, false, col);                // father
     person(g, 1330, 790, 430, -0.16, true, col);               // mother
-    person(g, 965, 790, 270, 0.0, true, col);                  // Senja, small
+    person(g, 965, 790, 270, 0.0, false, col, true);           // Senja, small, her hair in a ponytail
     g.strokeStyle = col; g.lineCap = 'round';
     g.lineWidth = 34; g.beginPath(); g.moveTo(690, 520); g.quadraticCurveTo(820, 640, 900, 780); g.stroke();   // father points at the paper
     g.lineWidth = 32; g.beginPath(); g.moveTo(1260, 540); g.quadraticCurveTo(1120, 560, 1010, 610); g.stroke(); // mother's hand on her shoulder

@@ -41,6 +41,47 @@
     }));
   };
 
+  // light touches over a plate so a still keeps breathing (plates.json "fx"; times are film seconds)
+  const FX = {
+    dust(ctx, t, o) { // motes drifting through a sunbeam; the biggest are near the lens, out of focus
+      const [x0, y0, x1, y1] = o.box, r = F.rng(o.seed || 3), col = o.color || '#ffd6a8';
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < (o.n || 60); i++) {
+        const bx = x0 + r() * (x1 - x0), by = y0 + r() * (y1 - y0), sp = 3 + r() * 9, size = r(), ph = r() * 6.3;
+        const x = bx + Math.sin(t * 0.27 + ph) * 18 + t * sp * 0.6, y = by + Math.cos(t * 0.19 + ph * 2) * 12 - t * sp * 0.25;
+        const tw = 0.35 + 0.65 * Math.abs(Math.sin(t * 0.7 + ph));
+        if (size > 0.88) F.glowDot(ctx, x, y, 10 + size * 12, col, 0.09 * tw);
+        else { ctx.fillStyle = F.rgba(col, 0.3 * tw); ctx.beginPath(); ctx.arc(x, y, 1 + size * 1.6, 0, Math.PI * 2); ctx.fill(); }
+      }
+      ctx.restore();
+    },
+    rain(ctx, t, o) { // streaks between the lens and the scene
+      ctx.save(); ctx.strokeStyle = `rgba(200,210,255,${o.a || 0.14})`; ctx.lineWidth = 1.2; ctx.beginPath();
+      for (let i = 0; i < (o.n || 120); i++) {
+        const x = F.hash(i * 3.7) * (W + 200) - 100, sp = 1100 + 500 * F.hash(i * 1.3), y = ((t * sp + F.hash(i * 9.1) * 3000) % (H + 200)) - 100;
+        ctx.moveTo(x + y * 0.12, y); ctx.lineTo(x + y * 0.12 + 5, y + 34);
+      }
+      ctx.stroke(); ctx.restore();
+    },
+    flicker(ctx, t, o) { // a failing lamp: brief dips in the light
+      const n = F.noise1(t * 9, 11), dip = Math.max(0, n - 0.35) / 0.65, k = (o.depth || 0.3) * dip * dip;
+      if (k > 0.002) { ctx.fillStyle = `rgba(0,0,0,${k})`; ctx.fillRect(0, 0, W, H); }
+    },
+    warm(ctx, t, o) { // warm light slowly filling the room
+      const k = F.ease.inOut(F.seg(t, o.from, o.to)) * (o.a || 0.25), col = o.color || '#ffb46a';
+      if (k <= 0) return;
+      ctx.save(); ctx.globalCompositeOperation = 'soft-light'; ctx.fillStyle = F.rgba(col, k); ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter'; F.glowDot(ctx, o.x || 420, o.y || 380, 950, col, k * 0.3); ctx.restore();
+    },
+    close(ctx, t, o) { // darkness closing in from the edges
+      const k = F.seg(t, o.from, o.to) * (o.a || 0.6);
+      if (k <= 0) return;
+      const g = ctx.createRadialGradient(W / 2, H / 2, H * (0.75 - 0.35 * k), W / 2, H / 2, H * 1.05);
+      g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${k})`);
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    },
+  };
+
   F.drawPlate = (ctx, p, t) => {
     const img = cache.get(url(p, frameOf(p, F._frameT == null ? t : F._frameT)));
     ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
@@ -49,5 +90,6 @@
     const s = Math.max(W / img.width, H / img.height) * z, w = img.width * s, h = img.height * s;
     const [ox, oy] = p.offset || [0, 0];
     ctx.drawImage(img, (W - w) / 2 + ox, (H - h) / 2 + oy, w, h);
+    for (const f of p.fx || []) if (FX[f.type]) FX[f.type](ctx, t, f);
   };
 })();

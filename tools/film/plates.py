@@ -50,6 +50,9 @@ TUNE = {
     "D1": {"fx": [{"type": "flicker", "depth": 0.32}]},
     "D2": {"fx": [{"type": "close", "from": LINE["L10"]["start"], "to": C["ears"], "a": 0.55}]},
     "E1": {"fx": [{"type": "rain", "n": 140, "a": 0.15}]},
+    # the collar device's light; its screen position follows parallax.py's H3 camera over its 6.9 s
+    "H3": {"fx": [{"type": "blink", "at": [969, 606, 970, 595], "from": C["press"] - 0.1, "to": C["press"] - 0.1 + 6.9,
+                   "times": [C["taps"], C["taps"] + 0.27], "r": 60}]},
     "H4": {"fx": [{"type": "warm", "from": C["hum"], "to": C["diary"], "a": 0.28}]},
 }
 

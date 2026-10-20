@@ -31,6 +31,8 @@ NEG_PLUS = {  # per-shot additions to NEG, for mistakes a shot kept making
     "D3": "earphones, headphones",
     "F1": "pens, markers",
     "G1": "green lines, teal lines, colored lines, marker pen",
+    "M1": "drawing on the window glass",
+    "I1": "yellow sleeve, paint, paintbrush",
 }
 
 HER = "young Indonesian woman with long straight black hair in a low ponytail, dark teal cardigan"
@@ -61,8 +63,8 @@ PROMPTS = {
           "gripping a black wax crayon, pressing hard, soft daylight",
     "G3": "close-up, a young woman's hand in a dark teal knitted sleeve drawing soft green crayon mountain lines "
           "on white paper, calm morning light",
-    "M1": "nostalgic memory, a small child's hands drawing green crayon mountains and a yellow sun at a wooden table "
-          "by a sunny window, parents' hands beside the paper, warm sepia",
+    "M1": "warm sepia memory, close-up of a small child's hand drawing green crayon mountains on paper on a wooden "
+          "table, a father's large hand resting beside it, sunlight, soft focus",
     "H1": f"over-the-shoulder rear view, a {HER}, face hidden, at a desk by a window at dusk holding a smartphone, "
           "green volcanic mountains of Java outside",
     "H2": "extreme macro close-up in profile of a young woman's lips and chin only, cropped below the nose, "
@@ -71,8 +73,8 @@ PROMPTS = {
           "knitted cardigan, strands of long black hair, warm dusk light",
     "H4": f"rear view from behind, one {HER}, alone, face hidden, sitting back calmly at a desk by a window, "
           "warm golden dusk light fills the small bedroom",
-    "I1": "morning light, close-up, a young woman's hand in a dark teal knitted sleeve pinning a child's crayon drawing "
-          "of green mountains and a yellow sun to a pale wall",
+    "I1": "close-up, a young woman's hand in a dark teal knitted sleeve pressing a red push-pin into a child's crayon "
+          "drawing of green mountains and a yellow sun on a pale wall, morning light",
 }
 
 

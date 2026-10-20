@@ -73,6 +73,15 @@
       ctx.save(); ctx.globalCompositeOperation = 'soft-light'; ctx.fillStyle = F.rgba(col, k); ctx.fillRect(0, 0, W, H);
       ctx.globalCompositeOperation = 'lighter'; F.glowDot(ctx, o.x || 420, o.y || 380, 950, col, k * 0.3); ctx.restore();
     },
+    blink(ctx, t, o) { // a device's light: a slow breath and a flash per tap; at = [x0, y0, x1, y1] on screen,
+      // eased like parallax.py's camera so the glow stays on the light as the frame drifts
+      const u = F.seg(t, o.from, o.to), k = u * u * (3 - 2 * u);
+      let a = 0.2 + 0.1 * Math.sin(t * 3);
+      for (const tt of o.times || []) a += 0.8 * F.pulse(t, tt, 0.03, 0.08, 0.15);
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      F.glowDot(ctx, F.lerp(o.at[0], o.at[2], k), F.lerp(o.at[1], o.at[3], k), o.r || 50, o.color || '#2ad4c4', Math.min(1, a));
+      ctx.restore();
+    },
     close(ctx, t, o) { // darkness closing in from the edges
       const k = F.seg(t, o.from, o.to) * (o.a || 0.6);
       if (k <= 0) return;

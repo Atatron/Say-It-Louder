@@ -32,6 +32,8 @@ MOVES = {
     "E1": {"dur": 5.0, "par": 0.10, "keys": [(0.0, 0.50, 0.52, 1.03), (5.0, 0.50, 0.46, 1.13)]},
     # day three: drifting toward the green lines as she draws
     "G3": {"dur": 2.8, "par": 0.08, "keys": [(0.0, 0.50, 0.50, 1.04), (2.8, 0.55, 0.52, 1.10)]},
+    # the device at her collar, framed below her chin; plates.py's H3 blink follows this move
+    "H3": {"dur": 6.9, "par": 0.06, "keys": [(0.0, 0.50, 0.57, 1.22), (6.9, 0.50, 0.58, 1.28)]},
 }
 DEFAULT = {"dur": 8.0, "par": 0.08, "keys": [(0.0, 0.5, 0.5, 1.03), (8.0, 0.5, 0.5, 1.10)]}
 

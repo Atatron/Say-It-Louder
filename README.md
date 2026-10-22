@@ -14,3 +14,7 @@ npm test         # verifies every reference answer compiles and prints the expec
 ```
 
 The server binds to `127.0.0.1` only: it compiles and runs the code you type (5 s time limit, 64 KB output cap, no sandbox), so don't expose it to a network.
+
+## Deploy (static, e.g. Vercel)
+
+The `public/` folder is a complete static site. When there is no `/api/health` (no Node server), the page runs C in the browser instead: a Web Worker loads [picoc](https://gitlab.com/zsaleeba/picoc) (a small C interpreter compiled to WebAssembly, via `picoc-js` from jsDelivr). It is an interpreter, not gcc: no compiler warnings, and only a subset of C is supported. Locally, `npm start` uses real gcc.

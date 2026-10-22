@@ -41,26 +41,51 @@ function loadCase() {
   $('expected').textContent = c.expected ? c.expected.replace(/\n/g, '↵ ') : '(no output)';
 }
 
+// Backend: the local Node server (real gcc) if present, otherwise C runs in the browser via WebAssembly.
+let backend = null;
+async function detectBackend() {
+  try { backend = (await fetch('/api/health')).ok ? 'gcc' : 'wasm'; } catch { backend = 'wasm'; }
+  $('engine').textContent = backend === 'gcc' ? 'Engine: gcc (local)' : 'Engine: in-browser C interpreter (picoc)';
+}
+
+function runInBrowser(code, stdin) {
+  return new Promise((resolve) => {
+    const w = new Worker('runner.js');
+    const timer = setTimeout(() => { w.terminate(); resolve({ ok: false, stage: 'run', output: '[stopped: exceeded 5s \u2014 infinite loop?]' }); }, 5000);
+    w.onmessage = ({ data }) => { clearTimeout(timer); w.terminate(); resolve({ ok: !data.error, stage: 'run', output: data.output + (data.error ? '\n' + data.error : '') }); };
+    w.onerror = (e) => { clearTimeout(timer); w.terminate(); resolve({ ok: false, stage: 'run', output: 'Runtime error: ' + e.message }); };
+    w.postMessage({ code, stdin });
+  });
+}
+
+const norm = (s) => s.replace(/\s+$/, '');
+
 async function run() {
   const c = topic.cases[cur];
   $('runBtn').disabled = true;
-  $('status').className = ''; $('status').textContent = 'running…';
+  $('status').className = ''; $('status').textContent = 'running\u2026';
   try {
-    const r = await fetch('/api/run', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: $('code').value, stdin: $('stdin').value }) }).then((x) => x.json());
+    if (!backend) await detectBackend();
+    const code = $('code').value, stdin = $('stdin').value;
+    const r = backend === 'gcc'
+      ? await fetch('/api/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code, stdin }) }).then((x) => x.json())
+      : await runInBrowser(code, stdin);
     $('output').className = r.ok ? '' : 'err';
     let text = r.output || (r.ok ? '(no output)' : '');
     if (r.stage === 'compile') { text = 'Compile error:\n' + text; $('status').textContent = 'compile failed'; $('status').className = 'bad'; }
+    else if (backend === 'wasm' && /^file\.c:\d+:\d+ |\n?file\.c:\d+:\d+ /.test(r.output)) {
+      $('output').className = 'err'; $('status').textContent = 'error'; $('status').className = 'bad';
+      text = r.output.replace(/file\.c:/g, 'line ');
+    }
     else {
-      const same = $('stdin').value === c.input && r.output === c.expected;
-      const sameInput = $('stdin').value === c.input;
-      if (r.ok && sameInput) { $('status').textContent = same ? '✓ matches expected output' : '✗ differs from expected output'; $('status').className = same ? 'ok' : 'bad'; }
+      const same = norm(r.output) === norm(c.expected);
+      if (r.ok && stdin === c.input) { $('status').textContent = same ? '\u2713 matches expected output' : '\u2717 differs from expected output'; $('status').className = same ? 'ok' : 'bad'; }
       else { $('status').textContent = r.ok ? 'done' : 'stopped'; $('status').className = r.ok ? '' : 'bad'; }
       if (r.warnings && !text.includes(r.warnings)) text += '\n\n--- warnings ---\n' + r.warnings;
     }
     $('output').textContent = text;
   } catch (e) {
-    $('output').className = 'err'; $('output').textContent = 'Cannot reach the server. Is `npm start` running?\n' + e;
+    $('output').className = 'err'; $('output').textContent = 'Cannot run the code.\n' + e;
   } finally { $('runBtn').disabled = false; }
 }
 
@@ -83,4 +108,4 @@ $('code').addEventListener('keydown', (e) => {
   } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); run(); }
 });
 
-renderTopics(); renderTopic();
+renderTopics(); renderTopic(); detectBackend();

@@ -60,6 +60,7 @@ http.createServer((req, res) => {
     });
     return;
   }
+  if (req.url === '/api/health') { res.writeHead(200); return res.end('ok'); }
   const rel = req.url.split('?')[0] === '/' ? '/index.html' : decodeURIComponent(req.url.split('?')[0]);
   const file = path.join(PUBLIC, path.normalize(rel));
   if (!file.startsWith(PUBLIC)) { res.writeHead(403); return res.end(); }

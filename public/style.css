@@ -37,3 +37,4 @@ textarea { width:100%; background:var(--code); color:var(--codefg); border:1px s
 #status.ok { color:var(--ok); } #status.bad { color:var(--bad); }
 .answer-bar { margin-top:14px; display:flex; gap:8px; }
 #answer { margin-top:10px; }
+header small { color: var(--muted); margin-left:auto; }

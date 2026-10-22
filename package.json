@@ -1,0 +1,7 @@
+{
+  "name": "c-playground",
+  "version": "1.0.0",
+  "description": "Local web app to learn and try C: material, cases, answers, and a code box.",
+  "scripts": { "start": "node server.js", "test": "node test/answers.test.js" },
+  "license": "MIT"
+}

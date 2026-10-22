@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C Playground</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>C Playground</h1>
+  <nav id="topics"></nav>
+</header>
+<main>
+  <section id="learn">
+    <h2 id="topicTitle"></h2>
+    <div id="material"></div>
+  </section>
+  <section id="practice">
+    <div class="case-bar">
+      <label for="caseSelect">Case</label>
+      <select id="caseSelect"></select>
+    </div>
+    <div class="task"><b id="caseTitle"></b><p id="caseTask"></p></div>
+    <div class="editor-head">
+      <span>main.c</span>
+      <span>
+        <button id="resetBtn" class="ghost">Reset</button>
+        <button id="runBtn">&#9654; Run <small>(Ctrl+Enter)</small></button>
+      </span>
+    </div>
+    <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+    <label class="small" for="stdin">Input (stdin, for scanf)</label>
+    <textarea id="stdin" spellcheck="false" rows="3"></textarea>
+    <div class="editor-head"><span>Output</span><span id="status"></span></div>
+    <pre id="output">Press Run to compile and execute.</pre>
+    <div class="answer-bar">
+      <button id="answerBtn" class="ghost">Show answer</button>
+      <button id="loadBtn" class="ghost" hidden>Load answer into editor</button>
+    </div>
+    <div id="answer" hidden>
+      <pre id="answerCode"></pre>
+      <p id="answerExplain"></p>
+      <p class="small">Expected output for the sample input: <code id="expected"></code></p>
+    </div>
+  </section>
+</main>
+<script src="content.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

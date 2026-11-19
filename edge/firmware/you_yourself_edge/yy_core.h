@@ -68,6 +68,14 @@ bool yy_outside_any(const yy_history_t *h);
 yy_outcome_t yy_decide(yy_inside_t in, bool outside_speech);
 bool yy_tap(yy_outcome_t o, bool cue_enabled);
 const char *yy_wording(yy_outcome_t o);
+const char *yy_wording_id(yy_outcome_t o);   /* Indonesian draft, needs clinical review */
+
+/* ---- simulator: replays a scripted scenario through the SAME core ----
+ * For demos when an electrode fails. Output is always SIMULATED data; it never
+ * enables the tap and never touches a person's saved settings. */
+typedef enum { YY_SIM_QUIET, YY_SIM_MOUTHING, YY_SIM_SPEECH_ONLY, YY_SIM_LEAD_OFF, YY_SIM_COUNT } yy_sim_t;
+const char *yy_sim_name(yy_sim_t sc);
+yy_outcome_t yy_sim_run(yy_sim_t sc);
 
 #ifdef __cplusplus
 }

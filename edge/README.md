@@ -17,7 +17,7 @@ python/yy/synth.py          SYNTHETIC signal generators for testing only
 python/train_emg.py         train on --synthetic or --data <folder of CSVs>
 python/tests/               pytest suite
 firmware/you_yourself_edge/ Arduino sketch (XIAO ESP32S3 Sense) + portable C core
-host_test/                  compiles the C core on a PC, checks parity with Python
+host_test/                  compiles the C core on a PC, checks parity with Python and the simulator
 ```
 
 ## Run
@@ -38,7 +38,10 @@ python train_emg.py --data ../recordings/     # prints leave-one-session-out acc
 
 Then open `firmware/you_yourself_edge/` in the Arduino IDE (ESP32 core 3.x,
 board "XIAO_ESP32S3"), flash, and open the serial monitor at 115200.
-Serial commands for bench work: `cal`, `cue on`, `cue off`.
+Serial commands for bench work: `cal`, `cue on`, `cue off`, `lang id`, `lang en`, and `sim`.
+`sim` replays four scripted scenarios (quiet room, silent mouthing, someone else speaking, electrode lifted)
+through the same code as a demo backup. Its output is labelled SIMULATED, never taps, and saves nothing.
+Output is Indonesian by default; the Indonesian sentences are a DRAFT for your psychiatrist to edit.
 
 ## Wiring (XIAO ESP32S3 Sense)
 

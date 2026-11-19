@@ -108,7 +108,7 @@ bullets(doc, [
     "**Step 3 (CNN):** train in Python, convert to int8 TFLite, run with TFLite Micro on the ESP32-S3 (ESP-NN speeds it up). Keep the model under about 100 KB and the arena under 100 KB of RAM.",
     "**Raspberry Pi version:** the same Python modules run directly; add Silero VAD. Good for a desk demo, too heavy for all-day wear.",
     "**Privacy by design:** audio is overwritten frame by frame. Only the outcome code leaves the board, over BLE, to the person's own phone. No account, no cloud.",
-    "**Simulator mode:** a serial command that replays a recorded or synthetic session through the same code, so a demo survives a loose electrode.",
+    "**Simulator mode (built):** the serial command sim replays four scripted scenarios through the same code, labelled SIMULATED, so a demo survives a loose electrode. It never taps and saves nothing.",
 ], size=10)
 
 heading(doc, "3.7 ML risks to name before a judge does", 2)
@@ -234,6 +234,17 @@ bullets(doc, [
     "Who else should I speak to: a nurse, a psychologist, a person with lived experience, a statistician?",
     "Will you read the paper and add notes, and what is a realistic date for our next meeting?",
 ], size=10)
+
+heading(doc, "9. Indonesian wording (draft)")
+para(doc, "You chose Indonesian first, English second. The device speaks Indonesian by default (serial command lang en switches to English). "
+     "**These sentences are my draft. Your psychiatrist should edit every one before any patient sees them.**")
+table(doc, ["Outcome", "Indonesian (draft)", "English"], [
+    ["Muscles active, no speech nearby", "Otot bicara Anda aktif dan tidak ada orang di dekat Anda yang berbicara. Suara ini mungkin berasal dari ucapan batin Anda sendiri.", "Your speech muscles were active and no one near you was speaking. This voice may be your own inner speech."],
+    ["Muscles active, speech nearby", "Ada orang berbicara di dekat Anda, dan otot bicara Anda aktif. Pemeriksaan ini tidak dapat membedakan keduanya.", "There was real speech near you, and your speech muscles were active. This check can't separate the two."],
+    ["Nothing detected, no speech", "Sensor tidak menangkap apa pun kali ini. Itu hal yang umum dan tidak menunjukkan dari mana suara itu berasal.", "The sensor picked up nothing this time. That is common, and it says nothing about where the voice came from."],
+    ["Speech nearby only", "Mikrofon mendengar ada orang berbicara di dekat Anda.", "The microphone heard real speech near you."],
+    ["Sensor not reading", "Sensor otot belum terbaca dengan baik saat ini, jadi pemeriksaan ini tidak dapat mengatakan apa pun tentang otot Anda.", "The muscle sensor isn't reading properly right now, so this check can't say anything about your muscles."],
+], [3.2, 7.0, 6.8], caption="Table 8. Outcome wording.")
 
 out = HERE / "You_Yourself_Edge_Plan.docx"
 doc.save(out)

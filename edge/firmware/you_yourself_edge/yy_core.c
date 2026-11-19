@@ -237,3 +237,84 @@ const char *yy_wording(yy_outcome_t o) {
                "can't say anything about your muscles.";
     }
 }
+
+/* Indonesian DRAFT. Not yet reviewed by a clinician. */
+const char *yy_wording_id(yy_outcome_t o) {
+    switch (o) {
+    case YY_MUSCLE_NO_SPEECH:
+        return "Otot bicara Anda aktif dan tidak ada orang di dekat Anda yang berbicara. "
+               "Suara ini mungkin berasal dari ucapan batin Anda sendiri.";
+    case YY_MUSCLE_AND_SPEECH:
+        return "Ada orang berbicara di dekat Anda, dan otot bicara Anda aktif. "
+               "Pemeriksaan ini tidak dapat membedakan keduanya.";
+    case YY_NOTHING_NO_SPEECH:
+        return "Sensor tidak menangkap apa pun kali ini. Itu hal yang umum dan tidak "
+               "menunjukkan dari mana suara itu berasal.";
+    case YY_SPEECH_ONLY:
+        return "Mikrofon mendengar ada orang berbicara di dekat Anda.";
+    default:
+        return "Sensor otot belum terbaca dengan baik saat ini, jadi pemeriksaan ini "
+               "tidak dapat mengatakan apa pun tentang otot Anda.";
+    }
+}
+
+/* ---------------- simulator ---------------- */
+
+#define SIM_REST_N 1500                      /* 15 s of simulated rest for calibration */
+#define SIM_N (19 * YY_HOP + YY_WIN)         /* 20 hops = 10 s of look-back */
+#define SIM_BASE 300.0f
+
+static float sim_rest[SIM_REST_N];
+static float sim_stream[SIM_N];
+
+static float sim_noise(uint32_t *r) {         /* about N(0, 6) */
+    float a = 0;
+    for (int i = 0; i < 4; i++) {
+        *r ^= *r << 13; *r ^= *r >> 17; *r ^= *r << 5;
+        a += ((*r & 0xFFFF) / 32768.0f) - 1.0f;
+    }
+    return a * 5.2f;
+}
+
+const char *yy_sim_name(yy_sim_t sc) {
+    static const char *n[] = {"quiet room", "silent mouthing", "someone else speaking", "electrode lifted"};
+    return (unsigned)sc < YY_SIM_COUNT ? n[sc] : "?";
+}
+
+static void sim_burst(float *x, int n, int start, int len, float amp) {
+    for (int i = 0; i < len && start + i < n; i++) {
+        float t = (float)i / YY_FS;
+        x[start + i] += amp * (0.6f + 0.4f * fabsf(sinf(6.2831853f * 2.5f * t)));
+    }
+}
+
+yy_outcome_t yy_sim_run(yy_sim_t sc) {
+    uint32_t r = 2463534242u + (uint32_t)sc * 7919u;
+    for (int i = 0; i < SIM_REST_N; i++) sim_rest[i] = SIM_BASE + sim_noise(&r);
+    float med, sigma;
+    yy_calibrate(sim_rest, SIM_REST_N, &med, &sigma);
+
+    for (int i = 0; i < SIM_N; i++) sim_stream[i] = SIM_BASE + sim_noise(&r);
+    if (sc == YY_SIM_MOUTHING) {
+        sim_burst(sim_stream, SIM_N, 600, 180, 110.0f);
+        sim_burst(sim_stream, SIM_N, 900, 150, 110.0f);
+    }
+    if (sc == YY_SIM_LEAD_OFF)
+        for (int i = 0; i < SIM_N; i++) sim_stream[i] = 0;
+
+    yy_history_t h;
+    memset(&h, 0, sizeof h);
+    for (int k = 0; k < YY_LOOKBACK_HOPS; k++) {
+        const float *w = sim_stream + k * YY_HOP;
+        bool ok = yy_contact_ok(w, YY_WIN);
+        float p[YY_NCLASS] = {0};
+        if (ok) {
+            float f[YY_NFEAT];
+            yy_features(w, YY_WIN, med, sigma, f);
+            yy_mlp_proba(f, p);
+        }
+        bool outside = (sc == YY_SIM_SPEECH_ONLY) && k >= 8 && k <= 12;
+        yy_history_push(&h, p[YY_CLASS_SPEECH], ok, outside);
+    }
+    return yy_decide(yy_inside_state(&h), yy_outside_any(&h));
+}

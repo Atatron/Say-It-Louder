@@ -109,11 +109,20 @@ static void test_contact(void) {
     CHECK(yy_contact_ok(ok, YY_WIN), "normal trace is fine");
 }
 
+static void test_simulator(void) {
+    CHECK(yy_sim_run(YY_SIM_QUIET) == YY_NOTHING_NO_SPEECH, "sim quiet");
+    CHECK(yy_sim_run(YY_SIM_MOUTHING) == YY_MUSCLE_NO_SPEECH, "sim mouthing");
+    CHECK(yy_sim_run(YY_SIM_SPEECH_ONLY) == YY_SPEECH_ONLY, "sim speech only");
+    CHECK(yy_sim_run(YY_SIM_LEAD_OFF) == YY_CANNOT_TELL, "sim lead off must give no muscle claim");
+    printf("simulator scenarios checked\n");
+}
+
 int main(void) {
     test_emg_parity();
     test_vad_parity();
     test_fusion();
     test_contact();
+    test_simulator();
     printf(failures ? "\n%d FAILURE(S)\n" : "\nall host tests passed\n", failures);
     return failures ? 1 : 0;
 }

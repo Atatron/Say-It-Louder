@@ -47,7 +47,7 @@ volatile bool speechThisHop = false;   // set by the mic task, cleared every hop
 static float env[YY_WIN];              // last 2 s of 100 Hz envelope
 static int envFill = 0, sinceHop = 0;
 static float baseMed = 0, baseSigma = 1;
-static bool calibrated = false, cueEnabled = false, micOk = false;
+static bool calibrated = false, cueEnabled = false, micOk = false, langId = true;   // Indonesian first, English second
 static yy_history_t hist;
 
 // ---------------------------------------------------------------- mic task
@@ -111,15 +111,20 @@ void onVoiceButton() {
   yy_inside_t in = yy_inside_state(&hist);
   if (!micOk) {
     // Without the microphone we must not imply that nobody was speaking.
-    say(in == YY_IN_ACTIVE
-          ? "OUTCOME 5 Your speech muscles were active. The microphone is off, so this check can't say whether anyone nearby was speaking."
-          : "OUTCOME 5 The microphone is off and the muscle sensor picked up nothing, so this check can't tell anything this time.");
+    if (langId)
+      say(in == YY_IN_ACTIVE
+            ? "OUTCOME 5 Otot bicara Anda aktif. Mikrofon mati, jadi pemeriksaan ini tidak dapat mengatakan apakah ada orang di dekat Anda yang berbicara."
+            : "OUTCOME 5 Mikrofon mati dan sensor otot tidak menangkap apa pun, jadi pemeriksaan ini tidak dapat mengatakan apa pun kali ini.");
+    else
+      say(in == YY_IN_ACTIVE
+            ? "OUTCOME 5 Your speech muscles were active. The microphone is off, so this check can't say whether anyone nearby was speaking."
+            : "OUTCOME 5 The microphone is off and the muscle sensor picked up nothing, so this check can't tell anything this time.");
     return;   // never tap without both channels
   }
   bool outside = yy_outside_any(&hist);
   yy_outcome_t o = yy_decide(in, outside);
   char buf[256];
-  snprintf(buf, sizeof buf, "OUTCOME %d %s", (int)o, yy_wording(o));
+  snprintf(buf, sizeof buf, "OUTCOME %d %s", (int)o, langId ? yy_wording_id(o) : yy_wording(o));
   say(buf);
   if (yy_tap(o, cueEnabled)) tap(2);
   // The coping coach (hum one soft note for 30 s) and the diary live in the app.
@@ -133,6 +138,19 @@ void handleSerial() {
   cmd.trim();
   if (cmd == "cue on")  { cueEnabled = true;  prefs.putBool("cue", true);  say("CUE enabled"); }
   if (cmd == "cue off") { cueEnabled = false; prefs.putBool("cue", false); say("CUE disabled"); }
+  if (cmd == "lang en") { langId = false; say("LANG English"); }
+  if (cmd == "lang id") { langId = true;  say("LANG Bahasa Indonesia"); }
+  if (cmd == "sim") {
+    // Demo backup: the same core, scripted data. Never taps, never saves anything.
+    say(langId ? "SIM DATA SIMULASI. Bukan dari tubuh Anda." : "SIM SIMULATED DATA. Not from your body.");
+    for (int k = 0; k < YY_SIM_COUNT; k++) {
+      yy_outcome_t o = yy_sim_run((yy_sim_t)k);
+      char buf[256];
+      snprintf(buf, sizeof buf, "SIM %s -> %s", yy_sim_name((yy_sim_t)k),
+               langId ? yy_wording_id(o) : yy_wording(o));
+      say(buf);
+    }
+  }
   if (cmd == "cal")     { calibrated = calibrate(); }
 }
 

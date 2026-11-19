@@ -86,3 +86,10 @@ def test_contact_check():
     assert not F.contact_ok(np.zeros(200))
     assert not F.contact_ok(np.full(200, 4095.0))
     assert F.contact_ok(synth.rest_recording(2.0))
+
+
+def test_indonesian_draft_covers_every_outcome_and_avoids_certainty():
+    assert set(fusion.WORDING_ID) == set(fusion.WORDING)
+    for text in fusion.WORDING_ID.values():
+        low = text.lower()
+        assert "tidak nyata" not in low and "halusinasi" not in low and "pasti" not in low

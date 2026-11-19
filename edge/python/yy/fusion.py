@@ -49,6 +49,26 @@ WORDING = {
 }
 
 
+# Indonesian DRAFT of the same sentences. Not yet reviewed by a clinician or a
+# native-speaking person with lived experience. Do not show to patients before
+# the psychiatrist has edited every sentence.
+WORDING_ID = {
+    Outcome.MUSCLE_NO_SPEECH: (
+        "Otot bicara Anda aktif dan tidak ada orang di dekat Anda yang berbicara. "
+        "Suara ini mungkin berasal dari ucapan batin Anda sendiri."),
+    Outcome.MUSCLE_AND_SPEECH: (
+        "Ada orang berbicara di dekat Anda, dan otot bicara Anda aktif. "
+        "Pemeriksaan ini tidak dapat membedakan keduanya."),
+    Outcome.NOTHING_NO_SPEECH: (
+        "Sensor tidak menangkap apa pun kali ini. Itu hal yang umum dan tidak "
+        "menunjukkan dari mana suara itu berasal."),
+    Outcome.SPEECH_ONLY: "Mikrofon mendengar ada orang berbicara di dekat Anda.",
+    Outcome.CANNOT_TELL: (
+        "Sensor otot belum terbaca dengan baik saat ini, jadi pemeriksaan ini "
+        "tidak dapat mengatakan apa pun tentang otot Anda."),
+}
+
+
 def inside_state(p_speech: list[float], contact: list[bool]) -> Inside:
     """Summarise the look-back windows of the muscle channel."""
     if not contact or sum(contact) < len(contact) / 2:

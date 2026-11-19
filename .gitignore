@@ -1,0 +1,6 @@
+__pycache__/
+.pytest_cache/
+edge/host_test/test_core
+edge/host_test/vad_audio.f32
+edge/host_test/vad_expected.txt
+recordings/

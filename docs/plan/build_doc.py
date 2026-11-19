@@ -172,10 +172,69 @@ table(doc, ["Item", "Where", "Status"], [
     ["This plan, its figures and builder", "docs/plan/", "This file"],
 ], [6.2, 7.0, 3.8])
 bullets(doc, [
-    "**This week:** order parts; decide the dates; send your psychiatrist the paper and ask the questions in the study plan.",
+    "**This week:** order parts; decide the dates; send your psychiatrist the paper and bring the question list in section 8.",
     "**First experiment:** the decisive test on your own lip. Everything else depends on it.",
     "**Still open from your plan:** the film's source citation, the website's Vercel account (blocked), and whether to rename the repository to match the product.",
 ], size=10)
+
+heading(doc, "8. Questions to ask your psychiatrist about real patient data")
+boxed(doc, "**Before anything else:** no recording, note, photo or measurement from a real patient should be collected, copied or shared until the "
+      "ethics committee has approved the protocol and the person has given written consent. Real data should come from sessions the "
+      "psychiatrist supervises (the paper's stages 3 and 4), not from existing medical records. Bring this list to the meeting and let "
+      "the psychiatrist answer in their own words.", 17.0, fill="F8EFEC")
+heading(doc, "A. Responsibility and approval", 2)
+bullets(doc, [
+    "Will you be the responsible clinician for any session in which a patient wears the device, and may you be named as an advisor or co-author?",
+    "Which ethics committee reviews this (your hospital's, my university's, or both), and what does it need from me?",
+    "Does it need a letter of support, a supervisor, a data-management plan or insurance cover, and who signs?",
+    "How long does approval usually take? Is there a faster route for a low-risk feasibility study?",
+    "Where does your own care of me end and this project begin, and how do you want to keep them separate?",
+], size=10)
+heading(doc, "B. Who can take part", 2)
+bullets(doc, [
+    "Out of the patients with persistent voices that you see, roughly how many describe voices as their own thoughts spoken aloud, and how many as something else?",
+    "Would you change the inclusion and exclusion rules in the paper (section 7.1)? In particular, how do we screen out people who believe devices monitor or control them?",
+    "How many suitable people could realistically be invited in a few weeks, and who invites them? Nobody is given to me; each person chooses.",
+    "Who decides whether a person has capacity to consent, and how is that recorded?",
+    "How do we make sure that saying no, or stopping at any time, has no effect on someone's care?",
+], size=10)
+heading(doc, "C. What data may be collected", 2)
+bullets(doc, [
+    "Which clinical details do you want recorded about each person (age band, years since first episode, medication, scales), and which would you never allow me to see?",
+    "Which rating scales do you already use, and in which Indonesian versions (PANSS, PSYRATS, BAVQ-R, C-SSRS, SUS)?",
+    "Is it acceptable to record the muscle signal and the per-frame sound levels only, with no audio saved, and does the committee agree?",
+    "What do you need us to record about each voice episode: time, button press, how distressing (0 to 10), what helped?",
+    "Do patients keep a voice diary or any recorded sessions already that could be used, with consent, instead of starting from nothing?",
+    "How many sessions per person is reasonable, and how long can one session last before it tires or upsets someone?",
+], size=10)
+heading(doc, "D. Privacy and handling", 2)
+bullets(doc, [
+    "Should data be identified only by a code, and who keeps the key linking codes to names? It must not be me.",
+    "Where may the data be stored (hospital server, encrypted laptop), for how long, and who can see it?",
+    "What happens to a person's data if they withdraw?",
+    "May anonymised signals be shared in a paper or public repository? Under Indonesia's Personal Data Protection Law, what do we need in the consent form?",
+    "Who may be told about the study, for example family members or other staff?",
+], size=10)
+heading(doc, "E. Safety and wording", 2)
+bullets(doc, [
+    "What would make you stop a session immediately? Do you agree with the stop rules in the paper (section 7.4)?",
+    "How should each of the four results be worded in Bahasa Indonesia so it is kind and cannot be misread? Please edit the sentences directly.",
+    "How do we introduce the idea that a voice may be a person's own inner speech without causing shame or fear?",
+    "How should we handle a participant who reports a new belief about the device, or any thought of self-harm?",
+    "Should a nurse or you be present in the room every time, and for how long after a session?",
+    "Is skin preparation and electrode use on the face acceptable for your patients, for example given allergies or skin conditions?",
+], size=10)
+heading(doc, "F. Study design and next steps", 2)
+bullets(doc, [
+    "Is a first session with 3 to 5 people and no medication changes a sensible size, and what would you want to see before a second one?",
+    "What result would convince you it is worth continuing, and what would make you stop the project?",
+    "Where in care could it fit: a clinic visit, a nurse-led session, or home use between visits?",
+    "What coping strategies do your patients already use that work? Those belong in the coach.",
+    "What do you want on the one-page summary, and what would you never have time to read?",
+    "Who else should I speak to: a nurse, a psychologist, a person with lived experience, a statistician?",
+    "Will you read the paper and add notes, and what is a realistic date for our next meeting?",
+], size=10)
+
 out = HERE / "You_Yourself_Edge_Plan.docx"
 doc.save(out)
 print("saved", out)

@@ -145,7 +145,7 @@ void setup() {
   prefs.begin("yy", false);
   cueEnabled = prefs.getBool("cue", false);   // off by default, always
 
-  BLEDevice::init("YouYourself");
+  BLEDevice::init("You, Yourself");
   BLEServer *srv = BLEDevice::createServer();
   BLEService *svc = srv->createService(SVC_UUID);
   tx = svc->createCharacteristic(TX_UUID, BLECharacteristic::PROPERTY_NOTIFY);

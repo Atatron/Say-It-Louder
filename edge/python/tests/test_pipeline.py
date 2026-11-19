@@ -93,3 +93,21 @@ def test_indonesian_draft_covers_every_outcome_and_avoids_certainty():
     for text in fusion.WORDING_ID.values():
         low = text.lower()
         assert "tidak nyata" not in low and "halusinasi" not in low and "pasti" not in low
+
+
+def test_session_pipeline_end_to_end(tmp_path, monkeypatch):
+    """Simulated recording -> analysis (null and with fake coupling) -> trainer input."""
+    import subprocess
+    py = sys.executable
+    root = Path(__file__).resolve().parents[1]
+    null_dir, eff_dir = tmp_path / "null", tmp_path / "eff"
+    for d, extra in ((null_dir, []), (eff_dir, ["--inner-effect", "90"])):
+        subprocess.run([py, str(root / "record_session.py"), "--simulate", "--name", "s1",
+                        "--out", str(d)] + extra, check=True, capture_output=True)
+    out_null = subprocess.run([py, str(root / "analyze_h1.py"), str(null_dir)], check=True,
+                              capture_output=True, text=True).stdout
+    out_eff = subprocess.run([py, str(root / "analyze_h1.py"), str(eff_dir)], check=True,
+                             capture_output=True, text=True).stdout
+    assert "NOT SUPPORTED" in out_null
+    assert "SUPPORTED in these sessions" in out_eff
+    assert "speech_motor" in out_null and "AUROC" in out_null

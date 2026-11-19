@@ -47,7 +47,7 @@ volatile bool speechThisHop = false;   // set by the mic task, cleared every hop
 static float env[YY_WIN];              // last 2 s of 100 Hz envelope
 static int envFill = 0, sinceHop = 0;
 static float baseMed = 0, baseSigma = 1;
-static bool calibrated = false, cueEnabled = false, micOk = false, langId = true;   // Indonesian first, English second
+static bool calibrated = false, cueEnabled = false, micOk = false, langId = true, streaming = false;   // Indonesian first, English second
 static yy_history_t hist;
 
 // ---------------------------------------------------------------- mic task
@@ -140,6 +140,9 @@ void handleSerial() {
   if (cmd == "cue off") { cueEnabled = false; prefs.putBool("cue", false); say("CUE disabled"); }
   if (cmd == "lang en") { langId = false; say("LANG English"); }
   if (cmd == "lang id") { langId = true;  say("LANG Bahasa Indonesia"); }
+  if (cmd == "buzz")      { tap(2); say("BUZZ test"); }   // bench test of the motor wiring
+  if (cmd == "stream on")  { streaming = true;  }   // one number per line, 100 per second
+  if (cmd == "stream off") { streaming = false; say("STREAM off"); }
   if (cmd == "sim") {
     // Demo backup: the same core, scripted data. Never taps, never saves anything.
     say(langId ? "SIM DATA SIMULASI. Bukan dari tubuh Anda." : "SIM SIMULATED DATA. Not from your body.");
@@ -189,6 +192,7 @@ void loop() {
 
   // shift in one 100 Hz sample
   float v = sample100Hz();
+  if (streaming) Serial.println((int)v);   // for record_session.py
   if (envFill < YY_WIN) env[envFill++] = v;
   else { memmove(env, env + 1, sizeof(float) * (YY_WIN - 1)); env[YY_WIN - 1] = v; }
 

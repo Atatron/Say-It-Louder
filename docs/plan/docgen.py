@@ -126,6 +126,8 @@ def table(doc, header, rows, widths_cm, size=8.5, caption=None):
         _shade(cell, HEAD_FILL)
         cell.paragraphs[0].paragraph_format.space_after = Pt(1)
         add_runs(cell.paragraphs[0], text, size=size, bold=True)
+    for i, w in enumerate(widths_cm):
+        tbl.columns[i].width = Cm(w)
     _repeat_header(tbl.rows[0])
     for row in rows:
         cells = tbl.add_row().cells

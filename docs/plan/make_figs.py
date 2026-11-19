@@ -261,6 +261,54 @@ def fig_synth_demo():
     fig.savefig(OUT / "fig_synthetic_demo.png", dpi=170); plt.close(fig)
 
 
+def fig_wiring():
+    fig, ax = plt.subplots(figsize=(12.5, 7.4))
+    ax.set_xlim(0, 12.5); ax.set_ylim(-0.5, 7.2); ax.axis("off")
+    RED, BLK, ORG, BLU = "#C0392B", "#222222", "#E67E22", "#2E6DA4"
+    ax.add_patch(FancyBboxPatch((4.6, 1.2), 3.0, 5.0, boxstyle="round,pad=0.05,rounding_size=0.15", fc=TEAL_L, ec=INK, lw=2))
+    ax.text(6.1, 5.85, "XIAO ESP32S3 Sense", ha="center", fontsize=11, fontweight="bold")
+    ax.text(6.1, 5.55, "(microphone is built in)", ha="center", fontsize=8.5, color=MUTED)
+    left = {"3V3": 4.9, "GND": 4.2, "A0 (GPIO1)": 3.5, "D1 (GPIO2)": 2.8}
+    right = {"3V3": 4.9, "GND": 4.2, "D2 (GPIO3)": 2.1}
+    for name, y in left.items():
+        ax.text(4.75, y, name, va="center", ha="left", fontsize=8.5)
+    for name, y in right.items():
+        ax.text(7.45, y, name, va="center", ha="right", fontsize=8.5)
+    # MyoWare (left)
+    box(ax, 1.6, 4.2, 2.2, 1.9, fc="#E9C46A", label="MyoWare 2.0\n+ Cable Shield", fs=9, tc=INK)
+    for nm, y, c in (("VIN", 4.9, RED), ("GND", 4.2, BLK), ("ENV", 3.5, ORG)):
+        ax.plot([2.7, 4.6], [y, y], color=c, lw=2.4)
+        ax.text(2.85, y + 0.1, nm, fontsize=8.5, color=c)
+    ax.text(1.6, 2.7, "3.5 mm jack -> 3-lead cable\n-> 3 electrodes on the skin", ha="center", fontsize=8.2, color=INK)
+    # button (left)
+    ax.plot([4.6, 3.5, 3.5], [2.8, 2.8, 2.45], color=BLU, lw=2.4)
+    box(ax, 3.5, 2.15, 0.9, 0.5, fc="#F6F8F8", label="button", fs=8.5, tc=INK)
+    ax.plot([3.5, 3.5], [1.9, 1.3], color=BLK, lw=2.4)
+    ax.text(3.6, 1.1, "other leg to GND", fontsize=8.2, color=MUTED, ha="center")
+    # motor driver (right)
+    ax.plot([7.6, 10.6, 10.6], [4.9, 4.9, 4.2], color=RED, lw=2.4)
+    ax.text(8.9, 5.05, "to motor +", fontsize=8.5, color=RED)
+    box(ax, 10.6, 3.8, 1.5, 0.7, fc="#D9B3A6", label="vibration motor", fs=8.5, tc=INK)
+    ax.plot([10.6, 10.6], [3.45, 3.0], color=BLK, lw=2.4)
+    box(ax, 10.6, 2.65, 1.5, 0.7, fc="#F6F8F8", label="NPN transistor", fs=8.5, tc=INK)
+    ax.text(11.45, 3.2, "collector", fontsize=8, color=MUTED)
+    ax.plot([7.6, 8.5], [2.1, 2.1], color=BLU, lw=2.4)
+    box(ax, 9.0, 2.1, 0.9, 0.45, fc="#F6F8F8", label="1 k\u03a9", fs=8.5, tc=INK)
+    ax.plot([9.45, 9.85, 9.85], [2.1, 2.1, 2.45], color=BLU, lw=2.4)
+    ax.text(9.0, 2.55, "to base", fontsize=8, color=MUTED, ha="center")
+    ax.plot([10.6, 10.6], [2.3, 1.55], color=BLK, lw=2.4)
+    ax.text(10.7, 1.9, "emitter", fontsize=8, color=MUTED)
+    ax.plot([7.6, 8.2, 8.2, 10.6], [4.2, 4.2, 1.55, 1.55], color=BLK, lw=2.4)
+    ax.text(9.4, 1.3, "to GND", fontsize=8.5, color=BLK)
+    ax.text(10.6, 0.8, "1N4148 diode across the motor, stripe toward +.\nOptional: 100 \u00b5F capacitor across 3V3 and GND.", ha="center", fontsize=8, color=INK)
+    # battery
+    box(ax, 6.1, 0.2, 3.6, 0.55, fc="#8FA9C7", label="LiPo 3.7 V, slide switch in the + wire", fs=8.5, tc=INK)
+    ax.text(7.55, 0.7, "to BAT+ / BAT- pads on the back", fontsize=8, color=MUTED, ha="right")
+    ax.text(0.2, 6.95, "Wiring for the bench build (concept diagram; check each part's own pinout)", fontsize=11, fontweight="bold")
+    ax.text(0.2, -0.4, "Battery power only while electrodes are on skin. Check battery polarity twice before connecting.", fontsize=8.5, color=ELEC)
+    fig.savefig(OUT / "fig_wiring.png", dpi=170, bbox_inches="tight"); plt.close(fig)
+
+
 if __name__ == "__main__":
-    fig_wearables(); fig_pendant(); fig_system(); fig_ml_roadmap(); fig_synth_demo()
+    fig_wearables(); fig_wiring(); fig_pendant(); fig_system(); fig_ml_roadmap(); fig_synth_demo()
     print("ok")
